@@ -36,6 +36,7 @@
 #ifndef OW_MAP_HPP_INCLUDE_GUARD_
 #define OW_MAP_HPP_INCLUDE_GUARD_
 #include "OW_config.h"
+#include "OW_vector.hpp"
 #include "OW_COWReference.hpp"
 #include <map>
 #include <functional>
