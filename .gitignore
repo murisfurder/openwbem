@@ -39,3 +39,10 @@ replacement_script.sed
 *~
 ylwrap
 install-sh
+*.o
+*.so
+*.so.?
+*.a
+db/test/dbtest
+src/authenticators/pamcl/OW_PAMAuth
+src/services/http/owlocalhelper
