@@ -36,6 +36,7 @@
 #include "OW_PlatformSignal.hpp"
 #include "OW_UserUtils.hpp"
 #include <ostream>
+#include <cstring> // for strsignal
 
 namespace OW_NAMESPACE
 {
