@@ -21,6 +21,7 @@
 
 #include "cmpisrv.h"
 #include "OW_CIMInstance.hpp"
+#include <cstring> // for strdup
 
 // TEST
 #include <iostream>
