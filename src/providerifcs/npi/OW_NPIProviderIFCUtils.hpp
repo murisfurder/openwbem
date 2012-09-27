@@ -34,6 +34,7 @@
 #include "OW_CIMParamValue.hpp"
 #include "OW_CIMObjectPath.hpp"
 #include "NPIExternal.hpp"
+#include <cstdlib> // for free
 
 namespace OW_NAMESPACE
 {
