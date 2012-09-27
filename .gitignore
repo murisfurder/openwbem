@@ -38,3 +38,4 @@ lib*sl*
 replacement_script.sed
 *~
 ylwrap
+install-sh
