@@ -40,6 +40,7 @@
 #include "OW_Assertion.hpp"
 #include <iostream> // for cerr
 #include <cstring> // for memcpy
+#include <cstdio> // for EOF
 
 namespace OW_NAMESPACE
 {

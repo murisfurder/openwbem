@@ -38,6 +38,7 @@
 #include "OW_config.h"
 #include "OW_StringBuffer.hpp"
 #include "OW_BaseStreamBuffer.hpp"
+#include <cstdio> // for EOF
 #if defined(OW_HAVE_OSTREAM) && defined(OW_HAVE_ISTREAM)
 #include <istream>
 #include <ostream>

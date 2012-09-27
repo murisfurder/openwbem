@@ -43,6 +43,7 @@
 #include "OW_TmpFile.hpp"
 #include "OW_Assertion.hpp"
 #include <cstring>
+#include <cstdio>
 
 namespace OW_NAMESPACE
 {

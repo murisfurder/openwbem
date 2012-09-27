@@ -45,6 +45,7 @@
 
 #include <vector>
 #include <cstdlib> // for strtol
+#include <climits> // for CHAR_MAX
 
 extern "C"
 {

@@ -33,6 +33,8 @@
  * @author Dan Nuffer
  */
 
+#include <cstdlib>
+#include <cstring>
 #include "OW_config.h"
 #include "OW_CIMDateTime.hpp"
 #include "OW_DateTime.hpp"

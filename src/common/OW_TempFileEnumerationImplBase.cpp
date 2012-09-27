@@ -37,6 +37,7 @@
 #include "OW_EnumerationException.hpp"
 #include "OW_File.hpp"
 #include "OW_FileSystem.hpp"
+#include <cstdio> // for SEEK_END
 
 namespace OW_NAMESPACE
 {

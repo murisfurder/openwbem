@@ -34,6 +34,7 @@
  */
 #include "OW_config.h"
 #include "OW_StackTrace.hpp"
+#include <cstdlib>
 
 #ifdef OW_WIN32
 #include <iostream>	// for cerr

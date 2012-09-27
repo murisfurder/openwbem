@@ -35,7 +35,7 @@
 
 #include "OW_config.h"
 #include "OW_File.hpp"
-
+#include <cstring> // for memset
 #ifdef OW_WIN32
 	#include <io.h>
 	#include <stdlib.h>

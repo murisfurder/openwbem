@@ -40,7 +40,7 @@
 #else
 #include <iostream>
 #endif
-
+#include <cstdio> // for EOF
 
 namespace OW_NAMESPACE
 {
