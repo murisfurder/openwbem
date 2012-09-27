@@ -36,8 +36,18 @@
 #ifndef OW_LIST_HPP_INCLUDE_GUARD_
 #define OW_LIST_HPP_INCLUDE_GUARD_
 #include "OW_config.h"
-#include "OW_COWReference.hpp"
 #include <list>
+
+namespace OW_NAMESPACE
+{
+template <class T>
+inline std::list<T>* COWReferenceClone(std::list<T>* obj)
+{
+	return new std::list<T>(*obj);
+}
+}
+
+#include "OW_COWReference.hpp"
 
 namespace OW_NAMESPACE
 {
@@ -289,12 +299,6 @@ inline void swap(List<T>& x, List<T>& y)
 {
 	x.swap(y);
 }
-template <class T>
-inline std::list<T>* COWReferenceClone(std::list<T>* obj)
-{
-	return new std::list<T>(*obj);
-}
-
 } // end namespace OW_NAMESPACE
 
 #endif
