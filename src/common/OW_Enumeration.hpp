@@ -37,7 +37,7 @@
 #include "OW_config.h"
 #include "OW_TempFileEnumerationImplBase.hpp"
 #include "OW_IntrusiveReference.hpp"
-
+#include <cstddef> // for ptrdiff_t
 #include <iterator> // for the iterator tags
 
 namespace OW_NAMESPACE
