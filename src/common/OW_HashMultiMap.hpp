@@ -35,14 +35,14 @@
 #ifndef OW_HASH_MULTI_MAP_HPP_INCLUDE_GUARD_
 #define OW_HASH_MULTI_MAP_HPP_INCLUDE_GUARD_
 #include "OW_config.h"
-#ifdef OW_HAVE_HASH_MAP
-	#include <hash_map>
-	#define OW_HASH_MAP_NS std
-	#define HashMultiMap std::hash_multimap
-#elif OW_HAVE_EXT_HASH_MAP
+#ifdef OW_HAVE_EXT_HASH_MAP
 	#include <ext/hash_map>
 	#define OW_HASH_MAP_NS __gnu_cxx
 	#define HashMultiMap __gnu_cxx::hash_multimap
+#elif OW_HAVE_HASH_MAP
+	#include <hash_map>
+	#define OW_HASH_MAP_NS std
+	#define HashMultiMap std::hash_multimap
 #else
 	// TODO: Write a real hash multi map
 	#include <map>

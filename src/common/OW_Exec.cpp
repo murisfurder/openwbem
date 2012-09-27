@@ -34,11 +34,11 @@
  */
 
 #include "OW_config.h"
+#include "OW_Array.hpp"
 #include "OW_Exec.hpp"
 #include "OW_Format.hpp"
 #include "OW_Assertion.hpp"
 #include "OW_PosixUnnamedPipe.hpp"
-#include "OW_Array.hpp"
 #include "OW_IOException.hpp"
 #include "OW_Thread.hpp"
 #include "OW_Select.hpp"

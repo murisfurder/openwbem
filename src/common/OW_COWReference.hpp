@@ -139,6 +139,14 @@ inline void COWReference<T>::decRef()
 
 //////////////////////////////////////////////////////////////////////////////
 template<class T>
+inline T* COWReferenceClone(T* obj)
+{
+	// default implementation.  If a certain class doesn't have clone()
+	// (like std::vector), then they can overload this function
+	return obj->clone();
+}
+//////////////////////////////////////////////////////////////////////////////
+template<class T>
 inline void COWReference<T>::getWriteLock()
 {
 	if (COWReferenceBase::refCountGreaterThanOne())
@@ -276,15 +284,6 @@ template <class T, class U>
 inline bool operator<(const COWReference<T>& a, const COWReference<U>& b)
 {
 	return a.getPtr() < b.getPtr();
-}
-
-//////////////////////////////////////////////////////////////////////////////
-template <class T>
-inline T* COWReferenceClone(T* obj)
-{
-	// default implementation.  If a certain class doesn't have clone()
-	// (like std::vector), then they can overload this function
-	return obj->clone();
 }
 
 } // end namespace OW_NAMESPACE

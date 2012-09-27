@@ -581,7 +581,7 @@ String::indexOf(char ch, size_t fromIndex) const
 size_t
 String::indexOf(const char* arg, size_t fromIndex) const
 {
-	int cc = npos;
+	size_t cc = npos;
 	if (fromIndex < length())
 	{
 		// Don't need to check m_buf for NULL, because if length() == 0,
@@ -598,7 +598,7 @@ String::indexOf(const char* arg, size_t fromIndex) const
 
 		if (p != NULL)
 		{
-			cc = static_cast<int>(p - m_buf->data());
+			cc = static_cast<size_t>(p - m_buf->data());
 		}
 	}
 	return cc;
