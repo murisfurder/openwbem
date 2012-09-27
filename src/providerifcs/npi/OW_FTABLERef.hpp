@@ -46,6 +46,7 @@
 #include "OW_SharedLibraryReference.hpp"
 #include "OW_Reference.hpp"
 #include "npi.h"
+#include <cstring> // for memcpy
 
 namespace OW_NAMESPACE
 {

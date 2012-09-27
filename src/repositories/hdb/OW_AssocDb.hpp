@@ -49,6 +49,7 @@
 #include "OW_ResultHandlerIFC.hpp"
 #include "OW_IntrusiveReference.hpp"
 #include "OW_IntrusiveCountableBase.hpp"
+#include <cstring> // for memset
 
 namespace OW_NAMESPACE
 {
