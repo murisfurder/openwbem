@@ -1,0 +1,1365 @@
+#!/bin/sh
+
+
+# The following environment variables affect the execuction of this
+# script.  
+#
+#	 OWSYMLINKS
+#		If this has a value of one, all binaries and libraries within
+#		the staged install will be replaced with symlinks to their 
+#		counter-parts in the build directory.  
+#   OWNODIFF
+#		If this has a value of 1, no diffs will be performed.  This
+#		can be usefull if using the MemTracer
+#   OWTESTLIST
+#		If this is non-empty, only the specified tests will be performed.
+#		Valid values are (case insensitive):
+#		install
+#		testIndividualHeaders
+#		testHeaders
+#		auth
+#		acl
+#		mofinstalltool
+#		mof
+#		testsuite
+#		testipcsuite
+#		indications
+#		wql
+#		multiReq
+#		cimexceptions
+#		namespaces
+#		interop
+#		misc
+#		hammer
+
+
+OWSYSCONFDIR=@sysconfdir@
+OWLIBDIR=@libdir@
+OWBINDIR=@bindir@
+OWSBINDIR=@sbindir@
+OWINCLUDEDIR=@includedir@
+OWPKGLIBDIR=@pkglibdir@
+OWLIBEXECDIR=@libexecdir@
+TOPSRCDIR=../@top_srcdir@
+TESTMOFDONE=0
+STATIC_SERVICES=0
+
+if diff -u /dev/null /dev/null > /dev/null 2>&1; then
+	DIFF="diff -u"
+else
+	DIFF="diff"
+fi
+
+#############################################################################
+Install()
+{
+	echo "Install"
+	if [ ! -z "$OWTESTLIST" ] && echo $OWTESTLIST | grep -v -i \
+		install >/dev/null 2>&1
+	then
+		return
+	fi
+
+	rm -rf stage
+	mkdir stage
+	mkdir $RESULTDIR
+	mkdir -p $STAGEDIR$OWSYSCONFDIR/openwbem/truststore
+
+	cd ../../
+	
+	PROVIDERS="\
+$BUILDDIR/test/c++providers/indication/libindicationtest1.@lib_ext@ \
+$BUILDDIR/test/c++providers/indication/libindicationtest2.@lib_ext@ \
+$BUILDDIR/test/c++providers/secondary_instance/libsecondaryinstancetest1.@lib_ext@ \
+$BUILDDIR/test/c++providers/secondary_instance/libsecondaryinstancetest2.@lib_ext@ \
+$BUILDDIR/test/c++providers/method/libmethodtest.@lib_ext@ \
+$BUILDDIR/test/c++providers/instance/libtestinstance.@lib_ext@ \
+$BUILDDIR/test/c++providers/associator/libassociatortest.@lib_ext@ \
+"
+	$MAKE DESTDIR=$STAGEDIR EXTERNAL_PROVIDERS="$PROVIDERS" install || ExitWithFail "$MAKE install didn't work"
+
+	cd $STAGEDIR/$OWSYSCONFDIR/openwbem
+	sed \
+			-e "s!= /!= $STAGEDIR/!g" \
+			-e 's!.*http_server.http_port =\(.*\)!http_server.http_port = 30926!g' \
+			-e 's!.*http_server.https_port =\(.*\)!http_server.https_port = 30927!g' \
+			-e "s!.*log.main.type =\(.*\)!log.main.type = file!g" \
+			-e "s!.*log.main.location =\(.*\)!log.main.location = $RESULTDIR/logfile!g" \
+			-e "s!.*log.main.categories =\(.*\)!log.main.categories = *!g" \
+			-e "s!.*owcimomd.dump_socket_io =\(.*\)!owcimomd.dump_socket_io = $RESULTDIR!g" \
+			-e "s!.*wcimomd.authentication_module\(.*\)pam\(.*\)!owcimomd.authentication_module\1simple\2!g" \
+			-e "s!.*wcimomd.wql_lib =\(.*\)!owcimomd.wql_lib = $STAGEDIR$OWLIBDIR/libowwql.@lib_ext@!g" \
+			-e "s!.*owcimomd.disable_indications =.*!owcimomd.disable_indications = true!g" \
+			-e "s!.*http_server.timeout =.*!http_server.timeout = 3000!g" \
+			-e "s!.*owcimomd.restart_on_error =.*!owcimomd.restart_on_error = false!g" \
+			-e "s!.*wcimomd.allowed_users =.*!owcimomd.allowed_users = test test1 test2 test3 root $USER!g" \
+			-e "s!.*http_server.ssl_trust_store =.*!http_server.ssl_trust_store = $STAGEDIR$OWSYSCONFDIR/openwbem/truststore!g" \
+			-e "s!.*owcimomd.check_referential_integrity =.*!owcimomd.check_referential_integrity = true!g" \
+			-e "s!.*owcimomd.pidfile =.*!owcimomd.pidfile = $PIDFILE!g" \
+			-e "s!http_server.uds_filename = \(.*\)!http_server.uds_filename = $STAGEDIR/owcimomduds!g" \
+		openwbem.conf > openwbem.conf-t
+			#-e "s!;http_server.enable_deflate =.*!http_server.enable_deflate = false!g" \
+	cd $STAGEDIR
+
+	grep "define OW_NO_SSL" $TOPSRCDIR/src/common/OW_config.h > /dev/null 2>&1
+	if [ "$?" = "0" ]; then
+		EditConfig 's!http_server.https_port = \(.*\)!http_server.https_port = -1!g'
+	fi
+
+
+	# create some users for digest authentication.
+	DIGPASSFILE=$STAGEDIR/$OWSYSCONFDIR/openwbem/digest_auth.passwd
+	$STAGEDIR/$OWSBINDIR/owdigestgenpass -l test1 -f $DIGPASSFILE -p pass1
+	$STAGEDIR/$OWSBINDIR/owdigestgenpass -l test2 -f $DIGPASSFILE -p pass2
+	$STAGEDIR/$OWSBINDIR/owdigestgenpass -l test3 -f $DIGPASSFILE -p pass3
+
+	# create a password file for simple authentication
+	echo "test:test" > $STAGEDIR/$OWSYSCONFDIR/openwbem/simple_auth.passwd
+	echo "test1:pass1" >> $STAGEDIR/$OWSYSCONFDIR/openwbem/simple_auth.passwd
+	echo "test2:pass2" >> $STAGEDIR/$OWSYSCONFDIR/openwbem/simple_auth.passwd
+	echo "test3:pass3" >> $STAGEDIR/$OWSYSCONFDIR/openwbem/simple_auth.passwd
+
+	# set up the server SSL key+certificate
+	cp $TOPSRCDIR/test/acceptance/testfiles/hostkey+cert.pem \
+		$STAGEDIR/$OWSYSCONFDIR/openwbem/servercert.pem
+	cp $TOPSRCDIR/test/acceptance/testfiles/hostkey+cert.pem \
+		$STAGEDIR/$OWSYSCONFDIR/openwbem/serverkey.pem
+	
+	# for client driver and acl test.
+	InstallProvider $BUILDDIR/test/c++providers/method/libmethodtest.@lib_ext@
+	InstallProvider $BUILDDIR/test/c++providers/instance/libtestinstance.@lib_ext@
+	InstallProvider $BUILDDIR/test/c++providers/associator/libassociatortest.@lib_ext@
+	
+	if [ "$OWSYMLINKS" = "1" ]; then
+		SwitchToLinks
+	fi
+
+	# Fix the symlinks to point into $STAGEDIR
+	for link in $STAGEDIR/$OWLIBDIR/openwbem/services/* \
+			$STAGEDIR/$OWLIBDIR/openwbem/provifcs/* \
+			$STAGEDIR/$OWLIBDIR/openwbem/requesthandlers/* \
+			$STAGEDIR/$OWLIBDIR/openwbem/authentication/*; do
+		if [ -f $STAGEDIR/$OWLIBDIR/`basename $link` ]; then
+			rm -f $link
+			ln -sf $STAGEDIR/$OWLIBDIR/`basename $link` $link
+		fi
+	done
+		
+}
+
+#############################################################################
+EditConfig()
+{
+	OLDDIR=`pwd`
+	cd $STAGEDIR/$OWSYSCONFDIR/openwbem
+	cp openwbem.conf-t openwbem.conf-t~
+	sed -e "$1"  openwbem.conf-t~ > openwbem.conf-t
+	if cmp -s openwbem.conf-t~ openwbem.conf-t; then
+		$DIFF openwbem.conf-t~ openwbem.conf-t
+		ExitWithFail "EditConfig didn't work for $1"
+	fi
+	cd $OLDDIR
+}
+
+#############################################################################
+SwitchToLinks()
+{
+	cd $STAGEDIR
+	LISTTOSWITCH=`find . -perm -0111 ! -type d ! -type l`
+	for i in $LISTTOSWITCH; do
+		rm -f $i
+		BASENAME=`basename $i`
+		FNAME=`find $TOPSRCDIR -name $BASENAME -perm -0100 ! -type d ! -type l`
+		FNAME=$STAGEDIR/$FNAME
+		echo "Creating symbolic link: $i -> $FNAME"
+		ln -sf $FNAME $i || ExitWithFail "Link creation failed.  Check that you don't have the remants of a failed '$MAKE distcheck'"
+	done
+}
+
+#############################################################################
+CreateNameSpace() 
+{
+	CREATENS=$STAGEDIR/$OWBINDIR/owcreatenamespace
+	OWURL="owbinary.wbem://test1:pass1@localhost:$OWIPC/root"
+	$CREATENS -u $OWURL -n root/$1
+}
+
+###########################################################################
+WAIT_RESULTS=1
+WaitForLogResults()
+{
+  WAIT_RESULTS=1
+  if [ $# -lt 2 ]
+  then
+    echo "WaitForLogResults requires at least TWO arguments (string, max wait, [lines])."
+  fi
+  TEXT="$1"
+  MAX_WAIT=$2
+  LINES_TO_SEARCH=50
+
+  if [ $# -gt 2 ]; then
+    LINES_TO_SEARCH=$3
+  fi
+
+  echo "Waiting up to $MAX_WAIT seconds for \"$TEXT\"".
+
+  sleep 1
+  WAIT_LEFT=$MAX_WAIT
+  while [ $WAIT_LEFT -gt 0 ]
+  do
+    tail -n $LINES_TO_SEARCH $RESULTDIR/logfile 2>/dev/null | grep -- "$TEXT" >/dev/null 2>/dev/null
+    if [ $? -ne 0 ]; then
+      sleep 1
+      WAIT_LEFT=`expr $WAIT_LEFT - 1`
+    else
+      WAIT_RESULTS=0
+      SECONDS_WAITED=`expr $MAX_WAIT - $WAIT_LEFT`
+      echo "Found text (waited $SECONDS_WAITED seconds)."
+      break
+    fi
+  done
+  unset TEXT
+  unset MAX_WAIT
+  unset LINES_TO_SEARCH
+}
+
+#############################################################################
+StartDaemon()
+{
+	echo "Starting owcimomd..."
+	if [ "$OWVALGRIND" = "1" ]; then
+		valgrind \
+			-v \
+			--leak-check=yes \
+			--error-limit=no \
+			--num-callers=99 \
+			--logfile-fd=9 \
+			--suppressions=../OpenSSL.supp \
+			9>> valgrind.out \
+		$STAGEDIR/$OWSBINDIR/owcimomd -c \
+			$STAGEDIR/$OWSYSCONFDIR/openwbem/openwbem.conf-t \
+			>> $RESULTDIR/owcimomd.output 2>&1
+	else
+		$STAGEDIR/$OWSBINDIR/owcimomd -c \
+			$STAGEDIR/$OWSYSCONFDIR/openwbem/openwbem.conf-t \
+			>> $RESULTDIR/owcimomd.output 2>&1
+	fi
+
+	RVAL=$?
+	if [ $RVAL != "0" ]; then
+		echo "** Daemon failed to start! Exit code: $RVAL. Check"
+		echo "** $STAGEDIR/results/owcimomd.output "
+		echo "** for clues."
+		Exit 1
+	fi
+
+	PID=`cat $PIDFILE`
+	if kill -0 $PID ; then
+		:
+	else
+		echo "** Daemon failed to start!  Another instance could be running. Check"
+		echo "** $STAGEDIR/results/owcimomd.output "
+		echo "** for clues."
+		Exit 1
+	fi
+
+	echo "Waiting for daemon to initialize"
+	WaitForLogResults 'owcimomd is now running' 60
+	if [ $WAIT_RESULTS -eq 0 ]; then
+		echo "The daemon should now be running."
+	fi
+}
+
+#############################################################################
+RestartDaemon()
+{
+	echo "Restarting owcimomd..."
+	if [ ! "$OWTESTLIST" = "" ]; then
+		if [ ! -f $PIDFILE ]; then
+			echo "Daemon is not running!  Starting..."
+			StartDaemon
+			return
+		fi
+	fi
+	# the nightly cronjob on solaris doesn't seem to deliver the HUP, so do it
+	# the hard way.
+	if [ "x$HOSTTYPE" = "xsparc" ]; then
+		StopDaemon
+		StartDaemon
+	else
+		PID=`cat $PIDFILE`
+		if kill -1 $PID; then # HUP
+			:
+		else
+			echo "Failed to HUP daemon"
+			Exit 1
+		fi
+	fi
+	echo "Waiting for daemon to re-initialize"
+	WaitForLogResults 'owcimomd is now running' 60
+	if [ $WAIT_RESULTS -eq 0 ]
+        then
+          echo "The daemon should now be running."
+        fi
+	PID=`cat $PIDFILE`
+	if kill -0 $PID; then # Test if it's running
+		:
+	else
+		echo "Daemon failed to start"
+		Exit 1
+	fi
+}
+
+#############################################################################
+StopDaemon()
+{
+	echo "Shutting down daemon..."
+	if [ ! -f $PIDFILE ]; then
+		echo "Daemon is not running!"
+		return
+	fi
+	PID=`cat $PIDFILE`
+	if kill -0 $PID; then
+		:
+	else
+		echo "** Daemon is not running!  It may have crashed.  Check "
+		echo "** $STAGEDIR/results/logfile "
+		echo "** for clues."
+		rm -f $PIDFILE
+		Exit 1
+	fi
+	kill -15 $PID # TERM
+	WaitForLogResults 'owcimomd has shutdown' 60 5
+	if kill -0 $PID 2>/dev/null; then
+		kill -9 $PID # KILL
+		echo "** Daemon failed to terminate!!!  Check"
+		echo "** $STAGEDIR/results/logfile "
+		echo "** for clues."
+		rm -f $PIDFILE
+		Exit 1
+	fi
+	rm -f $PIDFILE
+}
+
+
+#############################################################################
+ExitWithFail()
+{
+	echo "** $@ **"
+	echo "** The acceptance test script has failed.  The line above"
+	echo "   should describe what part of the test failed."
+	echo " The results of the tests are in "
+	echo "	$STAGEDIR/results/"
+	echo " You can look here for clues about what went wrong. "
+	StopDaemon
+	Exit 1
+}
+
+#############################################################################
+ImportMOF()
+{
+	echo "ImportMOF $*"
+
+	MOFFILE=$1
+	OUT_FILE=$RESULTDIR/`basename $MOFFILE`.owmofc_output
+
+	$STAGEDIR/$OWBINDIR/owmofc --url http://test1:pass1@localhost:30926/ --create-namespaces \
+			$MOFFILE > $OUT_FILE 2>&1 || \
+			ExitWithFail "owmofc exited with error. Check $OUT_FILE."
+}
+
+#############################################################################
+RemoveMOF()
+{
+	echo "RemoveMOF $*"
+
+	MOFFILE=$1
+	OUT_FILE=$RESULTDIR/`basename $MOFFILE`.owmofc_output
+
+	$STAGEDIR/$OWBINDIR/owmofc --remove --url http://test1:pass1@localhost:30926/ --create-namespaces \
+			$MOFFILE > $OUT_FILE 2>&1 || \
+			ExitWithFail "owmofc exited with error. Check $OUT_FILE."
+}
+
+#############################################################################
+RunATest()
+{
+	TEST=$1
+	URL=$2
+	OUT_FILE=$RESULTDIR/$1.out
+	ARGS=$3
+
+	if [ ! -z "$OWTESTLIST" ] && echo $OWTESTLIST | grep -v -i \
+		$TEST >/dev/null 2>&1
+	then
+		return
+	fi
+
+	echo "Executing $TEST $URL $ARGS, saving output in " $OUT_FILE
+	$BUILDDIR/test/acceptance/progs/$TEST $URL $RESULTDIR/$TEST $ARGS \
+		> $OUT_FILE 2>&1 || \
+		ExitWithFail "$TEST failed with an error.  "
+
+	echo "$TEST Passed"
+}
+
+#############################################################################
+InstallProvider()
+{
+	PROVIDER=$1
+	
+	if [ "$STATIC_SERVICES" = "1" ]; then
+		$TOPSRCDIR/fake_library_creator.sh createProvider $PROVIDER
+		PROVIDER_DIR_NAME=`dirname $PROVIDER`
+		PROVIDER_BASE_NAME=`basename $PROVIDER .@lib_ext@`
+		cp $PROVIDER_DIR_NAME/$PROVIDER_BASE_NAME.fsl $STAGEDIR/$OWPKGLIBDIR/c++providers/$PROVIDER_BASE_NAME.@lib_ext@
+		rm $PROVIDER_DIR_NAME/$PROVIDER_BASE_NAME.fsl
+	else
+		ln -sf $PROVIDER $STAGEDIR/$OWPKGLIBDIR/c++providers/
+	fi
+}
+
+#############################################################################
+IAmRoot()
+{
+	if [ -n "$EUID" -a "$EUID" != "0" ] || [ -n "$UID" -a "$UID" != "0" ]; then
+		if  id | grep 'uid=0' >/dev/null 2>/dev/null; then
+			return 0
+		else
+			return 1
+		fi
+	fi
+}
+
+#############################################################################
+TestInstalledHeaders()
+{
+	HEADERDIR=$1
+	if [ ! -z "$OWTESTLIST" ] && echo $OWTESTLIST | grep -v -i \
+	 testHeaders >/dev/null 2>&1
+	then
+		return
+	fi
+
+	echo "Creating main() to test installed headers."
+	cd $STAGEDIR
+	OUTFILE=testInstalledHeaders.cpp
+	echo "" > $OUTFILE
+	for i in `ls $HEADERDIR/*`; do
+	  echo '#include "'"$i"'"' >> $OUTFILE
+	done
+	cat <<EOS >> $OUTFILE
+#include <iostream>
+int main()
+{
+	std::cout << "Executing Installed Headers Test main()" << std::endl;
+	return 0;
+}
+EOS
+	echo "Compiling..."
+   g++ -o testInstalledHeaders.o -c $OUTFILE -I$HEADERDIR -I/usr/local/ssl/include || ExitWithFail "Failed to compile headers" 
+#	echo "Linking..."
+#	g++ -L$STAGEDIR/$OWLIBDIR -lopenwbem -lowserver -o testInstalledHeaders \
+#		testInstalledHeaders.o || ExitWithFail "Failed to link header test"
+#	echo "Executing main()"
+#	./testInstalledHeaders
+	echo "Headers Passed"
+}
+
+#############################################################################
+TestInstalledHeadersOneByOne()
+{
+	HEADERDIR=$1
+	CONFIGHEADER=$2
+	if [ ! -z "$OWTESTLIST" ] && echo $OWTESTLIST | grep -v -i \
+		testIndividualHeaders >/dev/null 2>&1
+	then
+		return
+	fi
+
+	cd $STAGEDIR
+	echo "Testing header inclusion one-by-one..."
+	rm -rf compilation
+	mkdir compilation
+	cd compilation
+	INCLUSION_FAIL_LIST=""
+
+	for i in `ls $HEADERDIR/*`; do
+		EXECFILE=`basename $i`
+		OUTFILE=$EXECFILE.cpp
+		echo '#include "'"$CONFIGHEADER"'"' >> $OUTFILE
+		echo '#include "'"$EXECFILE"'"' >> $OUTFILE
+		cat <<EOS >> $OUTFILE
+#include <iostream>
+int main(int argc, char* argv[])
+{
+	char* execName = argv[0] + 2;
+	std::cout << execName << " Passed!" << std::endl;
+	return 0;
+}
+EOS
+		echo "$EXECFILE:."
+		g++ -o $EXECFILE.o -I$HEADERDIR -I/usr/local/ssl/include -c $OUTFILE \
+			|| ExitWithFail "Failed to compile header test"
+		echo "."
+
+		# check for inclusion of OW_config.h
+		if [ ! "$EXECFILE" = $CONFIGHEADER ] \
+			&& [ ! "$EXECFILE" = "config.h" ] \
+			&& [ ! "$EXECFILE" = "OW_MemTracer.hpp" ];
+		then
+			grep $CONFIGHEADER $i > /dev/null
+			if [ ! "$?" = "0" ]; then
+				echo " ##### Doesn't include \""$CONFIGHEADER"\"!"
+				INCLUSION_FAIL_LIST="$INCLUSION_FAIL_LIST $EXECFILE"
+			fi
+
+			grep "Copyright" $i > /dev/null
+			if [ ! "$?" = "0" ]; then
+				echo " ##### Doesn't have a Copyright!"
+				INCLUSION_FAIL_LIST="$INCLUSION_FAIL_LIST $EXECFILE"
+			fi
+
+			grep "[Aa]uthor" $i > /dev/null
+			if [ ! "$?" = "0" ]; then
+				echo " ##### Doesn't have an @author!"
+				INCLUSION_FAIL_LIST="$INCLUSION_FAIL_LIST $EXECFILE"
+			fi
+		fi
+		echo "."
+	done
+
+	if [ ! "$INCLUSION_FAIL_LIST" = "" ]; then
+	echo "FAIL!  ## The following headers failed the test:"
+		for j in $INCLUSION_FAIL_LIST; do
+			echo "   ###   $j"
+		done
+		ExitWithFail
+	fi
+	cd ..		   
+	echo 'Header inclusion (one-by-one) passed!' 
+}
+
+#############################################################################
+Diff()
+{
+	DIFF_FILE1=$1
+	DIFF_FILE2=$2
+	if [ "$NODIFF" = "0" ]; then
+		echo "$DIFF $TOPSRCDIR/test/acceptance/testfiles/$DIFF_FILE1 \
+			$RESULTDIR/$DIFF_FILE2"
+		$DIFF  $TOPSRCDIR/test/acceptance/testfiles/$DIFF_FILE1 \
+			 $RESULTDIR/$DIFF_FILE2 || \
+			 ExitWithFail "$3"
+	fi
+}
+
+#############################################################################
+TestSuite()
+{
+	if [ ! -z "$OWTESTLIST" ] && echo $OWTESTLIST | grep -v -i \
+		testSuite >/dev/null 2>&1
+	then
+		return
+	fi
+
+	URL=$1
+	DIFF_FILE=$2
+	DIFF_FILE2=$3
+
+	if [ "$TESTMOFDONE" = "0" ]; then
+		TESTMOFDONE=1
+		echo "Importing mof files for test"
+		$STAGEDIR/$OWBINDIR/owmofc -u $URL -n /root/testsuite \
+			$TOPSRCDIR/test/c++providers/method/OW_MethodProviderTest.mof || \
+			ExitWithFail "TestSuite: MOF compiler exited with error."
+		$STAGEDIR/$OWBINDIR/owmofc -u $URL -n /root/testsuite \
+			$TOPSRCDIR/test/c++providers/associator/OW_AssociatorTest.mof || \
+			ExitWithFail "TestSuite: MOF compiler exited with error."
+		$STAGEDIR/$OWBINDIR/owmofc -u $URL -n /root/testsuite \
+			$TOPSRCDIR/test/c++providers/instance/testinstance.mof || \
+			ExitWithFail "TestSuite: MOF compiler exited with error."
+		$STAGEDIR/$OWBINDIR/owmofc -u $URL -n /root/testsuite \
+			$TOPSRCDIR/test/acceptance/testfiles/testsuite.mof || \
+			ExitWithFail "TestSuite: MOF compiler exited with error."
+	fi
+
+	echo "Executing test suite, saving output in " $RESULTDIR/$DIFF_FILE
+	$BUILDDIR/test/acceptance/progs/owcimclientcl $URL $RESULTDIR/testsuite \
+		> $RESULTDIR/$DIFF_FILE 2>&1 || \
+		ExitWithFail "TestSuite: owcimclientcl failed with an error.  "
+ 
+	MSTR_FILE=$TOPSRCDIR/test/acceptance/testfiles/$DIFF_FILE2$OWDIFFSUFFIX
+	if [ ! -f $MSTR_FILE -a "x$OWLONGTEST" = "x1" ]; then
+		echo "***** Not comparing with expected output.  This is"
+		echo "***** Normal if OWLONGTEST and not running from CVS"
+	else
+		Diff $DIFF_FILE2$OWDIFFSUFFIX $DIFF_FILE \
+			"TestSuite: Diff test for owcimclientcl failed."
+	fi
+
+	echo "Testsuite Passed"
+}
+
+#############################################################################
+TestCIMExceptions()
+{
+	if [ ! -z "$OWTESTLIST" ] && echo $OWTESTLIST | grep -v -i \
+		cimexceptions >/dev/null 2>&1
+	then
+		return
+	fi
+
+	#RestartDaemon
+
+	URL=$1
+	OUT_FILE=testCIMExceptions.out
+
+	echo "Executing test suite, saving output in " $RESULTDIR/$OUT_FILE
+	$BUILDDIR/test/acceptance/progs/testCIMExceptions $URL $RESULTDIR/testCIMExceptions \
+		> $RESULTDIR/$OUT_FILE 2>&1 || \
+		ExitWithFail "TestCIMExceptions: testCIMExceptions failed with an error.  "
+
+	echo "Testsuite Passed"
+}
+
+#############################################################################
+TestNamespaces()
+{
+	if [ ! -z "$OWTESTLIST" ] && echo $OWTESTLIST | grep -v -i \
+		namespaces >/dev/null 2>&1
+	then
+		return
+	fi
+
+	#RestartDaemon
+
+	URL=$1
+	OUT_FILE=testNamespaces.out
+
+	echo "Executing test suite, saving output in " $RESULTDIR/$OUT_FILE
+	$BUILDDIR/test/acceptance/progs/testNamespaces $URL $RESULTDIR/testNamespaces \
+		> $RESULTDIR/$OUT_FILE 2>&1 || \
+		ExitWithFail "TestNamespaces: testNamespaces failed with an error.  "
+
+	echo "Testsuite Passed"
+}
+
+#############################################################################
+TestWQL()
+{
+	if [ ! -z "$OWTESTLIST" ] && echo $OWTESTLIST | grep -v -i \
+		wql >/dev/null 2>&1
+	then
+		return
+	fi
+
+	#RestartDaemon
+	echo "Executing wql test suite, saving output in " $RESULTDIR/wqlTest.out
+	$BUILDDIR/test/acceptance/progs/wqlTest1 owbinary.wbem://test1:pass1@localhost:$OWIPC/ \
+		> $RESULTDIR/wqlTest.out 2>&1 || \
+		ExitWithFail "WQL test exited with error"
+
+	Diff wqlTest.out wqlTest.out "WQL test: Diff test for WQL failed."
+
+	echo "Executing wql test suite 2, saving output in " $RESULTDIR/wqlTest2.out
+	$BUILDDIR/test/acceptance/progs/wqlTest2 \
+		> $RESULTDIR/wqlTest2.out 2>&1 || \
+		ExitWithFail "WQL test 2 exited with error"
+
+	Diff wqlTest2.out wqlTest2.out "WQL test 2: Diff test for WQL failed."
+	echo "WQL Testsuite Passed"
+}
+
+#############################################################################
+TestMofinstalltool()
+{
+	set -x
+	if [ ! -z "$OWTESTLIST" ] && echo $OWTESTLIST | grep -v -i \
+		mofinstalltool >/dev/null 2>&1
+	then
+		return
+	fi
+
+	RESULTS="$RESULTDIR/owmofinstalltooltest.out"
+	TEST_COMMAND="$BUILDDIR/test/acceptance/progs/owmofinstalltooltest/owmofinstalltooltest"
+
+	echo "Executing mofinstalltool test suite, saving output in " $RESULTS
+	## FIXME: command line parameters.
+	echo "STAGEDIR is $STAGEDIR"
+	$TEST_COMMAND $STAGEDIR $STAGEDIR/$OWSYSCONFDIR/openwbem/openwbem.conf-t 2>&1 $RESULTS || \
+		ExitWithFail "$TEST_COMMAND exited with error(s) . See $RESULTS ."
+
+	echo "\$? $?"
+	# Diff owmofinstalltooltest.out owmofinstalltooltest.out "FAIL: owmofinstalltooltest output differs from expected."
+	# echo "owmofinstalltool Testsuite Passed."
+}
+
+#############################################################################
+TestIndications()
+{
+	if [ ! -z "$OWTESTLIST" ] && echo $OWTESTLIST | grep -v -i \
+		indications >/dev/null 2>&1
+	then
+		return
+	fi
+
+	#create links to the test indication providers so they will be loaded
+	InstallProvider $BUILDDIR/test/c++providers/indication/libindicationtest1.@lib_ext@
+	InstallProvider $BUILDDIR/test/c++providers/indication/libindicationtest2.@lib_ext@
+
+	# turn on indications
+	EditConfig "s!owcimomd.disable_indications = .*!owcimomd.disable_indications = false!g"
+
+	RestartDaemon
+
+	# import the mof
+	$STAGEDIR/$OWBINDIR/owmofc -u owbinary.wbem://test1:pass1@localhost:$OWIPC/ -n /root/testsuite \
+		$TOPSRCDIR/schemas/cim28/CIM_Event28.mof || \
+		ExitWithFail "indication test: owmofc exited with error."
+
+	$STAGEDIR/$OWBINDIR/owmofc -u owbinary.wbem://test1:pass1@localhost:$OWIPC/ -n /root/testsuite \
+		$TOPSRCDIR/test/acceptance/testfiles/indicationTest.mof || \
+		ExitWithFail "indication test: owmofc exited with error."
+
+	echo "Executing indication test suite, saving output in " $RESULTDIR/indicationTest.out
+	$BUILDDIR/test/acceptance/progs/cimlistener http://test1:pass1@localhost:30926 \
+		> $RESULTDIR/indicationTest.out 2>&1 || \
+		ExitWithFail "Indication test: cimlistener exited with error"
+
+	echo "Executing indication test suite, saving output in " $RESULTDIR/indicationTest.out
+	$BUILDDIR/test/acceptance/progs/cimlistener owbinary.wbem://test1:pass1@localhost:$OWIPC \
+		> $RESULTDIR/indicationTest.out 2>&1 || \
+		ExitWithFail "Indication test: cimlistener exited with error"
+
+	echo "Indication Testsuite Passed"
+
+	# TODO: delete the mof
+
+	# turn off indications
+	rm -f $STAGEDIR/$OWPKGLIBDIR/c++providers/libindicationtest1.@lib_ext@ 
+	rm -f $STAGEDIR/$OWPKGLIBDIR/c++providers/libindicationtest2.@lib_ext@ 
+
+	EditConfig "s!owcimomd.disable_indications = .*!owcimomd.disable_indications = true!g"
+
+	RestartDaemon
+
+}
+
+
+#############################################################################
+TestMultiReq()
+{
+	if [ ! -z "$OWTESTLIST" ] && echo $OWTESTLIST | grep -v -i \
+		multiReq >/dev/null 2>&1
+	then
+		return
+	fi
+
+	echo "Testing Multiple Operations Support..."
+
+	# make sure we can shutdown and restart
+	StopDaemon
+	StartDaemon
+
+	DIFF_FILE="MultiReqResp.xml"
+
+	$BUILDDIR/test/acceptance/progs/fakeclient http://test1:pass1@localhost:30926 \
+		$TOPSRCDIR/test/acceptance/testfiles/MultiReqInput.xml > \
+			$RESULTDIR/$DIFF_FILE || \
+			ExitWithFail "MultiReq test: fakeclient exited with error."
+
+	Diff $DIFF_FILE $DIFF_FILE "MultiReq test: Diff failed."
+
+	echo "Multiple Operations Support Passed."
+
+	grep "define OW_NO_SSL" $TOPSRCDIR/src/common/OW_config.h > /dev/null 2>&1
+	if [ ! "$?" = "0" ]; then
+		echo "Testing HTTPS support..."
+
+		$BUILDDIR/test/acceptance/progs/fakeclient https://test1:pass1@localhost:30927 \
+			$TOPSRCDIR/test/acceptance/testfiles/MultiReqInput.xml > \
+				$RESULTDIR/$DIFF_FILE || \
+				ExitWithFail "HTTPS test: fakeclient exited with error."
+
+		echo "Comparing output with expected response..."
+		Diff $DIFF_FILE $DIFF_FILE "HTTPS test: Diff failed."
+	else
+		echo "** OpenWBEM was not built with HTTPS (SSL) support **"
+	fi
+	
+	echo "HTTPS Test Passed"
+}
+
+#############################################################################
+CanRunLocalAuthTest()
+{
+	if IAmRoot; then
+		return 0
+	fi
+
+	# it'll fail unless owlocalhelper is setuid root and the current user is owcimomd
+	if [ -u $OWLIBEXECDIR/openwbem/owlocalhelper ] && [ $USER = "owcimomd" ]; then
+		return 0
+	fi
+
+	return 1
+}
+
+#############################################################################
+TestAuth()
+{
+	if [ ! -z "$OWTESTLIST" ] && echo $OWTESTLIST | grep -v -i \
+		Auth >/dev/null 2>&1
+	then
+		return
+	fi
+
+	echo "TestAuth"
+
+	# enable allow_anonymous
+	EditConfig "s!owcimomd.allow_anonymous = .*!owcimomd.allow_anonymous = true!g" 
+	
+	echo "1. Testing Allow Anonymous"
+	RestartDaemon
+	echo "fakeclient http://localhost:30926"
+	$BUILDDIR/test/acceptance/progs/fakeclient http://localhost:30926 \
+		>> $RESULTDIR/AuthTest.out 2>&1
+	[ "$?" = "0" ] || ExitWithFail "1. Allow Anonymous Failed"
+
+	# disable allow_anonymous
+	EditConfig "s!owcimomd.allow_anonymous = true!owcimomd.allow_anonymous = false!g" 
+
+	# switch from digest to simple
+	#EditConfig "s!http_server.use_digest = true!http_server.use_digest = false!g" 
+	echo "2. Testing Simple Authentication Module and GetFeatures"
+	RestartDaemon
+	echo "fakeclient http://localhost:30926"
+	$BUILDDIR/test/acceptance/progs/fakeclient http://localhost:30926 \
+		>> $RESULTDIR/AuthTest.out 2>&1
+	RVAL=$?
+	[ "$RVAL" = "2" ] || \
+	ExitWithFail "2. Authentication test (simple): fakeclient return wrong code. $RVAL != 2"
+
+	echo "fakeclient http://bad:no_good@localhost:30926"
+	$BUILDDIR/test/acceptance/progs/fakeclient http://bad:no_good@localhost:30926 \
+		 >> $RESULTDIR/AuthTest.out 2>&1
+	RVAL=$?
+	[ "$RVAL" = "1" ] || \
+	ExitWithFail "3. Authentication test (simple): fakeclient return wrong code. $RVAL != 1"
+
+	echo "fakeclient http://test:test@localhost:30926"
+	$BUILDDIR/test/acceptance/progs/fakeclient http://test:test@localhost:30926 \
+		 > $RESULTDIR/GetFeatures.out 2>&1 
+	RVAL=$?
+	cat $RESULTDIR/GetFeatures.out >> $RESULTDIR/AuthTest.out
+	[ "$RVAL" = "0" ] || \
+	ExitWithFail "4. Authentication test (simple): fakeclient return wrong code. $RVAL != 0"
+
+	Diff GetFeatures.out GetFeatures.out "Authentication test (simple): Diff failed."
+
+	echo "Simple Authentication module and GetFeatures Passed"
+	
+	if grep "define OW_DISABLE_DIGEST" $TOPSRCDIR/src/common/OW_config.h > /dev/null 2>&1; then
+		echo "OpenWBEM was not build with Digest support"
+	else
+		EditConfig "s!http_server.use_digest = false!http_server.use_digest = true!g" 
+		echo "5. Testing Digest Authentication"
+		RestartDaemon
+		
+		echo "fakeclient http://localhost:30926"
+		$BUILDDIR/test/acceptance/progs/fakeclient http://localhost:30926 \
+			> $RESULTDIR/AuthTest.out 2>&1
+		RVAL=$?
+		[ "$RVAL" = "2" ] || \
+		ExitWithFail "5. Authentication test (digest): fakeclient return wrong code. $RVAL != 2"
+
+		echo "fakeclient http://bad:no_good@localhost:30926"
+		$BUILDDIR/test/acceptance/progs/fakeclient http://bad:no_good@localhost:30926 \
+			 >> $RESULTDIR/AuthTest.out 2>&1
+		RVAL=$?
+		[ "$RVAL" = "1" ] || \
+		ExitWithFail "6. Authentication test (digest): fakeclient return wrong code. $RVAL != 1"
+
+		echo "fakeclient http://test:test@localhost:30926"
+		$BUILDDIR/test/acceptance/progs/fakeclient http://test:test@localhost:30926 \
+			 > $RESULTDIR/GetFeatures.out 2>&1
+		RVAL=$?
+		[ "$RVAL" = "1" ] || \
+		ExitWithFail "7. Authentication test (digest): fakeclient return wrong code. $RVAL != 1"
+
+		echo "fakeclient http://test1:pass1@localhost:30926"
+		$BUILDDIR/test/acceptance/progs/fakeclient http://test1:pass1@localhost:30926 \
+			 > $RESULTDIR/GetFeatures.out 2>&1
+		RVAL=$?
+		[ "$RVAL" = "0" ] || \
+		ExitWithFail "8. Authentication test (digest): fakeclient return wrong code. $RVAL != 0"
+
+		echo "fakeclient http://test2:pass2@localhost:30926"
+		$BUILDDIR/test/acceptance/progs/fakeclient http://test2:pass2@localhost:30926 \
+			 > $RESULTDIR/GetFeatures.out 2>&1
+		RVAL=$?
+		[ "$RVAL" = "0" ] || \
+		ExitWithFail "9. Authentication test (digest): fakeclient return wrong code. $RVAL != 0"
+
+		Diff GetFeatures.out GetFeatures.out "Authentication test (digest): Diff failed."
+		echo "Digest Authentication passed"
+	fi
+
+	if grep "define OW_HAVE_PAM" $TOPSRCDIR/src/common/OW_config.h > /dev/null 2>&1; then
+		# just start with the pam authentication module to make sure it can be loaded.
+		EditConfig "s!owcimomd.authentication_module\(.*\)simple\(.*\)!owcimomd.authentication_module\1pam\2!g"
+		if grep "define OW_DISABLE_DIGEST" $TOPSRCDIR/src/common/OW_config.h > /dev/null 2>&1; then
+			:
+		else
+			EditConfig "s!http_server.use_digest = true!http_server.use_digest = false!g" 
+		fi
+		RestartDaemon
+		
+		# if we have a pam username/password, then try it out
+		if [ ! -z "$OWPAMUSERNAME" ] && [ ! -z "$OWPAMPASS" ]; then
+			echo "fakeclient http://${OWPAMUSERNAME}:${OWPAMPASS}@localhost:30926"
+			$BUILDDIR/test/acceptance/progs/fakeclient http://${OWPAMUSERNAME}:${OWPAMPASS}@localhost:30926 \
+				 >> $RESULTDIR/AuthTest.out 2>&1
+			RVAL=$?
+			[ "$RVAL" = "0" ] || \
+			ExitWithFail "10. Authentication test (pam): fakeclient return wrong code. $RVAL != 0"
+		fi
+		# switch back from pam
+		EditConfig "s!owcimomd.authentication_module\(.*\)pam\(.*\)!owcimomd.authentication_module\1simple\2!g" \
+		EditConfig "s!http_server.use_digest = false!http_server.use_digest = true!g" 
+		RestartDaemon
+	else
+		echo "OpenWBEM was not build with pam support"
+	fi
+
+	# enable http_server.allow_local_authentication
+	# This test can only work if we're root or owlocalhelper is setuid root.
+	# Also, because of the security sensitive nature of owlocalhelper, it has to be installed in it's final location.
+	# owcimomd will only run it from there.
+	if CanRunLocalAuthTest; then
+		EditConfig "s!http_server.allow_local_authentication = false!http_server.allow_local_authentication = true!g" 
+		
+		echo "11. Testing Local Authentication"
+		RestartDaemon
+		echo "fakeclient http://localhost:30926"
+		$BUILDDIR/test/acceptance/progs/fakeclient http://localhost:30926 \
+			> $RESULTDIR/AuthTest.local.out 2>$RESULTDIR/AuthTest.local.err
+		[ "$?" = "0" ] || ExitWithFail "11. Local Authentication Failed"
+
+		# disable http_server.allow_local_authentication
+		EditConfig "s!http_server.allow_local_authentication = true!;http_server.allow_local_authentication = false!g" 
+		RestartDaemon
+	fi
+
+}
+
+#############################################################################
+TestACL()
+{
+	if [ ! -z "$OWTESTLIST" ] && echo $OWTESTLIST | grep -v -i \
+		ACL >/dev/null 2>&1
+	then
+		return
+	fi
+
+	echo "TestACL"
+
+	# turn on the authorizer
+	EditConfig "s!;owcimomd.authorization2_lib = \(.*\)!owcimomd.authorization2_lib = \1!g"
+
+	echo "Setting up ACL test..."
+	EditConfig "s!;owcimomd.ACL_superuser =.*!owcimomd.ACL_superuser = test1!g" 
+
+	ACLPROG=$BUILDDIR/test/acceptance/progs/aclTest
+	WQLEXEC=$STAGEDIR/$OWBINDIR/owexecwql
+	SUACLURL="owbinary.wbem://test1:pass1@localhost:$OWIPC/"
+	RestartDaemon
+	echo "Importing MOF to enable ACLs..."
+	CreateNameSpace "security"
+	CreateNameSpace "acltest"
+	$STAGEDIR/$OWBINDIR/owmofc -u $SUACLURL -n /root \
+		$TOPSRCDIR/mof/OpenWBEM_Acl1.0.mof || 
+		ExitWithFail "ACL test: MOF compiler exited with error"
+	$STAGEDIR/$OWBINDIR/owmofc -u $SUACLURL -n /root/acltest \
+		$TOPSRCDIR/test/acceptance/testfiles/CIM_Min25.mof || \
+		ExitWithFail "ACL test: MOF compiler exited with error"
+	$STAGEDIR/$OWBINDIR/owmofc -u $SUACLURL -n /root/acltest \
+		$TOPSRCDIR/test/acceptance/testfiles/ACLTest.mof || \
+		ExitWithFail "ACL test: MOF compiler exited with error"
+	$STAGEDIR/$OWBINDIR/owmofc -u $SUACLURL -n /root/acltest \
+		$TOPSRCDIR/test/c++providers/method/OW_MethodProviderTest.mof || \
+		ExitWithFail "ACL test: MOF compiler exited with error"
+
+	echo "Verifying superuser access..."
+	$ACLPROG $SUACLURL rw || \
+		ExitWithFail " ACL test: SuperUser Access Failed."
+
+	echo "Verifying superuser disabled..."
+	EditConfig "s!owcimomd.ACL_superuser.*!;owcimomd.ACL_superuser = test1!g" 
+
+	RestartDaemon
+	$ACLPROG $SUACLURL 0 || \
+		ExitWithFail "ACL test: SuperUser Disabled failed."
+
+	echo "re-enabling superuser access..."
+
+	EditConfig "s!;owcimomd.ACL_superuser =.*!owcimomd.ACL_superuser = test1!g" 
+	RestartDaemon
+
+	echo "Testing read-only ACL..."
+	$WQLEXEC $SUACLURL /root/security 'insert into OpenWBEM_UserACL (nspace, username, capability) values ("root/acltest", "test2", "r")' 
+	CREDS="test2:pass2"
+	ACLURL="http://$CREDS@localhost:$OWIPC"
+	$ACLPROG $ACLURL r || \
+		ExitWithFail "ACL test (user): Read-Only test failed."
+
+	echo "Testing write-only ACL..."
+	$WQLEXEC $SUACLURL /root/security 'update OpenWBEM_UserACL SET capability="w" WHERE username="test2"'
+	$ACLPROG $ACLURL w || \
+		ExitWithFail "ACL test (user): Write-Only test failed."
+
+	echo "Testing read-write access..."
+	$WQLEXEC $SUACLURL /root/security 'update OpenWBEM_UserACL SET capability="rw" WHERE username="test2"'
+	$ACLPROG $ACLURL rw || \
+		ExitWithFail "ACL test (user): Read-Write test failed."
+
+	echo "Testing no access..."
+	$WQLEXEC $SUACLURL /root/security 'DELETE FROM OpenWBEM_UserACL WHERE username="test2"'
+	$ACLPROG $ACLURL 0 || \
+		ExitWithFail "ACL test (user): no access test failed."
+
+	echo "Testing namespace ACL read-only..."
+	CREDS="test3:pass3"
+	ACLURL="owbinary.wbem://$CREDS@localhost:30926"
+	$WQLEXEC $SUACLURL /root/security 'insert into OpenWBEM_NamespaceACL (nspace, capability) values ("root/acltest", "r")'
+	$ACLPROG $ACLURL r || \
+		ExitWithFail "ACL test (namespace): Read-Only test failed."
+
+	echo "Testing namespace ACL write-only..."
+	$WQLEXEC $SUACLURL /root/security 'update OpenWBEM_NamespaceACL SET capability="w" WHERE nspace="root/acltest"'
+	$ACLPROG $ACLURL w || \
+		ExitWithFail "ACL test (namespace): Write-Only test failed."
+
+	echo "Testing namespace ACL read-write..."
+	$WQLEXEC $SUACLURL /root/security 'update OpenWBEM_NamespaceACL SET capability="rw" WHERE nspace="root/acltest"'
+	$ACLPROG $ACLURL rw || \
+		ExitWithFail "ACL test (namespace): Read-Write test failed."
+
+	echo "Testing namespace ACL with no access..."
+	$WQLEXEC $SUACLURL /root/security 'DELETE FROM OpenWBEM_NamespaceACL WHERE nspace="root/acltest"'
+	$ACLPROG $ACLURL 0 || \
+		ExitWithFail "ACL test (namespace): no access test failed."
+
+	# turn of the authorizer
+	EditConfig "s!owcimomd.authorization2_lib = \(.*\)!;owcimomd.authorization2_lib = \1!g"
+
+}
+
+#############################################################################
+TestMof()
+{
+	if [ ! -z "$OWTESTLIST" ] && echo $OWTESTLIST | grep -v -i \
+		MOF >/dev/null 2>&1
+	then
+		return
+	fi
+
+	echo "TestMof"
+
+	CreateNameSpace testsuite
+	$STAGEDIR/$OWBINDIR/owmofc -u owbinary.wbem://test1:pass1@localhost:$OWIPC/ -n /root/testsuite \
+			$TOPSRCDIR/schemas/cim28/CIM_Core28.mof || \
+			ExitWithFail "MOF compiler test: owmofc exited with error."
+	$STAGEDIR/$OWBINDIR/owmofc -u owbinary.wbem://test1:pass1@localhost:$OWIPC/ -n /root/testsuite \
+		$TOPSRCDIR/test/acceptance/testfiles/wqlTest.mof || \
+		ExitWithFail "MOF compiler test: MOF compiler exited with error"
+	mkdir $STAGEDIR/owmofc_test
+	$STAGEDIR/$OWBINDIR/owmofc -d $STAGEDIR/owmofc_test \
+		-c -n /root/testsuite \
+		$TOPSRCDIR/schemas/cim28/CIM_Core28.mof || \
+		ExitWithFail "MOF compiler test: owmofc -d exited with error."
+	rm -r $STAGEDIR/owmofc_test
+}
+
+#############################################################################
+SetupInteropSchema()
+{
+	if [ ! -z "$OWTESTLIST" ] && echo $OWTESTLIST | grep -v -i \
+		interop >/dev/null 2>&1
+	then
+		return
+	fi
+
+	echo "SetupInteropSchema"
+
+	$STAGEDIR/$OWBINDIR/owmofc -u owbinary.wbem://test1:pass1@localhost:30926/ -n root \
+			$TOPSRCDIR/schemas/cim28/CIM_Core28.mof || \
+			ExitWithFail "Setup Interop Schema test: owmofc exited with error."
+	$STAGEDIR/$OWBINDIR/owmofc -u owbinary.wbem://test1:pass1@localhost:30926/ -n root \
+                        $TOPSRCDIR/schemas/cim28/CIM_Event28.mof || \
+			ExitWithFail "Setup Interop Schema test: owmofc exited with error."
+	$STAGEDIR/$OWBINDIR/owmofc -u owbinary.wbem://test1:pass1@localhost:30926/ -n root \
+                        $TOPSRCDIR/schemas/cim28/Physical28_Package.mof || \
+			ExitWithFail "Setup Interop Schema test: owmofc exited with error."
+	$STAGEDIR/$OWBINDIR/owmofc -u owbinary.wbem://test1:pass1@localhost:30926/ -n root \
+                        $TOPSRCDIR/schemas/cim28/System28_SystemElements.mof || \
+			ExitWithFail "Setup Interop Schema test: owmofc exited with error."
+	$STAGEDIR/$OWBINDIR/owmofc -u owbinary.wbem://test1:pass1@localhost:$OWIPC/ -n root \
+			$TOPSRCDIR/schemas/cim28/CIM_Interop28.mof || \
+			ExitWithFail "Setup Interop Schema test: owmofc exited with error."
+	$STAGEDIR/$OWBINDIR/owmofc -u owbinary.wbem://test1:pass1@localhost:$OWIPC/ -n root \
+			$TOPSRCDIR/mof/OpenWBEM_Interop.mof || \
+			ExitWithFail "Setup Interop Schema test: owmofc exited with error."
+}
+
+#############################################################################
+TestMisc()
+{
+	if [ ! -z "$OWTESTLIST" ] && echo $OWTESTLIST | grep -v -i \
+		misc >/dev/null 2>&1
+	then
+		return
+	fi
+
+	URL=$1
+	OUT_FILE=testMisc.out
+
+	echo "Executing misc test suite, saving output in " $RESULTDIR/$OUT_FILE
+	$BUILDDIR/test/acceptance/progs/testMisc $URL $RESULTDIR/testMisc \
+		> $RESULTDIR/$OUT_FILE 2>&1 || \
+		ExitWithFail "TestMisc: testMisc failed with an error.  "
+
+	echo "Testsuite Passed"
+}
+
+#############################################################################
+TestEmbeddedCIMOM()
+{
+	OUT_FILE=testEmbedded.out
+	echo "Executing Embedded CIMOM test, saving output in " $RESULTDIR/$OUT_FILE
+	$BUILDDIR/test/acceptance/progs/testEmbeddedCIMOM \
+			-d -c $STAGEDIR/$OWSYSCONFDIR/openwbem/openwbem.conf-t \
+			> $RESULTDIR/$OUT_FILE 2>&1 \
+			|| ExitWithFail "TestEmbeddedCIMOM: failed with an error."
+}
+
+#############################################################################
+TestHammer()
+{
+	if [ ! -z "$OWTESTLIST" ] && echo $OWTESTLIST | grep -v -i \
+		hammer >/dev/null 2>&1
+	then
+		return
+	fi
+
+	URL=$1
+	OUT_FILE=hammerClient.out
+
+	echo "Executing hammerClient $URL single, saving output in " $RESULTDIR/$OUT_FILE
+	$BUILDDIR/test/acceptance/progs/hammerClient $URL single once collect \
+		> $RESULTDIR/$OUT_FILE 2>&1 || \
+		ExitWithFail "TestHammer: hammerClient failed with an error.  "
+
+	echo "Executing hammerClient $URL pool=10, saving output in " $RESULTDIR/$OUT_FILE
+	$BUILDDIR/test/acceptance/progs/hammerClient $URL pool=10 once collect \
+		> $RESULTDIR/$OUT_FILE 2>&1 || \
+		ExitWithFail "TestHammer: hammerClient failed with an error.  "
+
+	echo "Testsuite Passed"
+}
+
+#############################################################################
+TestSecondaryInstanceProvider()
+{
+	InstallProvider $BUILDDIR/test/c++providers/secondary_instance/libsecondaryinstancetest1.@lib_ext@
+	InstallProvider $BUILDDIR/test/c++providers/secondary_instance/libsecondaryinstancetest2.@lib_ext@
+	RestartDaemon
+	ImportMOF $TOPSRCDIR/test/c++providers/secondary_instance/SecondaryInstanceTest.mof
+	RunATest testSecondaryInstanceProviders "http://test1:pass1@localhost:30926"
+	RemoveMOF $TOPSRCDIR/test/c++providers/secondary_instance/SecondaryInstanceTest.mof
+}
+
+#############################################################################
+TestSocketCat()
+{
+	for inputFile in $TOPSRCDIR/test/acceptance/testfiles/socketCat/*.in; do
+		if [ "x`basename $inputFile`" = "xMakefile.in" ]; then
+			continue
+		fi                
+		REGEX_LIST_FILE=${inputFile%in}regexlist
+		REGEX_COUNT=`wc -l < $REGEX_LIST_FILE`
+		MATCH_COUNT=`$BUILDDIR/test/acceptance/progs/socketCat $* < $inputFile | grep -f $REGEX_LIST_FILE | wc -l`
+		if [ $MATCH_COUNT -lt $REGEX_COUNT ]; then
+			ExitWithFail "TestSocketCat: didn't get expected output for $inputFile"
+		fi
+	done
+
+}
+
+#############################################################################
+CoreCheck()
+{
+	CORES=`ls $STAGEDIR/core* 2> /dev/null`
+	if [ ! "$CORES" = "" ]; then
+		echo "Detected core file(s)!: $CORES"
+		exit 1
+	fi
+}
+
+#############################################################################
+#GatherResults()
+#{
+#	OLDDIR=`pwd`
+#	cd $STAGEDIR
+#	rm -f testresults.tar.gz
+#	tar cf testresults.tar results
+#	gzip testresults.tar
+#	cd $OLDDIR
+#}
+
+#############################################################################
+Exit()
+{
+#	GatherResults
+	CoreCheck
+	exit $1
+}
+
+
+#############################################################################
+## MAIN starts here.
+#############################################################################
+
+#disable OW_MemTracer so diffs will work.
+OW_MEM_DISABLE=1
+export OW_MEM_DISABLE
+
+if [ "z$OWLONGTEST" = "z1" ]; then
+	OWDIFFSUFFIX=".long"
+fi
+
+if [ "$OWNODIFF" = "1" ]; then
+	NODIFF=1
+else
+	NODIFF=0
+fi
+
+SYSNAME=`uname -s`
+if [ $SYSNAME = "Linux" ]; then
+	# allow core file dumps
+	ulimit -c unlimited
+	# turn on symlinks
+	OWSYMLINKS=1
+	# This causes glibc to abort() if we do anything funky with memory.
+	MALLOC_CHECK_=2
+	export MALLOC_CHECK_
+fi
+
+STAGEDIR=`pwd`/stage
+RESULTDIR=$STAGEDIR/results
+
+BUILDDIR=$STAGEDIR/../../..
+
+PIDFILE=$STAGEDIR/owcimomd.pid
+
+OWIPC=`echo "$STAGEDIR/owcimomduds" | sed -e s'~/~%2F~g'`
+
+# This is how the test method provider knows where to store it's state.
+OW_METHOD_PROVIDER_TEST_FILENAME=$STAGEDIR/ow_MethodProviderTest.txt
+export OW_METHOD_PROVIDER_TEST_FILENAME
+
+# Linux
+LD_LIBRARY_PATH="$STAGEDIR/$OWLIBDIR:$STAGEDIR/$OWLIBDIR/openwbem/services:$LD_LIBRARY_PATH"
+
+# AIX
+LIBPATH="$LD_LIBRARY_PATH:$LIBPATH" 
+
+# HP-UX
+SHLIB_PATH="$LD_LIBRARY_PATH:$SHLIB_PATH"
+
+# OSX
+DYLD_LIBRARY_PATH="$LD_LIBRARY_PATH:$DYLD_LIBRARY_PATH"
+
+export LD_LIBRARY_PATH LIBPATH SHLIB_PATH DYLD_LIBRARY_PATH
+
+RANDFILE=$STAGEDIR/ssl_randfile
+export RANDFILE
+
+if [ -z "$MAKE" ]; then
+  if gmake -v; then
+    MAKE=gmake
+  else
+    MAKE=make
+  fi
+fi
+
+Install
+
+cd $STAGEDIR
+
+StartDaemon
+
+if [ "z$OWLONGTEST" = "z1" ]; then
+  TestAuth
+  TestACL
+fi
+
+SetupInteropSchema
+TestMof
+
+#TestMofinstalltool
+
+TestSuite "http://test1:pass1@localhost:30926" "testsuiteTCPXML.out" "testsuite28.out"
+TestSuite "owbinary.wbem://test1:pass1@localhost:$OWIPC/ " "testsuiteUDSBIN.out" "testsuite28.out"
+
+TestCIMExceptions "http://test1:pass1@localhost:30926"
+TestCIMExceptions "owbinary.wbem://test1:pass1@localhost:$OWIPC/"
+
+TestNamespaces "http://test1:pass1@localhost:30926"
+TestNamespaces "owbinary.wbem://test1:pass1@localhost:$OWIPC/"
+
+TestMisc "http://test1:pass1@localhost:30926"
+TestMisc "owbinary.wbem://test1:pass1@localhost:$OWIPC/"
+
+TestIndications
+
+TestWQL
+
+TestMultiReq
+
+TestSecondaryInstanceProvider
+
+RunATest testLargeRequest "http://test1:pass1@localhost:30926"
+RunATest testLargeRequest "owbinary.wbem://test1:pass1@localhost:$OWIPC/"
+
+TestSocketCat localhost 30926
+TestSocketCat "$STAGEDIR/owcimomduds"
+
+if [ "z$OWLONGTEST" = "z1" ]; then
+	RunATest testClientTimeout "http://test1:pass1@localhost:30926"
+	RunATest testClientTimeout "owbinary.wbem://test1:pass1@localhost:$OWIPC/"
+
+	TestHammer "http://test1:pass1@localhost:30926"
+	TestHammer "owbinary.wbem://test1:pass1@localhost:$OWIPC/"
+fi
+
+StopDaemon
+
+TestEmbeddedCIMOM
+
+if [ "z$OWLONGTEST" = "z1" ]; then
+  TestInstalledHeaders $STAGEDIR/$OWINCLUDEDIR/openwbem/
+  TestInstalledHeaders $STAGEDIR/$OWINCLUDEDIR/owbi1/
+  TestInstalledHeadersOneByOne $STAGEDIR/$OWINCLUDEDIR/openwbem/ OW_config.h
+  TestInstalledHeadersOneByOne $STAGEDIR/$OWINCLUDEDIR/owbi1/ OWBI1_config.h
+fi
+
+CoreCheck
+
+Exit 0
+
+#############################################################################
+# end of main
+#############################################################################
+

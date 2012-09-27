@@ -1,0 +1,767 @@
+/* config.h.in.  Generated from configure.in by autoheader.  */
+/*******************************************************************************
+* Copyright (C) 2001-3 Vintela, Inc. All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+*  - Redistributions of source code must retain the above copyright notice,
+*    this list of conditions and the following disclaimer.
+*
+*  - Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+*
+*  - Neither the name of Vintela, Inc. nor the names of its
+*    contributors may be used to endorse or promote products derived from this
+*    software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
+* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+* ARE DISCLAIMED. IN NO EVENT SHALL Vintela, Inc. OR THE CONTRIBUTORS
+* BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+* INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+* CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+*******************************************************************************/
+
+/**
+ * @author Dan Nuffer
+ */
+
+
+
+
+/* autoconf set variables here */
+
+
+/* The system has OpenSSL headers and libs */
+#undef HAVE_OPENSSL
+
+/* The system doesn't have OpenSSL */
+#undef NO_SSL
+
+/* Dirs from configure */
+#undef DEFAULT_SYSCONF_DIR
+#undef DEFAULT_STATE_DIR
+#undef DEFAULT_LIB_DIR
+#undef DEFAULT_LIBEXEC_DIR
+#undef PIDFILE_DIR
+
+/* Either "" or the argument to --with-package-prefix */
+#undef PACKAGE_PREFIX
+
+/* Defined if --enable-stack-trace was passed to configure */
+#undef ENABLE_STACK_TRACE_ON_EXCEPTIONS
+
+/* Defined if --enable-debug was passed to configure */
+#undef DEBUG
+
+/* Defined if --enable-profile was passed to configure */
+#undef PROFILE
+
+/* Defined if we are building gnu pthreads version */
+#undef USE_PTHREAD
+
+/* Defined if we want to use custom "new" operator to debug memory leaks */
+#undef DEBUG_MEMORY
+
+/* Define if we want to print "Entering"/"Leaving" <functionName> */
+#undef PRINT_FUNC_DEBUG
+
+/* Define if we want to check for NULL references and throw an exception */
+#undef CHECK_NULL_REFERENCES
+
+/* Define if we want to check for valid array indexing and throw an exception */
+#undef CHECK_ARRAY_INDEXING
+
+/* Define if we want to build the perlIFC */
+#undef PERLIFC
+
+/* Define which one is the current platform */
+#undef GNU_LINUX
+#undef OPENUNIX
+#undef SOLARIS
+#undef OPENSERVER
+#undef DARWIN
+#undef HPUX
+#undef FREEBSD
+
+
+#undef u_int8_t
+#undef u_int16_t
+#undef u_int32_t
+#undef HAVE_SOCKLEN_T
+
+#undef HAVE_PTHREAD_MUTEXATTR_SETTYPE
+#undef HAVE_PTHREAD_SPIN_LOCK
+#undef HAVE_PTHREAD_BARRIER
+#undef HAVE_PAM
+
+/* Define if system has dlfcn.h */
+#undef USE_DL
+/* Define if system has shl_*() <dl.h> */
+#undef USE_SHL
+/* Define if a system has dyld.h (Mac OS X) */
+#undef USE_DYLD
+
+#undef DISABLE_DIGEST
+#undef DISABLE_ASSOCIATION_TRAVERSAL
+#undef DISABLE_QUALIFIER_DECLARATION
+#undef DISABLE_SCHEMA_MANIPULATION
+#undef DISABLE_INSTANCE_MANIPULATION
+#undef DISABLE_PROPERTY_OPERATIONS
+#undef DISABLE_NAMESPACE_MANIPULATION
+
+/* Define to enable workarounds so we can work with valgrind */
+#undef VALGRIND_SUPPORT
+
+/* Define to enable workarounds for non-thread safe exception handling support */
+#undef NON_THREAD_SAFE_EXCEPTION_HANDLING
+
+
+/* Target OS is AIX */
+#undef AIX
+
+/* HP PA-RISC 2.0 architecture */
+#undef ARCH_HPPA20
+
+/* PowerPC architecture */
+#undef ARCH_PPC
+
+/* SPARC architecture */
+#undef ARCH_SPARC
+
+/* Unknown architecture */
+#undef ARCH_UNKNOWN
+
+/* Intel x86 architecture */
+#undef ARCH_X86
+
+/* x86-64 architecture */
+#undef ARCH_X86_64
+
+/* Target OS is DARWIN */
+#undef DARWIN
+
+/* "The bin dir" */
+#undef DEFAULT_BIN_DIR
+
+/* "The sbin dir" */
+#undef DEFAULT_SBIN_DIR
+
+/* Enable db4 repository */
+#undef ENABLE_DB4_REPOSITORY
+
+/* Where false is. */
+#undef FALSE_PATHNAME
+
+/* Number of args to gethostbyname_r() */
+#undef GETHOSTBYNAME_R_ARGUMENTS
+
+/* Define to 1 if getopt and unistd conflict */
+#undef GETOPT_AND_UNISTD_CONFLICT
+
+/* Define to 1 if you have the <alloca.h> header file. */
+#undef HAVE_ALLOCA_H
+
+/* Define to 1 if you have the `asctime_r' function. */
+#undef HAVE_ASCTIME_R
+
+/* Define to 1 if you have the `backtrace' function. */
+#undef HAVE_BACKTRACE
+
+/* Define to 1 if you have the <byteswap.h> header file. */
+#undef HAVE_BYTESWAP_H
+
+/* Define to 1 if the C++ compiler supports the C99 __func__ */
+#undef HAVE_C99_UUFUNCUU
+
+/* Define to 1 if you have the <cxxabi.h> header file. */
+#undef HAVE_CXXABI_H
+
+/* Define to 1 if you have the declaration of `sys_siglist', and to 0 if you
+   don't. */
+#undef HAVE_DECL_SYS_SIGLIST
+
+/* Define to 1 if you have the <dirent.h> header file. */
+#undef HAVE_DIRENT_H
+
+/* Define to 1 if you have the `dlopen' function. */
+#undef HAVE_DLOPEN
+
+/* Define to 1 if you don't have `vprintf' but do have `_doprnt.' */
+#undef HAVE_DOPRNT
+
+/* Define to 1 if you have the <ext/hash_map> header file. */
+#undef HAVE_EXT_HASH_MAP
+
+/* Define to 1 if you have the <fcntl.h> header file. */
+#undef HAVE_FCNTL_H
+
+/* Have gethostbyname_r() */
+#undef HAVE_GETHOSTBYNAME_R
+
+/* Define to 1 if you have the <getopt.h> header file. */
+#undef HAVE_GETOPT_H
+
+/* Define to 1 if you have the `getopt_long' function. */
+#undef HAVE_GETOPT_LONG
+
+/* Define to 1 if you have the `getpagesize' function. */
+#undef HAVE_GETPAGESIZE
+
+/* Define to 1 if you have the `getpwnam_r' function. */
+#undef HAVE_GETPWNAM_R
+
+/* Define to 1 if you have the `getpwuid_r' function. */
+#undef HAVE_GETPWUID_R
+
+/* Define to 1 if you have the `gettimeofday' function. */
+#undef HAVE_GETTIMEOFDAY
+
+/* Define to 1 if you have the `gmtime_r' function. */
+#undef HAVE_GMTIME_R
+
+/* Define to 1 if you have the <grp.h> header file. */
+#undef HAVE_GRP_H
+
+/* Define to 1 if you have the <hash_map> header file. */
+#undef HAVE_HASH_MAP
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#undef HAVE_INTTYPES_H
+
+/* Define to 1 if you have the <istream> header file. */
+#undef HAVE_ISTREAM
+
+/* Define to 1 if you have the <istream.h> header file. */
+#undef HAVE_ISTREAM_H
+
+/* Define to 1 if you have the <limits.h> header file. */
+#undef HAVE_LIMITS_H
+
+/* Define to 1 if you have the `localtime_r' function. */
+#undef HAVE_LOCALTIME_R
+
+/* Define to 1 if you have the <memory.h> header file. */
+#undef HAVE_MEMORY_H
+
+/* Define to 1 if you have the `mkstemp' function. */
+#undef HAVE_MKSTEMP
+
+/* Define to 1 if you have a working `mmap' system call. */
+#undef HAVE_MMAP
+
+/* Define to 1 if you have the `nanosleep' function. */
+#undef HAVE_NANOSLEEP
+
+/* Define to 1 if you have the <netinet/in.h> header file. */
+#undef HAVE_NETINET_IN_H
+
+/* Define to 1 if you have the `NSLinkModule' function. */
+#undef HAVE_NSLINKMODULE
+
+/* Define to 1 if you have the <ostream> header file. */
+#undef HAVE_OSTREAM
+
+/* Define to 1 if you have the <ostream.h> header file. */
+#undef HAVE_OSTREAM_H
+
+/* Define to 1 if you have the <pam/pam_appl.h> header file. */
+#undef HAVE_PAM_PAM_APPL_H
+
+/* Define to 1 if you have the <pam/pam_misc.h> header file. */
+#undef HAVE_PAM_PAM_MISC_H
+
+/* pthread_atfork() exists */
+#undef HAVE_PTHREAD_ATFORK
+
+/* Define to 1 if you have the <pthread.h> header file. */
+#undef HAVE_PTHREAD_H
+
+/* Define to 1 if you have the `pthread_kill_other_threads_np' function. */
+#undef HAVE_PTHREAD_KILL_OTHER_THREADS_NP
+
+/* Define to 1 if you have the <pwd.h> header file. */
+#undef HAVE_PWD_H
+
+/* Define to 1 if you have the `random' function. */
+#undef HAVE_RANDOM
+
+/* Define to 1 if you have the `sched_yield' function. */
+#undef HAVE_SCHED_YIELD
+
+/* Define to 1 if you have the <security/pam_appl.h> header file. */
+#undef HAVE_SECURITY_PAM_APPL_H
+
+/* Define to 1 if you have the <security/pam_misc.h> header file. */
+#undef HAVE_SECURITY_PAM_MISC_H
+
+/* Define to 1 if you have the `setrlimit' function. */
+#undef HAVE_SETRLIMIT
+
+/* Define to 1 if the system has the type `sighandler_t'. */
+#undef HAVE_SIGHANDLER_T
+
+/* Define to 1 if `si_fd' is member of `siginfo_t'. */
+#undef HAVE_SIGINFO_T_SI_FD
+
+/* Define to 1 if the system has the type `sigval'. */
+#undef HAVE_SIGVAL
+
+/* Define to 1 if the system has the type `sigval_t'. */
+#undef HAVE_SIGVAL_T
+
+/* Define to 1 if `sigval_int' is member of `SIGVAL_TYPE'. */
+#undef HAVE_SIGVAL_TYPE_SIGVAL_INT
+
+/* Define to 1 if `sival_int' is member of `SIGVAL_TYPE'. */
+#undef HAVE_SIGVAL_TYPE_SIVAL_INT
+
+/* Define to 1 if you have the <slp.h> header file. */
+#undef HAVE_SLP_H
+
+/* Define to 1 if you have the `snprintf' function. */
+#undef HAVE_SNPRINTF
+
+/* Define to 1 if you have the `srandom' function. */
+#undef HAVE_SRANDOM
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#undef HAVE_STDINT_H
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#undef HAVE_STDLIB_H
+
+/* Define to 1 if you have the <streambuf> header file. */
+#undef HAVE_STREAMBUF
+
+/* Define to 1 if you have the <streambuf.h> header file. */
+#undef HAVE_STREAMBUF_H
+
+/* Define to 1 if you have the `strerror' function. */
+#undef HAVE_STRERROR
+
+/* Define to 1 if you have the <strings.h> header file. */
+#undef HAVE_STRINGS_H
+
+/* Define to 1 if you have the <string.h> header file. */
+#undef HAVE_STRING_H
+
+/* Define to 1 if you have the <stropts.h> header file. */
+#undef HAVE_STROPTS_H
+
+/* Define to 1 if you have the `strsignal' function. */
+#undef HAVE_STRSIGNAL
+
+/* Define to 1 if you have the `strtof' function. */
+#undef HAVE_STRTOF
+
+/* Define to 1 if you have the `strtoll' function. */
+#undef HAVE_STRTOLL
+
+/* Define to 1 if you have the `strtoull' function. */
+#undef HAVE_STRTOULL
+
+/* Define to 1 if the system has the type `struct sigval'. */
+#undef HAVE_STRUCT_SIGVAL
+
+/* Define to 1 if the system has the type `struct sigval_t'. */
+#undef HAVE_STRUCT_SIGVAL_T
+
+/* Define to 1 if `st_blksize' is member of `struct stat'. */
+#undef HAVE_STRUCT_STAT_ST_BLKSIZE
+
+/* Define to 1 if your `struct stat' has `st_blksize'. Deprecated, use
+   `HAVE_STRUCT_STAT_ST_BLKSIZE' instead. */
+#undef HAVE_ST_BLKSIZE
+
+/* Define to 1 if you have the <sys/cdefs.h> header file. */
+#undef HAVE_SYS_CDEFS_H
+
+/* Define to 1 if you have the <sys/epoll.h> header file. */
+#undef HAVE_SYS_EPOLL_H
+
+/* Define to 1 if you have the <sys/file.h> header file. */
+#undef HAVE_SYS_FILE_H
+
+/* Define to 1 if you have the <sys/int_types.h> header file. */
+#undef HAVE_SYS_INT_TYPES_H
+
+/* Define to 1 if you have the <sys/param.h> header file. */
+#undef HAVE_SYS_PARAM_H
+
+/* Define to 1 if you have the <sys/poll.h> header file. */
+#undef HAVE_SYS_POLL_H
+
+/* Define to 1 if you have the <sys/queue.h> header file. */
+#undef HAVE_SYS_QUEUE_H
+
+/* Define to 1 if you have the <sys/resource.h> header file. */
+#undef HAVE_SYS_RESOURCE_H
+
+/* Define to 1 if you have the <sys/select.h> header file. */
+#undef HAVE_SYS_SELECT_H
+
+/* Define to 1 if you have the <sys/socket.h> header file. */
+#undef HAVE_SYS_SOCKET_H
+
+/* Define to 1 if you have the <sys/sockio.h> header file. */
+#undef HAVE_SYS_SOCKIO_H
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#undef HAVE_SYS_STAT_H
+
+/* Define to 1 if you have the <sys/time.h> header file. */
+#undef HAVE_SYS_TIME_H
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#undef HAVE_SYS_TYPES_H
+
+/* Define to 1 if you have the <sys/un.h> header file. */
+#undef HAVE_SYS_UN_H
+
+/* Define to 1 if you have the <sys/wait.h> header file. */
+#undef HAVE_SYS_WAIT_H
+
+/* Define to 1 if you have the `timegm' function. */
+#undef HAVE_TIMEGM
+
+/* Define to 1 if the system has the type `union sigval'. */
+#undef HAVE_UNION_SIGVAL
+
+/* Define to 1 if the system has the type `union sigval_t'. */
+#undef HAVE_UNION_SIGVAL_T
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#undef HAVE_UNISTD_H
+
+/* Define to 1 if the C++ compiler supports __PRETTY_FUNCTION__ */
+#undef HAVE_UUPRETTY_FUNCTIONUU
+
+/* Define to 1 if you have the `vprintf' function. */
+#undef HAVE_VPRINTF
+
+/* Define to 1 if you have the <zlib.h> header file. */
+#undef HAVE_ZLIB_H
+
+/* Define to 1 if <inttypes.h> defines PRIu32 and PRIx32. */
+#undef INTTYPES_H_DEFINES_PRI
+
+/* Define to 1 if <inttypes.h> does not define PRIu32 or PRIx32. */
+#undef INTTYPES_H_DOES_NOT_DEFINE_PRI
+
+/* Target OS is NetWare */
+#undef NETWARE
+
+/* OpenWBEM Library Version */
+#undef OPENWBEM_LIBRARY_VERSION
+
+/* OpenWBEM Major Version */
+#undef OPENWBEM_MAJOR_VERSION
+
+/* OpenWBEM Micro Version */
+#undef OPENWBEM_MICRO_VERSION
+
+/* OpenWBEM Minor Version */
+#undef OPENWBEM_MINOR_VERSION
+
+/* OpenWBEM Version */
+#undef OPENWBEM_VERSION
+
+/* Name of package */
+#undef PACKAGE
+
+/* Define to the address where bug reports for this package should be sent. */
+#undef PACKAGE_BUGREPORT
+
+/* Define to the full name of this package. */
+#undef PACKAGE_NAME
+
+/* Define to the full name and version of this package. */
+#undef PACKAGE_STRING
+
+/* Define to the one symbol short name of this package. */
+#undef PACKAGE_TARNAME
+
+/* Define to the version of this package. */
+#undef PACKAGE_VERSION
+
+/* The sigval type */
+#undef SIGVAL_TYPE
+
+/* The size of a `char', as computed by sizeof. */
+#undef SIZEOF_CHAR
+
+/* The size of a `char *', as computed by sizeof. */
+#undef SIZEOF_CHAR_P
+
+/* The size of a `double', as computed by sizeof. */
+#undef SIZEOF_DOUBLE
+
+/* The size of a `float', as computed by sizeof. */
+#undef SIZEOF_FLOAT
+
+/* The size of a `int', as computed by sizeof. */
+#undef SIZEOF_INT
+
+/* The size of a `long double', as computed by sizeof. */
+#undef SIZEOF_LONG_DOUBLE
+
+/* The size of a `long int', as computed by sizeof. */
+#undef SIZEOF_LONG_INT
+
+/* The size of a `long long int', as computed by sizeof. */
+#undef SIZEOF_LONG_LONG_INT
+
+/* The size of a `pthread_t', as computed by sizeof. */
+#undef SIZEOF_PTHREAD_T
+
+/* The size of a `short int', as computed by sizeof. */
+#undef SIZEOF_SHORT_INT
+
+/* Static services are enabled */
+#undef STATIC_SERVICES
+
+/* Define to 1 if you have the ANSI C header files. */
+#undef STDC_HEADERS
+
+/* Threads run as the authenticated user */
+#undef THREADS_RUN_AS_USER
+
+/* Where true is. */
+#undef TRUE_PATHNAME
+
+/* Fake libraries are enabled */
+#undef USE_FAKE_LIBS
+
+/* Version number of package */
+#undef VERSION
+
+/* Define to 1 if WIFEXITED and WEXITSTATUS require wait.h */
+#undef WIFEXITED_NEEDS_WAIT_H
+
+/* Define to 1 if your processor stores words with the most significant byte
+   first (like Motorola and SPARC, unlike Intel and VAX). */
+#undef WORDS_BIGENDIAN
+
+/* Define to 1 if `lex' declares `yytext' as a `char *' by default, not a
+   `char[]'. */
+#undef YYTEXT_POINTER
+
+/* Define to `long' if <sys/types.h> does not define. */
+#undef off_t
+
+/* Define to `unsigned' if <sys/types.h> does not define. */
+#undef size_t
+
+/* Define to `uint16_t' if <sys/types.h> does not define. */
+#undef u_int16_t
+
+/* Define to `uint32_t' if <sys/types.h> does not define. */
+#undef u_int32_t
+
+/* Define to `uint8_t' if <sys/types.h> does not define. */
+#undef u_int8_t
+
+/* end of autoconf set vars */
+
+/**
+ * The OW_DEPRECATED macro can be used to trigger compile-time warnings
+ * with gcc >= 3.2 when deprecated functions are used.
+ *
+ * For non-inline functions, the macro is used at the very end of the
+ * function declaration, right before the semicolon, unless it's pure
+ * virtual:
+ *
+ * int deprecatedFunc() const OW_DEPRECATED;
+ * virtual int deprecatedPureVirtualFunc() const OW_DEPRECATED = 0;
+ *
+ * Functions which are implemented inline are handled differently:
+ * the OW_DEPRECATED macro is used at the front, right before the return
+ * type, but after "static" or "virtual":
+ *
+ * OW_DEPRECATED void deprecatedFuncA() { .. }
+ * virtual OW_DEPRECATED int deprecatedFuncB() { .. }
+ * static OW_DEPRECATED bool deprecatedFuncC() { .. }
+ *
+ * You can also mark whole structs or classes as deprecated, by inserting the
+ * OW_DEPRECATED macro after the struct/class keyword, but before the
+ * name of the struct/class:
+ *
+ * class OW_DEPRECATED DeprecatedClass { };
+ * struct OW_DEPRECATED DeprecatedStruct { };
+ * 
+ * However, deprecating a struct/class doesn't create a warning for gcc 
+ * versions <= 3.3 (haven't tried 3.4 yet).  If you want to deprecate a class,
+ * also deprecate all member functions as well (which will cause warnings).
+ *
+ */
+#if __GNUC__ - 0 > 3 || (__GNUC__ - 0 == 3 && __GNUC_MINOR__ - 0 >= 2)
+#define DEPRECATED __attribute__ ((deprecated))
+#else
+#define DEPRECATED
+#endif
+
+
+
+#ifdef OW_WIN32
+#define EXPORT __declspec(dllexport)
+#define IMPORT __declspec(dllimport)
+#else
+#define EXPORT
+#define IMPORT
+#endif
+
+#ifdef OW_COMMON_BUILD
+#define COMMON_API OW_EXPORT
+#else
+#define COMMON_API OW_IMPORT
+#endif
+
+#ifdef OW_XML_BUILD
+#define XML_API OW_EXPORT
+#else
+#define XML_API OW_IMPORT
+#endif
+
+#ifdef OW_MOF_BUILD
+#define MOF_API OW_EXPORT
+#else
+#define MOF_API OW_IMPORT
+#endif
+
+#ifdef OW_HTTP_BUILD
+#define HTTP_API OW_EXPORT
+#else
+#define HTTP_API OW_IMPORT
+#endif
+
+#ifdef OW_HTTPSVC_BUILD
+#define HTTPSVC_API OW_EXPORT
+#else
+#define HTTPSVC_API OW_IMPORT
+#endif
+
+#ifdef OW_LISTENER_BUILD
+#define LISTENER_API OW_EXPORT
+#else
+#define LISTENER_API OW_IMPORT
+#endif
+
+
+#ifdef OW_CLIENT_BUILD
+#define CLIENT_API OW_EXPORT
+#else
+#define CLIENT_API OW_IMPORT
+#endif
+
+#ifdef OW_DB_BUILD
+#define DB_API OW_EXPORT
+#else
+#define DB_API OW_IMPORT
+#endif
+
+#ifdef OW_REPHDB_BUILD
+#define HDB_API OW_EXPORT
+#else
+#define HDB_API OW_IMPORT
+#endif
+
+#ifdef OW_WQL_BUILD
+#define WQL_API OW_EXPORT
+#else
+#define WQL_API OW_IMPORT
+#endif
+
+#ifdef OW_WQLCOMMON_BUILD
+#define WQLCOMMON_API OW_EXPORT
+#else
+#define WQLCOMMON_API OW_IMPORT
+#endif
+
+#ifdef OW_PROVIDER_BUILD
+#define PROVIDER_API OW_EXPORT
+#else
+#define PROVIDER_API OW_IMPORT
+#endif
+
+#ifdef OW_CPPPROVIFC_BUILD
+#define CPPPROVIFC_API OW_EXPORT
+#else
+#define CPPPROVIFC_API OW_IMPORT
+#endif
+
+#ifdef OW_CIMOMSERVER_BUILD
+#define CIMOMSERVER_API OW_EXPORT
+#else
+#define CIMOMSERVER_API OW_IMPORT
+#endif
+
+#ifdef OW_CIMOMCOMMON_BUILD
+#define CIMOMCOMMON_API OW_EXPORT
+#else
+#define CIMOMCOMMON_API OW_IMPORT
+#endif
+
+#ifdef OW_INDICATIONSERVER_BUILD
+#define INDICATIONSERVER_API OW_EXPORT
+#else
+#define INDICATIONSERVER_API OW_IMPORT
+#endif
+
+#ifdef OW_INDICATIONREPLAYER_BUILD
+#define INDICATIONREPLAYER_API OW_EXPORT
+#else
+#define INDICATIONREPLAYER_API OW_IMPORT
+#endif
+
+#ifdef OW_PROVIDERAGENT_BUILD
+#define PROVIDERAGENT_API OW_EXPORT
+#else
+#define PROVIDERAGENT_API OW_IMPORT
+#endif
+
+#ifdef OW_OWBI1PROVIFC_BUILD
+#define OWBI1PROVIFC_API OW_EXPORT
+#else
+#define OWBI1PROVIFC_API OW_IMPORT
+#endif
+
+#ifdef OW_WIN32
+#define EXPORT_TEMPLATE(API, TMPL, X) template class API TMPL< X >
+#else
+#define EXPORT_TEMPLATE(API, TMPL, X)
+#endif
+
+/* C++ specific stuff here */
+#ifdef __cplusplus
+
+/* Need this first macro because ## doesn't expand vars, and we need an intermediate step */
+#define NAMESPACE_CAT(ow, ver) ow ## ver
+#define NAMESPACE_AUX(ver) OW_NAMESPACE_CAT(OpenWBEM, ver)
+#define NAMESPACE OW_NAMESPACE_AUX(OW_OPENWBEM_LIBRARY_VERSION)
+
+/* This is so this particular code is only active in OW_config.h, not OWBI1_config.h */
+#ifdef OW_NAMESPACE
+/* need this to set up an alias. */
+namespace OW_NAMESPACE
+{
+}
+
+namespace OpenWBEM = OW_NAMESPACE;
+#endif
+
+#ifdef OW_DEBUG_MEMORY
+#include "OW_MemTracer.hpp"
+#endif
+
+
+
+#endif /* #ifdef __cplusplus */
+

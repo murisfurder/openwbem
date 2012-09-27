@@ -1,0 +1,212 @@
+[Description("This class represents the OpenWBEM CIM object manager.")]
+class OpenWBEM_ObjectManager : CIM_ObjectManager
+{
+    [Description("Version of this object manager.")]
+    string Version;
+};
+
+// ==================================================================
+// HostedObjectManager
+// ==================================================================
+   [Association, Description (
+       "HostedObjectManager is an association between an "
+       "ObjectManager and the hosting ComputerSystem.")]
+class OpenWBEM_HostedObjectManager : CIM_HostedService
+{
+      [Override ( "Antecedent" ), Min ( 1 ), Max ( 1 ), Description (
+          "The ComputerSystem hosting the ObjectManager")]
+   CIM_ComputerSystem REF Antecedent;
+
+      [Override ( "Dependent" ), Weak, Description (
+          "The ObjectManager.")]
+   OpenWBEM_ObjectManager REF Dependent;
+};
+
+/* not implemented yet
+[Description("This class specializes ObjectManagerCommunicationMechanism, "
+    "adding properties specific to the OpenWBEM binary protocol.")]
+class OpenWBEM_BinaryCommunicationMechanism : CIM_ObjectManagerCommunicationMechanism
+{
+	[Description("The version of the binary protocol supported by the Object "
+	"manager.")]
+	uint16 BinaryProtocolVersion;
+};
+
+*/
+
+// ==================================================================
+// CommMechanismForManager
+// ==================================================================
+   [Association, Description (
+       "OpenWBEM_CIMXMLCommMechanismForOpenWBEMManager is an association between an "
+       "OpenWBEM_ObjectManager and an CIM_CIMXMLCommunicationMechanism "
+       "class. The latter describes a possible encoding/protocol/ set "
+       "of operations for accessing the referenced ObjectManager.")]
+class OpenWBEM_CIMXMLCommMechanismForOpenWBEMManager : CIM_CommMechanismForManager {
+
+      [Override ( "Antecedent" ), Min ( 1 ), Max ( 1 ), Description (
+          "The specific ObjectManager whose communication mechanism is "
+          "described.")]
+   OpenWBEM_ObjectManager REF Antecedent;
+
+      [Override ( "Dependent" ), Min ( 1 ), Description (
+          "The encoding/protocol/set of operations that may be used to "
+          "communicate with the referenced ObjectManager.")]
+   CIM_CIMXMLCommunicationMechanism REF Dependent;
+};
+
+
+class OpenWBEM_UnitaryComputerSystem : CIM_UnitaryComputerSystem
+{
+}; 
+
+/* These aren't in cim 2.7 final
+class OpenWBEM_Provider : CIM_Provider
+{
+};
+
+class OpenWBEM_ProviderCapabilities : CIM_ProviderCapabilities
+{
+};
+
+class OpenWBEM_ProviderModule : CIM_ProviderModule
+{
+};
+
+class OpenWBEM_ProviderInModule : CIM_ProviderInModule
+{
+};
+
+class OpenWBEM_ProviderElementCapabilities : CIM_ProviderElementCapabilities
+{
+};
+
+class OpenWBEM_ObjectManagerIsProvider : CIM_ObjectManagerIsProvider
+{
+};
+
+class OpenWBEM_FiltersSupported : CIM_FiltersSupported
+{
+};
+
+class OpenWBEM_ClassSupportForNamespace : CIM_ClassSupportForNamespace
+{
+};
+
+*/
+
+/* not implemented
+class OpenWBEM_ProtocolAdapter : CIM_ProtocolAdapter
+{
+};
+
+class OpenWBEM_CommMechanismForAdapter : CIM_CommMechanismForAdapter
+{
+};
+
+class OpenWBEM_SystemIdentification : CIM_SystemIdentification
+{
+};
+
+class OpenWBEM_SystemInNamespace : CIM_SystemInNamespace
+{
+};
+
+class OpenWBEM_IdentificationOfManagedSystem : CIM_IdentificationOfManagedSystem
+{
+};
+
+class OpenWBEM_CIMOMStatisticalData : CIM_CIMOMStatisticalData
+{
+};
+*/
+
+
+class OpenWBEM_RemoteProviderRegistration
+{
+      [Key, Description (
+          "Within the scope of the instantiating Namespace, InstanceID "
+          "opaquely and uniquely identifies an instance of this class. "
+          "In order to ensure uniqueness within the NameSpace, the "
+          "value of InstanceID SHOULD be constructed using the "
+          "following 'preferred' algorithm: \n"
+          "<OrgID>:<LocalID> \n"
+          "Where <OrgID> and <LocalID> are separated by a colon ':', "
+          "and where <OrgID> MUST include a copyrighted, trademarked "
+          "or otherwise unique name that is owned by the business "
+          "entity creating/defining the InstanceID, or is a registered "
+          "ID that is assigned to the business entity by a recognized "
+          "global authority. (This is similar to the <Schema "
+          "Name>_<Class Name> structure of Schema class names.) In "
+          "addition, to ensure uniqueness <OrgID> MUST NOT contain a "
+          "colon (':'). When using this algorithm, the first colon to "
+          "appear in InstanceID MUST appear between <OrgID> and "
+          "<LocalID>. \n"
+          "<LocalID> is chosen by the business entity and SHOULD not "
+          "be re-used to identify different underlying (real-world) "
+          "elements. If the above 'preferred' algorithm is not used, "
+          "the defining entity MUST assure that the resultant "
+          "InstanceID is not re-used across any InstanceIDs produced "
+          "by this or other providers for this instance's NameSpace. "
+          "For DMTF defined instances, the 'preferred' algorithm MUST "
+          "be used with the <OrgID> set to 'CIM'.")]
+        string InstanceID;
+
+        [Description (
+          "The namespace for this provider registration. If this "
+          "property is empty of NULL, all namespaces is implied.")]
+        string NamespaceName;
+
+        [Required, Description (
+          "The CIM class name for the provider")]
+        string ClassName;
+
+        [Description (
+          "ProviderTypes identifies the kind of provider."),
+          ValueMap {"1", "2", "3", "4", "5"},
+          Values {"Instance", "Secondary Instance", "Association", "Indication",
+             "Method"},
+          ArrayType ("Indexed"),
+          Required ]
+        uint16 ProviderTypes[];
+
+
+        [Required, Description (
+          "Identifies the WBEM Server the remote provider will connect "
+          "to in order to fulfill the request. Credentials may be included.")]
+        string Url;
+
+        [Required, Description (
+          "If false, the WBEM client used by the remote provider will "
+          "use the standard HTTP authentication, and will make an initial "
+          "request without sending credentials. If the server replies with "
+          "a 401 Unauthorized error, then the client will send the "
+          "credentials. If the value is true, the remote provider will"
+          "assume the WBEM server supports HTTP basic authentication and "
+          "send the credentials with the first request. THIS MAY BE A "
+          "SECURITY RISK. Make sure you understand the implications before "
+          "you enable this. ")]
+        boolean AlwaysSendCredentials = false;
+
+        [Required, Description (
+          "This property, if true, instructs the remote provider to use the "
+          "same credentials that were used to connect to the cimom when "
+          "connecting to the remote WBEM server. The principal can "
+          "always be obtained, however the credential will only be "
+          "found if a custom authenticator is used that stored the "
+          "credential in the OperationContext with the key "
+          "\"remote_provider.user_credentials\". If this value is false, "
+          "the only credentials that may be used are those stored in the "
+          "Url property.")]
+        boolean UseConnectionCredentials = false;
+};
+
+[Description("Class used by some of the OpenWBEM interop providers to store data")]
+class OpenWBEM_InternalData
+{
+	[Key]
+	string Name;
+	[Required]
+	string Value;
+};
+

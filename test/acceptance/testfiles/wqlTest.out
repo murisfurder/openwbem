@@ -1,0 +1,7174 @@
+
+Executing query 1 local: select * from wqlTestClass
+Got back 10 instances.  Expected 10
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 1 remote: select * from wqlTestClass
+Got back 10 instances.  Expected 10
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 2 local: select name from wqlTestClass
+Got back 10 instances.  Expected 10
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+};
+
+
+Executing query 2 remote: select name from wqlTestClass
+Got back 10 instances.  Expected 10
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+};
+
+
+Executing query 3 local: select sint32Data from wqlTestClass
+Got back 10 instances.  Expected 10
+INSTANCE OF wqlTestClass
+{
+  sint32Data=0;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=10;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+
+Executing query 3 remote: select sint32Data from wqlTestClass
+Got back 10 instances.  Expected 10
+INSTANCE OF wqlTestClass
+{
+  sint32Data=0;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=10;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+
+Executing query 4 local: select wqlTestClass.sint32Data from wqlTestClass
+Got back 10 instances.  Expected 10
+INSTANCE OF wqlTestClass
+{
+  sint32Data=0;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=10;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+
+Executing query 4 remote: select wqlTestClass.sint32Data from wqlTestClass
+Got back 10 instances.  Expected 10
+INSTANCE OF wqlTestClass
+{
+  sint32Data=0;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=10;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+};
+
+
+Executing query 5 local: select booleanData, wqlTestClass.sint32Data from wqlTestClass
+Got back 10 instances.  Expected 10
+INSTANCE OF wqlTestClass
+{
+  sint32Data=0;
+  booleanData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=10;
+  booleanData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+  booleanData=false;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+  booleanData=true;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+  booleanData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+  booleanData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+  booleanData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+  booleanData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+  booleanData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+  booleanData=NULL;
+};
+
+
+Executing query 5 remote: select booleanData, wqlTestClass.sint32Data from wqlTestClass
+Got back 10 instances.  Expected 10
+INSTANCE OF wqlTestClass
+{
+  sint32Data=0;
+  booleanData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=10;
+  booleanData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+  booleanData=false;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+  booleanData=true;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+  booleanData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+  booleanData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+  booleanData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+  booleanData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+  booleanData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  sint32Data=NULL;
+  booleanData=NULL;
+};
+
+
+Executing query 6 local: select wqlTestClass.* from wqlTestClass
+Got back 10 instances.  Expected 10
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 6 remote: select wqlTestClass.* from wqlTestClass
+Got back 10 instances.  Expected 10
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 7 local: select * from wqlTestClass where name = "test1"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 7 remote: select * from wqlTestClass where name = "test1"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 8 local: select * from wqlTestClass where "test1" = name
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 8 remote: select * from wqlTestClass where "test1" = name
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 9 local: select * from wqlTestClass where sint32Data = 0
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 9 remote: select * from wqlTestClass where sint32Data = 0
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 10 local: select * from wqlTestClass where 0 = sint32Data
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 10 remote: select * from wqlTestClass where 0 = sint32Data
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 11 local: select * from wqlTestClass where sint32Data = b'1010'
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 11 remote: select * from wqlTestClass where sint32Data = b'1010'
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 12 local: select * from wqlTestClass where sint32Data = x'A'
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 12 remote: select * from wqlTestClass where sint32Data = x'A'
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 13 local: select * from wqlTestClass where booleanData = TRUE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 13 remote: select * from wqlTestClass where booleanData = TRUE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 14 local: select * from wqlTestClass where TRUE = booleanData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 14 remote: select * from wqlTestClass where TRUE = booleanData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 15 local: select * from wqlTestClass where booleanData = FALSE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 15 remote: select * from wqlTestClass where booleanData = FALSE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 16 local: select * from wqlTestClass where FALSE = booleanData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 16 remote: select * from wqlTestClass where FALSE = booleanData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 17 local: select * from wqlTestClass where realData = 123.456789
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+
+Executing query 17 remote: select * from wqlTestClass where realData = 123.456789
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+
+Executing query 18 local: select * from wqlTestClass where 123.456789 = realData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+
+Executing query 18 remote: select * from wqlTestClass where 123.456789 = realData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+
+Executing query 19 local: select * from wqlTestClass where realData = NULL
+Got back 8 instances.  Expected 8
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+
+Executing query 19 remote: select * from wqlTestClass where realData = NULL
+Got back 8 instances.  Expected 8
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+
+Executing query 20 local: select * from wqlTestClass where NULL = realData
+Got back 8 instances.  Expected 8
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+
+Executing query 20 remote: select * from wqlTestClass where NULL = realData
+Got back 8 instances.  Expected 8
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+
+Executing query 21 local: select * from wqlTestClass where __Path = "wqlTestClass.name=\"test5\""
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 21 remote: select * from wqlTestClass where __Path = "wqlTestClass.name=\"test5\""
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 22 local: select * from wqlTestClass where "wqlTestClass.name=\"test5\"" = __Path
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 22 remote: select * from wqlTestClass where "wqlTestClass.name=\"test5\"" = __Path
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 23 local: select * from wqlTestClass where name <> "test1"
+Got back 9 instances.  Expected 9
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 23 remote: select * from wqlTestClass where name <> "test1"
+Got back 9 instances.  Expected 9
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 24 local: select * from wqlTestClass where "test1" <> name
+Got back 9 instances.  Expected 9
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 24 remote: select * from wqlTestClass where "test1" <> name
+Got back 9 instances.  Expected 9
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 25 local: select * from wqlTestClass where sint32Data <> 0
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 25 remote: select * from wqlTestClass where sint32Data <> 0
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 26 local: select * from wqlTestClass where 0 <> sint32Data
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 26 remote: select * from wqlTestClass where 0 <> sint32Data
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 27 local: select * from wqlTestClass where sint32Data <> b'1010'
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 27 remote: select * from wqlTestClass where sint32Data <> b'1010'
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 28 local: select * from wqlTestClass where sint32Data <> x'A'
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 28 remote: select * from wqlTestClass where sint32Data <> x'A'
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 29 local: select * from wqlTestClass where booleanData <> TRUE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 29 remote: select * from wqlTestClass where booleanData <> TRUE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 30 local: select * from wqlTestClass where TRUE <> booleanData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 30 remote: select * from wqlTestClass where TRUE <> booleanData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 31 local: select * from wqlTestClass where booleanData <> FALSE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 31 remote: select * from wqlTestClass where booleanData <> FALSE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 32 local: select * from wqlTestClass where FALSE <> booleanData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 32 remote: select * from wqlTestClass where FALSE <> booleanData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 33 local: select * from wqlTestClass where realData <> 123.456789
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 33 remote: select * from wqlTestClass where realData <> 123.456789
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 34 local: select * from wqlTestClass where 123.456789 <> realData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 34 remote: select * from wqlTestClass where 123.456789 <> realData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 35 local: select * from wqlTestClass where realData <> NULL
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 35 remote: select * from wqlTestClass where realData <> NULL
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 36 local: select * from wqlTestClass where NULL <> realData
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 36 remote: select * from wqlTestClass where NULL <> realData
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 37 local: select * from wqlTestClass where __Path <> "wqlTestClass.name=\"test5\""
+Got back 9 instances.  Expected 9
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 37 remote: select * from wqlTestClass where __Path <> "wqlTestClass.name=\"test5\""
+Got back 9 instances.  Expected 9
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 38 local: select * from wqlTestClass where "wqlTestClass.name=\"test5\"" <> __Path
+Got back 9 instances.  Expected 9
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 38 remote: select * from wqlTestClass where "wqlTestClass.name=\"test5\"" <> __Path
+Got back 9 instances.  Expected 9
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 39 local: select * from wqlTestClass where name >= "test1"
+Got back 10 instances.  Expected 10
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 39 remote: select * from wqlTestClass where name >= "test1"
+Got back 10 instances.  Expected 10
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 40 local: select * from wqlTestClass where "test1" >= name
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 40 remote: select * from wqlTestClass where "test1" >= name
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 41 local: select * from wqlTestClass where sint32Data >= 0
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 41 remote: select * from wqlTestClass where sint32Data >= 0
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 42 local: select * from wqlTestClass where 0 >= sint32Data
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 42 remote: select * from wqlTestClass where 0 >= sint32Data
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 43 local: select * from wqlTestClass where sint32Data >= b'1010'
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 43 remote: select * from wqlTestClass where sint32Data >= b'1010'
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 44 local: select * from wqlTestClass where sint32Data >= x'A'
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 44 remote: select * from wqlTestClass where sint32Data >= x'A'
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 45 local: select * from wqlTestClass where booleanData >= TRUE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 45 remote: select * from wqlTestClass where booleanData >= TRUE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 46 local: select * from wqlTestClass where TRUE >= booleanData
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 46 remote: select * from wqlTestClass where TRUE >= booleanData
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 47 local: select * from wqlTestClass where booleanData >= FALSE
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 47 remote: select * from wqlTestClass where booleanData >= FALSE
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 48 local: select * from wqlTestClass where FALSE >= booleanData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 48 remote: select * from wqlTestClass where FALSE >= booleanData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 49 local: select * from wqlTestClass where realData >= 123.456789
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 49 remote: select * from wqlTestClass where realData >= 123.456789
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 50 local: select * from wqlTestClass where 123.456789 >= realData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+
+Executing query 50 remote: select * from wqlTestClass where 123.456789 >= realData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+
+Executing query 51 local: select * from wqlTestClass where __Path >= "wqlTestClass.name=\"test5\""
+Got back 5 instances.  Expected 5
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+
+Executing query 51 remote: select * from wqlTestClass where __Path >= "wqlTestClass.name=\"test5\""
+Got back 5 instances.  Expected 5
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+
+Executing query 52 local: select * from wqlTestClass where "wqlTestClass.name=\"test5\"" >= __Path
+Got back 6 instances.  Expected 6
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 52 remote: select * from wqlTestClass where "wqlTestClass.name=\"test5\"" >= __Path
+Got back 6 instances.  Expected 6
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 53 local: select * from wqlTestClass where name <= "test1"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 53 remote: select * from wqlTestClass where name <= "test1"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 54 local: select * from wqlTestClass where "test1" <= name
+Got back 10 instances.  Expected 10
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 54 remote: select * from wqlTestClass where "test1" <= name
+Got back 10 instances.  Expected 10
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 55 local: select * from wqlTestClass where sint32Data <= 0
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 55 remote: select * from wqlTestClass where sint32Data <= 0
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 56 local: select * from wqlTestClass where 0 <= sint32Data
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 56 remote: select * from wqlTestClass where 0 <= sint32Data
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 57 local: select * from wqlTestClass where sint32Data <= b'1010'
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 57 remote: select * from wqlTestClass where sint32Data <= b'1010'
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 58 local: select * from wqlTestClass where sint32Data <= x'A'
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 58 remote: select * from wqlTestClass where sint32Data <= x'A'
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 59 local: select * from wqlTestClass where booleanData <= TRUE
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 59 remote: select * from wqlTestClass where booleanData <= TRUE
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 60 local: select * from wqlTestClass where TRUE <= booleanData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 60 remote: select * from wqlTestClass where TRUE <= booleanData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 61 local: select * from wqlTestClass where booleanData <= FALSE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 61 remote: select * from wqlTestClass where booleanData <= FALSE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 62 local: select * from wqlTestClass where FALSE <= booleanData
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 62 remote: select * from wqlTestClass where FALSE <= booleanData
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 63 local: select * from wqlTestClass where realData <= 123.456789
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+
+Executing query 63 remote: select * from wqlTestClass where realData <= 123.456789
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+
+Executing query 64 local: select * from wqlTestClass where 123.456789 <= realData
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 64 remote: select * from wqlTestClass where 123.456789 <= realData
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 65 local: select * from wqlTestClass where __Path <= "wqlTestClass.name=\"test5\""
+Got back 6 instances.  Expected 6
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 65 remote: select * from wqlTestClass where __Path <= "wqlTestClass.name=\"test5\""
+Got back 6 instances.  Expected 6
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 66 local: select * from wqlTestClass where "wqlTestClass.name=\"test5\"" <= __Path
+Got back 5 instances.  Expected 5
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+
+Executing query 66 remote: select * from wqlTestClass where "wqlTestClass.name=\"test5\"" <= __Path
+Got back 5 instances.  Expected 5
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+
+Executing query 67 local: select * from wqlTestClass where name > "test1"
+Got back 9 instances.  Expected 9
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 67 remote: select * from wqlTestClass where name > "test1"
+Got back 9 instances.  Expected 9
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 68 local: select * from wqlTestClass where "test1" > name
+Got back 0 instances.  Expected 0
+
+Executing query 68 remote: select * from wqlTestClass where "test1" > name
+Got back 0 instances.  Expected 0
+
+Executing query 69 local: select * from wqlTestClass where sint32Data > 0
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 69 remote: select * from wqlTestClass where sint32Data > 0
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 70 local: select * from wqlTestClass where 0 > sint32Data
+Got back 0 instances.  Expected 0
+
+Executing query 70 remote: select * from wqlTestClass where 0 > sint32Data
+Got back 0 instances.  Expected 0
+
+Executing query 71 local: select * from wqlTestClass where sint32Data > b'1010'
+Got back 0 instances.  Expected 0
+
+Executing query 71 remote: select * from wqlTestClass where sint32Data > b'1010'
+Got back 0 instances.  Expected 0
+
+Executing query 72 local: select * from wqlTestClass where sint32Data > x'A'
+Got back 0 instances.  Expected 0
+
+Executing query 72 remote: select * from wqlTestClass where sint32Data > x'A'
+Got back 0 instances.  Expected 0
+
+Executing query 73 local: select * from wqlTestClass where booleanData > TRUE
+Got back 0 instances.  Expected 0
+
+Executing query 73 remote: select * from wqlTestClass where booleanData > TRUE
+Got back 0 instances.  Expected 0
+
+Executing query 74 local: select * from wqlTestClass where TRUE > booleanData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 74 remote: select * from wqlTestClass where TRUE > booleanData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 75 local: select * from wqlTestClass where booleanData > FALSE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 75 remote: select * from wqlTestClass where booleanData > FALSE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 76 local: select * from wqlTestClass where FALSE > booleanData
+Got back 0 instances.  Expected 0
+
+Executing query 76 remote: select * from wqlTestClass where FALSE > booleanData
+Got back 0 instances.  Expected 0
+
+Executing query 77 local: select * from wqlTestClass where realData > 123.456789
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 77 remote: select * from wqlTestClass where realData > 123.456789
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 78 local: select * from wqlTestClass where 123.456789 > realData
+Got back 0 instances.  Expected 0
+
+Executing query 78 remote: select * from wqlTestClass where 123.456789 > realData
+Got back 0 instances.  Expected 0
+
+Executing query 79 local: select * from wqlTestClass where __Path > "wqlTestClass.name=\"test5\""
+Got back 4 instances.  Expected 4
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+
+Executing query 79 remote: select * from wqlTestClass where __Path > "wqlTestClass.name=\"test5\""
+Got back 4 instances.  Expected 4
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+
+Executing query 80 local: select * from wqlTestClass where "wqlTestClass.name=\"test5\"" > __Path
+Got back 5 instances.  Expected 5
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 80 remote: select * from wqlTestClass where "wqlTestClass.name=\"test5\"" > __Path
+Got back 5 instances.  Expected 5
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 81 local: select * from wqlTestClass where name < "test1"
+Got back 0 instances.  Expected 0
+
+Executing query 81 remote: select * from wqlTestClass where name < "test1"
+Got back 0 instances.  Expected 0
+
+Executing query 82 local: select * from wqlTestClass where "test1" < name
+Got back 9 instances.  Expected 9
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 82 remote: select * from wqlTestClass where "test1" < name
+Got back 9 instances.  Expected 9
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 83 local: select * from wqlTestClass where sint32Data < 0
+Got back 0 instances.  Expected 0
+
+Executing query 83 remote: select * from wqlTestClass where sint32Data < 0
+Got back 0 instances.  Expected 0
+
+Executing query 84 local: select * from wqlTestClass where 0 < sint32Data
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 84 remote: select * from wqlTestClass where 0 < sint32Data
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 85 local: select * from wqlTestClass where sint32Data < b'1010'
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 85 remote: select * from wqlTestClass where sint32Data < b'1010'
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 86 local: select * from wqlTestClass where sint32Data < x'A'
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 86 remote: select * from wqlTestClass where sint32Data < x'A'
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 87 local: select * from wqlTestClass where booleanData < TRUE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 87 remote: select * from wqlTestClass where booleanData < TRUE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 88 local: select * from wqlTestClass where TRUE < booleanData
+Got back 0 instances.  Expected 0
+
+Executing query 88 remote: select * from wqlTestClass where TRUE < booleanData
+Got back 0 instances.  Expected 0
+
+Executing query 89 local: select * from wqlTestClass where booleanData < FALSE
+Got back 0 instances.  Expected 0
+
+Executing query 89 remote: select * from wqlTestClass where booleanData < FALSE
+Got back 0 instances.  Expected 0
+
+Executing query 90 local: select * from wqlTestClass where FALSE < booleanData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 90 remote: select * from wqlTestClass where FALSE < booleanData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 91 local: select * from wqlTestClass where realData < 123.456789
+Got back 0 instances.  Expected 0
+
+Executing query 91 remote: select * from wqlTestClass where realData < 123.456789
+Got back 0 instances.  Expected 0
+
+Executing query 92 local: select * from wqlTestClass where 123.456789 < realData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 92 remote: select * from wqlTestClass where 123.456789 < realData
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 93 local: select * from wqlTestClass where __Path < "wqlTestClass.name=\"test5\""
+Got back 5 instances.  Expected 5
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 93 remote: select * from wqlTestClass where __Path < "wqlTestClass.name=\"test5\""
+Got back 5 instances.  Expected 5
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 94 local: select * from wqlTestClass where "wqlTestClass.name=\"test5\"" < __Path
+Got back 4 instances.  Expected 4
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+
+Executing query 94 remote: select * from wqlTestClass where "wqlTestClass.name=\"test5\"" < __Path
+Got back 4 instances.  Expected 4
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+
+Executing query 95 local: select * from wqlTestClass where booleanData IS TRUE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 95 remote: select * from wqlTestClass where booleanData IS TRUE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 96 local: select * from wqlTestClass where booleanData IS NOT TRUE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 96 remote: select * from wqlTestClass where booleanData IS NOT TRUE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 97 local: select * from wqlTestClass where booleanData IS FALSE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 97 remote: select * from wqlTestClass where booleanData IS FALSE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 98 local: select * from wqlTestClass where booleanData IS NOT FALSE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 98 remote: select * from wqlTestClass where booleanData IS NOT FALSE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 99 local: select * from wqlTestClass where realData ISNULL
+Got back 8 instances.  Expected 8
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+
+Executing query 99 remote: select * from wqlTestClass where realData ISNULL
+Got back 8 instances.  Expected 8
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+
+Executing query 100 local: select * from wqlTestClass where realData IS NULL
+Got back 8 instances.  Expected 8
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+
+Executing query 100 remote: select * from wqlTestClass where realData IS NULL
+Got back 8 instances.  Expected 8
+INSTANCE OF wqlTestClass
+{
+  name="test1";
+  sint32Data=0;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test2";
+  sint32Data=10;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test3";
+  sint32Data=NULL;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=5000000000000;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test6";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=10;
+  stringData=NULL;
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test7";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="abc";
+  realData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test8";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData="test";
+  realData=NULL;
+};
+
+
+Executing query 101 local: select * from wqlTestClass where realData NOTNULL
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 101 remote: select * from wqlTestClass where realData NOTNULL
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 102 local: select * from wqlTestClass where realData IS NOT NULL
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 102 remote: select * from wqlTestClass where realData IS NOT NULL
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=123.456789;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  sint32Data=NULL;
+  booleanData=NULL;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=4.567890123e+27;
+};
+
+
+Executing query 103 local: select * from wqltestClass where name = "test4" or booleanData IS true
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 103 remote: select * from wqltestClass where name = "test4" or booleanData IS true
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 104 local: select name, booleanData from wqltestClass where name = "test5" or booleanData IS true
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  booleanData=true;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  booleanData=NULL;
+};
+
+
+Executing query 104 remote: select name, booleanData from wqltestClass where name = "test5" or booleanData IS true
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  booleanData=true;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  booleanData=NULL;
+};
+
+
+Executing query 105 local: select name, sint32Data from wqltestClass where name = "test4" and sint32Data = 1
+Got back 0 instances.  Expected 0
+
+Executing query 105 remote: select name, sint32Data from wqltestClass where name = "test4" and sint32Data = 1
+Got back 0 instances.  Expected 0
+
+Executing query 106 local: select name, booleanData, sint32Data from wqltestClass where name = "test4" and booleanData IS TRUE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+};
+
+
+Executing query 106 remote: select name, booleanData, sint32Data from wqltestClass where name = "test4" and booleanData IS TRUE
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+};
+
+
+Executing query 107 local: select name, realData from wqltestClass where name IS NOT NULL and realData IS NOT NULL
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  realData=4.567890123e+27;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  realData=123.456789;
+};
+
+
+Executing query 107 remote: select name, realData from wqltestClass where name IS NOT NULL and realData IS NOT NULL
+Got back 2 instances.  Expected 2
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  realData=4.567890123e+27;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  realData=123.456789;
+};
+
+
+Executing query 108 local: select name, booleanData from wqltestClass where (name IS NOT NULL and realData IS NOT NULL) or (name = "test5" or booleanData IS true)
+Got back 4 instances.  Expected 4
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  booleanData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  booleanData=true;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  booleanData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  booleanData=NULL;
+};
+
+
+Executing query 108 remote: select name, booleanData from wqltestClass where (name IS NOT NULL and realData IS NOT NULL) or (name = "test5" or booleanData IS true)
+Got back 4 instances.  Expected 4
+INSTANCE OF wqlTestClass
+{
+  name="test10";
+  booleanData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  booleanData=true;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test5";
+  booleanData=NULL;
+};
+
+INSTANCE OF wqlTestClass
+{
+  name="test9";
+  booleanData=NULL;
+};
+
+
+Executing query 109 local: select * from wqltestClass where (name = "test4" or name = "test2") and (sint32Data = 1 or booleanData = true)
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 109 remote: select * from wqltestClass where (name = "test4" or name = "test2") and (sint32Data = 1 or booleanData = true)
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test4";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 109 remote: INSERT INTO wqlTestClass (name, booleanData, stringData) VALUES ("test11", true, "test11String")
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  [key(true)]
+  name="test11";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData="test11String";
+  realData=NULL;
+};
+
+
+Executing query 110 local: select * from wqlTestClass where name = "test11"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test11";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData="test11String";
+  realData=NULL;
+};
+
+
+Executing query 110 remote: select * from wqlTestClass where name = "test11"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test11";
+  sint32Data=NULL;
+  booleanData=true;
+  uint64Data=NULL;
+  stringData="test11String";
+  realData=NULL;
+};
+
+
+Executing query 110 local: INSERT INTO wqlTestClass VALUES ("test12", 32, true, 64, "test12String", 50.0)
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  [key(true)]
+  name="test12";
+  sint32Data=32;
+  booleanData=true;
+  uint64Data=64;
+  stringData="test12String";
+  realData=50;
+};
+
+
+Executing query 111 local: UPDATE wqlTestClass SET booleanData=false, sint32Data=12345 WHERE name="test11"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test11";
+  sint32Data=12345;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData="test11String";
+  realData=NULL;
+};
+
+
+Executing query 111 remote: UPDATE wqlTestClass SET booleanData=false, sint32Data=12345 WHERE name="test11"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test11";
+  sint32Data=12345;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData="test11String";
+  realData=NULL;
+};
+
+
+Executing query 112 local: select * from wqlTestClass where name = "test11"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test11";
+  sint32Data=12345;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData="test11String";
+  realData=NULL;
+};
+
+
+Executing query 112 remote: select * from wqlTestClass where name = "test11"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test11";
+  sint32Data=12345;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData="test11String";
+  realData=NULL;
+};
+
+
+Executing query 113 local: UPDATE wqlTestClass SET stringData="" WHERE name="test11"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test11";
+  sint32Data=12345;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData="";
+  realData=NULL;
+};
+
+
+Executing query 113 remote: UPDATE wqlTestClass SET stringData="" WHERE name="test11"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test11";
+  sint32Data=12345;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData="";
+  realData=NULL;
+};
+
+
+Executing query 114 local: select * from wqlTestClass where name = "test11"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test11";
+  sint32Data=12345;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData="";
+  realData=NULL;
+};
+
+
+Executing query 114 remote: select * from wqlTestClass where name = "test11"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test11";
+  sint32Data=12345;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData="";
+  realData=NULL;
+};
+
+
+Executing query 115 local: UPDATE wqlTestClass SET stringData=null WHERE name="test11"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test11";
+  sint32Data=12345;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 115 remote: UPDATE wqlTestClass SET stringData=null WHERE name="test11"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test11";
+  sint32Data=12345;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 116 local: select * from wqlTestClass where name = "test11"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test11";
+  sint32Data=12345;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 116 remote: select * from wqlTestClass where name = "test11"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test11";
+  sint32Data=12345;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 116 remote: DELETE FROM wqlTestClass WHERE name="test11"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test11";
+  sint32Data=12345;
+  booleanData=false;
+  uint64Data=NULL;
+  stringData=NULL;
+  realData=NULL;
+};
+
+
+Executing query 117 local: select * from wqlTestClass where name = "test11"
+Got back 0 instances.  Expected 0
+
+Executing query 117 remote: select * from wqlTestClass where name = "test11"
+Got back 0 instances.  Expected 0
+
+Executing query 117 local: DELETE FROM wqlTestClass WHERE name="test12"
+Got back 1 instances.  Expected 1
+INSTANCE OF wqlTestClass
+{
+  name="test12";
+  sint32Data=32;
+  booleanData=true;
+  uint64Data=64;
+  stringData="test12String";
+  realData=50;
+};
+
+
+Executing query 118 local: select * from wqlTestClass where name = "test12"
+Got back 0 instances.  Expected 0
+
+Executing query 118 remote: select * from wqlTestClass where name = "test12"
+Got back 0 instances.  Expected 0
+
+Executing query 119 local: SELECT "*" FROM meta_class WHERE __this ISA  "ClassWhichDoesNotExist" 
+
+Executing query 120 local: SELECT "*" FROM meta_class WHERE __This ISA  "ClassWhichDoesNotExist" 
+
+Executing query 121 local: SELECT "*" FROM meta_class WHERE __THIS ISA  "ClassWhichDoesNotExist" 
+
+Executing query 122 local: SELECT "*" FROM meta_class WHERE __this ISA  "ClassWhichDoesNotExist" 
+
+Executing query 123 local: SELECT "*" FROM meta_class WHERE __this = "ClassWhichDoesNotExist" 
+
+Executing query 124 local: SELECT "*" FROM meta_class WHERE __this ISA "ClassWithNoChildren" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithNoChildren";
+};
+
+
+Executing query 124 remote: SELECT "*" FROM meta_class WHERE __this ISA "ClassWithNoChildren" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithNoChildren";
+};
+
+
+Executing query 125 local: SELECT "*" FROM meta_class WHERE __this ISA "ClassWithManyChildren" 
+Got back 4 instances.  Expected 4
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfClassWithManyChildren";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfClassWithManyChildren";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfClassWithManyChildren";
+};
+
+
+Executing query 125 remote: SELECT "*" FROM meta_class WHERE __this ISA "ClassWithManyChildren" 
+Got back 4 instances.  Expected 4
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfClassWithManyChildren";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfClassWithManyChildren";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfClassWithManyChildren";
+};
+
+
+Executing query 126 local: SELECT "*" FROM meta_class WHERE __this ISA "ClassWithManyChildren2Level" 
+Got back 13 instances.  Expected 13
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild2OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild2OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild2OfClassWithManyChildren2Level";
+};
+
+
+Executing query 126 remote: SELECT "*" FROM meta_class WHERE __this ISA "ClassWithManyChildren2Level" 
+Got back 13 instances.  Expected 13
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild2OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild2OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild2OfClassWithManyChildren2Level";
+};
+
+
+Executing query 127 local: SELECT "*" FROM meta_class WHERE __this ISA "Child1OfClassWithManyChildren2Level" 
+Got back 4 instances.  Expected 4
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild1OfClassWithManyChildren2Level";
+};
+
+
+Executing query 127 remote: SELECT "*" FROM meta_class WHERE __this ISA "Child1OfClassWithManyChildren2Level" 
+Got back 4 instances.  Expected 4
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild1OfClassWithManyChildren2Level";
+};
+
+
+Executing query 128 local: SELECT "*" FROM meta_class WHERE __class =  "ClassWhichDoesNotExist" 
+
+Executing query 129 local: SELECT "*" FROM meta_class WHERE __Class =  "ClassWhichDoesNotExist" 
+
+Executing query 130 local: SELECT "*" FROM meta_class WHERE __CLASS =  "ClassWhichDoesNotExist" 
+
+Executing query 131 local: SELECT "*" FROM meta_class WHERE __class =  "ClassWhichDoesNotExist" 
+
+Executing query 132 local: SELECT "*" FROM meta_class WHERE __class ISA "ClassWhichDoesNotExist" 
+
+Executing query 133 local: SELECT "*" FROM meta_class WHERE __class = "ClassWithNoChildren" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithNoChildren";
+};
+
+
+Executing query 133 remote: SELECT "*" FROM meta_class WHERE __class = "ClassWithNoChildren" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithNoChildren";
+};
+
+
+Executing query 134 local: SELECT "*" FROM meta_class WHERE __class = "ClassWithManyChildren" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren";
+};
+
+
+Executing query 134 remote: SELECT "*" FROM meta_class WHERE __class = "ClassWithManyChildren" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren";
+};
+
+
+Executing query 135 local: SELECT "*" FROM meta_class WHERE __class = "ClassWithManyChildren2Level" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren2Level";
+};
+
+
+Executing query 135 remote: SELECT "*" FROM meta_class WHERE __class = "ClassWithManyChildren2Level" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren2Level";
+};
+
+
+Executing query 136 local: SELECT "*" FROM meta_class WHERE __class = "Child1OfClassWithManyChildren2Level" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfClassWithManyChildren2Level";
+};
+
+
+Executing query 136 remote: SELECT "*" FROM meta_class WHERE __class = "Child1OfClassWithManyChildren2Level" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfClassWithManyChildren2Level";
+};
+
+
+Executing query 137 local: SELECT "*" FROM meta_class WHERE __dynasty =  "ClassWhichDoesNotExist" 
+
+Executing query 138 local: SELECT "*" FROM meta_class WHERE __Dynasty =  "ClassWhichDoesNotExist" 
+
+Executing query 139 local: SELECT "*" FROM meta_class WHERE __DYNASTY =  "ClassWhichDoesNotExist" 
+
+Executing query 140 local: SELECT "*" FROM meta_class WHERE __dynasty =  "ClassWhichDoesNotExist" 
+
+Executing query 141 local: SELECT "*" FROM meta_class WHERE __dynasty ISA "ClassWhichDoesNotExist" 
+
+Executing query 142 local: SELECT "*" FROM meta_class WHERE __dynasty = "ClassWithNoChildren" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithNoChildren";
+};
+
+
+Executing query 142 remote: SELECT "*" FROM meta_class WHERE __dynasty = "ClassWithNoChildren" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithNoChildren";
+};
+
+
+Executing query 143 local: SELECT "*" FROM meta_class WHERE __dynasty = "ClassWithManyChildren" 
+Got back 4 instances.  Expected 4
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfClassWithManyChildren";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfClassWithManyChildren";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfClassWithManyChildren";
+};
+
+
+Executing query 143 remote: SELECT "*" FROM meta_class WHERE __dynasty = "ClassWithManyChildren" 
+Got back 4 instances.  Expected 4
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfClassWithManyChildren";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfClassWithManyChildren";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfClassWithManyChildren";
+};
+
+
+Executing query 144 local: SELECT "*" FROM meta_class WHERE __dynasty = "ClassWithManyChildren2Level" 
+Got back 13 instances.  Expected 13
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild2OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild2OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild2OfClassWithManyChildren2Level";
+};
+
+
+Executing query 144 remote: SELECT "*" FROM meta_class WHERE __dynasty = "ClassWithManyChildren2Level" 
+Got back 13 instances.  Expected 13
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild2OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild2OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild2OfClassWithManyChildren2Level";
+};
+
+
+Executing query 145 local: SELECT "*" FROM meta_class WHERE __dynasty = "Child1OfClassWithManyChildren2Level" 
+
+Executing query 146 local: SELECT "*" FROM meta_class WHERE __class =  "ClassWhichDoesNotExist" 
+
+Executing query 147 local: SELECT "*" FROM meta_class WHERE __Class =  "ClassWhichDoesNotExist" 
+
+Executing query 148 local: SELECT "*" FROM meta_class WHERE __CLASS =  "ClassWhichDoesNotExist" 
+
+Executing query 149 local: SELECT "*" FROM meta_class WHERE __class =  "ClassWhichDoesNotExist" 
+
+Executing query 150 local: SELECT "*" FROM meta_class WHERE __class ISA "ClassWhichDoesNotExist" 
+
+Executing query 151 local: SELECT "*" FROM meta_class WHERE __class = "ClassWithNoChildren" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithNoChildren";
+};
+
+
+Executing query 151 remote: SELECT "*" FROM meta_class WHERE __class = "ClassWithNoChildren" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithNoChildren";
+};
+
+
+Executing query 152 local: SELECT "*" FROM meta_class WHERE __class = "ClassWithManyChildren" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren";
+};
+
+
+Executing query 152 remote: SELECT "*" FROM meta_class WHERE __class = "ClassWithManyChildren" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren";
+};
+
+
+Executing query 153 local: SELECT "*" FROM meta_class WHERE __class = "ClassWithManyChildren2Level" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren2Level";
+};
+
+
+Executing query 153 remote: SELECT "*" FROM meta_class WHERE __class = "ClassWithManyChildren2Level" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren2Level";
+};
+
+
+Executing query 154 local: SELECT "*" FROM meta_class WHERE __class = "Child1OfClassWithManyChildren2Level" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfClassWithManyChildren2Level";
+};
+
+
+Executing query 154 remote: SELECT "*" FROM meta_class WHERE __class = "Child1OfClassWithManyChildren2Level" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfClassWithManyChildren2Level";
+};
+
+
+Executing query 155 local: SELECT "*" FROM meta_class WHERE __dynasty =  "ClassWhichDoesNotExist" 
+
+Executing query 156 local: SELECT "*" FROM meta_class WHERE __Dynasty =  "ClassWhichDoesNotExist" 
+
+Executing query 157 local: SELECT "*" FROM meta_class WHERE __DYNASTY =  "ClassWhichDoesNotExist" 
+
+Executing query 158 local: SELECT "*" FROM meta_class WHERE __dynasty =  "ClassWhichDoesNotExist" 
+
+Executing query 159 local: SELECT "*" FROM meta_class WHERE __dynasty ISA "ClassWhichDoesNotExist" 
+
+Executing query 160 local: SELECT "*" FROM meta_class WHERE __dynasty = "ClassWithNoChildren" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithNoChildren";
+};
+
+
+Executing query 160 remote: SELECT "*" FROM meta_class WHERE __dynasty = "ClassWithNoChildren" 
+Got back 1 instances.  Expected 1
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithNoChildren";
+};
+
+
+Executing query 161 local: SELECT "*" FROM meta_class WHERE __dynasty = "ClassWithManyChildren" 
+Got back 4 instances.  Expected 4
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfClassWithManyChildren";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfClassWithManyChildren";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfClassWithManyChildren";
+};
+
+
+Executing query 161 remote: SELECT "*" FROM meta_class WHERE __dynasty = "ClassWithManyChildren" 
+Got back 4 instances.  Expected 4
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfClassWithManyChildren";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfClassWithManyChildren";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfClassWithManyChildren";
+};
+
+
+Executing query 162 local: SELECT "*" FROM meta_class WHERE __dynasty = "ClassWithManyChildren2Level" 
+Got back 13 instances.  Expected 13
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild2OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild2OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild2OfClassWithManyChildren2Level";
+};
+
+
+Executing query 162 remote: SELECT "*" FROM meta_class WHERE __dynasty = "ClassWithManyChildren2Level" 
+Got back 13 instances.  Expected 13
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="ClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild0OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild1OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child0OfChild2OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child1OfChild2OfClassWithManyChildren2Level";
+};
+
+INSTANCE OF __SchemaQueryResult
+{
+  CimClass="Child2OfChild2OfClassWithManyChildren2Level";
+};
+
+
+Executing query 163 local: SELECT "*" FROM meta_class WHERE __dynasty = "Child1OfClassWithManyChildren2Level" 

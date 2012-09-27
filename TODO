@@ -1,0 +1,251 @@
+Testing:
+    - smaller schema for make check.  create classes to exercise all aspects 
+      of mof and xml.
+    - bad xml tests
+    - do some interop testing (client-server & server-client)
+      - snia old and new (http://www.opengroup.org/snia-cimom/)
+      - wbem services (get cimworkshop talking to owcimomd)
+      - pegasus
+      - openwbem 1.3.2 1.2.x (make sure binary fails)
+      - wbemcli (http://www-124.ibm.com/sblim/sblimrm.html)
+    - various make check components to have separate namespaces.
+    - review CIM operations over HTTP v1.2 and see where we deviate.
+    - Test case insensitivity (eg. try to add a disk and DISK class)
+    - Test storing 1 million instances.
+    - Test that failed OW_ASSERT(foo) comes across the wire correctly.
+    - Capture XML and run it through xmllint with the dtd.
+    - Create a test that does a createInstance with a class that has an 
+      infinite number of properties (to try and simulate a DNS attack)
+    - Cleanup/integrate some of the tests under src/*/test subdirs
+    - Create a test for mof compiling directly to the repository.
+    - Simulate problems:
+      - Out of memory.  Use RLIMIT_DATA.
+      - Out of disk space (for repository and/or temp files). Use RLIMIT_FSIZE
+        RLIMIT_NOFILE
+      - Random syscall failure.  Send SIGUSR1 to owciomd at random intervals
+        while hammerClient is running.
+      - Do all this while running under valgrind to detect memory leaks, etc.
+    - Test suite doesn't error on timeout while waiting for log output
+    - Validate no "stray" symbols in libraries: nm -Bpg src/common/libopenwbem.so.4 | egrep '^[0-9a-z ]{8} [^Uwt] .*OpenWBEM[^4].*'
+       for x in `find . -name lib\*4`; do nm -Bpg $x | egrep '^[0-9a-z ]{8} [^Uwt] [^._].*' | less; done
+
+Fix problems:
+    - All non-provider libs should be installed in $(libdir) and links created in 
+      $(libdir)/openwbem/*/ This is necessary for listener and provider agent support.
+    - CMAddArg() broken.
+    - Add a rw lock to the repositories so that a provider doesn't violate 
+      repository integrity if it does a write operation when only the global read lock is held.
+    - Create a way to not have extrinsic methods not require the write lock.
+      If a qualifier is available for this, that will work, and the CIM Server
+      can look at it in begin/endOperation and pass the result down to the
+      CIM Repository.  If a qualifier won't work, then it can query the
+      provider.  This will necessitate a change to the provider interface
+      interface, so don't forget to tell Jason Long.
+    - Provider environments should throw exceptions after they are no longer 
+      valid. Indication provider environments can be saved.
+    - The HDB class doesn't consolidate adjacent free blocks, this causes excessive growth
+      if a block is gradually resized larger. For instance, creating 1000 associations
+      to 1 instance in the repository will easily use 1 GB of disk, and most of it won't
+      be allocated to anything.
+    - Creating lots of associations to one instance in the repository is an n^2 algorithm,
+      and gets quite slow after about 100 associations.
+    - Fix String::toUpperCase(), toLowerCase() to be UTF-8 aware.
+    - Make xml parser validate incoming utf8 (use a FSM, create unit tests).
+    - To prevent DNS attacks, set a limit on incoming data.
+    - Audit classes in src/{cim,common}, especially comparison operators and 
+      operator<<
+    - Fix all exceptions to use error codes.
+    - Only throw cim exceptions from providers/repository/cimomhandleifc
+    - Throw appropriate exceptions, use chained exceptions. Log chained 
+      exceptions correctly. Already done for CIMException.
+    - Create a impl namespace and move internal classes into it.
+    - Document public/internal classes.
+    - Doxygen appears to ignore global functions associated with a class in 
+      the header file for that class -- for example, when you look up String, 
+      it doesn't show you the associated relational operators ==, !=, <, etc.
+    - On FreeBSD, Berkely DB is part of libc, and our version of libdb 
+      overrides the symbols, but isn't binary compatible and causes problems.
+      We need to change all the symbol names to have the OW_ prefix.
+    - http://www.faqs.org/rfcs/rfc2047.html is not handled
+    - Clean up the HTTP authentication so they have the same interface and 
+      are handled generically.  Also fix it to report a difference between 
+      issuing a new challenge and failing authentication so that log messages 
+      don't have false positives.
+
+New features:
+    - Providers provide their schema at startup in the for of mof, which the cimom compiles and caches.
+    - Handle the various options in the CIM_IndicationSubscription and
+      CIM_IndicationHandler classes.
+    - Send indications as a thread per handler, which can stay around for a
+      while.  This will allow the socket to remain open and will also serialize
+      the indications being sent to a particular listener.  Each thread will
+      have a queue of indications to send. The indication export providers will
+      need to be modified to separate connecting and sending indications into
+      separate steps.
+      Maybe have a map<handler,queue of indications>.  When a new
+      indication is generated it's stuck in the correct queue where the
+      delivery thread can pick it up. If the subscription isn't in the queue,
+      it's added and a new thread is created for it. Unless the thread limit has
+      been reached, then it's added to the overflow queue so the overflow
+      thread can deliver it.  If a thread's queue empties out, it will switch
+      to getting indications from the overflow queue, and it that's empty it
+      will wait for a configurable period of time for a new indication to
+      arrive before exiting.
+      This will also allow for exporting a batch of indications.  If there are
+      already > 1 indication in the queue for delivery after the connection is
+      made, then batch export can be used for greater efficiency.
+      To prevent a set of busy handlers from causing starvation of others 
+      beyond the number of processing threads, set a maximum limit on
+      the time (or number of indications processed) one can stay around.
+    - Don't load the authentication provider if allow_anonymous is turned on.
+    - client batch support
+    - Add support for running under inetd
+    - Create provider base classes which will make writing providers easier
+      - Template method base class for weak to ComputerSystem(anything?) providers (almost all hardware)
+      - Use ideas from SBLIM: http://oss.software.ibm.com/developerworks/oss/sblim/doc/ProviderArchitecture.pdf
+      - Review all providers and simplify & re-use & move any ideas into common functionality.
+    - create static CIMQualifiers for standard qualifiers.
+    - Create a repository debugger so you can easily inspect what's in a repository.
+    - Pass language down to providers
+    - Add an option to the CIM Listener to run in single threaded mode.
+    - Add support for TCP wrappers (/etc/{hosts.allow,hosts.deny}).
+    - rewrite the repository with libdb 3 or 4 with support for transactions
+      and recovery. Also take a look at SQLite (www.sqlite.org), which has a better 
+      license and looks easier to use than libdb.
+    - Add an option to run as a different user and drop privelidges on startup.
+      This will be dependent on the new repository.  With the current
+      repository it's necessary to open/close it for each operation.
+    - associators and references can't return an objectpath, only an instance.
+      This won't support cross-cimom associations. Extend the interface to
+      handle this. Maybe add the extra information to OW_CIMInstance, or create
+      a new class to encapsulate an OW_CIMObjectPath and an OW_CIMInstance.
+    - Refactor OW_CIMObjectPath into various classes which represent different
+      usages of paths (e.g. ClassName, ModelPath, LocalPath, etc.)
+    - Deal with locale on WBEM requests. (at least reject those that won't work)
+      Look at unicode.org http://www.unicode.org/Public/ALPHA/CVTUTF-1-1/ConvertUTF.{c,h}
+    - Add better error handling/messages to the MOF compiler.
+    - Binary Indications (Possibly re-factor and use CIMXMLListener)
+    - Use Boost.Python to create a python binding to the client library, to
+      allow for easy scripting or dynamic CIMOM interaction.
+    - Write a config file provider so the CIMOM config can be programatically
+      changed from remote.
+    - Write an SQL repository.
+    - Merge the PollingManager and the SelectEngine to remove a thread.
+    - Create a mechanism to share schemas between namespaces.
+    - Create a CIM class & provider to control the provider manager (re-scan
+      providers, reload/unload providers, register new providers, etc.)
+    - Make OW_Cpp*ProviderIFC method virtual (non-pure), so providers don't
+      have to override non-implemented methods.
+    - Remove instance qualifiers?
+    - Create an indication export provider to the logger (cimom logger,
+      syslog, etc.)
+    - Add some mof compiler options:
+      - perform a syntax check (don't really import)
+      - delete object(s) from repository
+      - Preserve objects (don't overwrite if they already exist)
+      - Suppress warnings
+      - Suppress all messages.
+      - Add -I flag for mof include search path.
+      - Specify a file containing a list of MOFs to compile
+      - output XML only to stdout.
+      - Ignore double #includes so that you don't have to be so careful.
+    - ModifyInstance (deprecate empty PropertyList and ignore includeQualifiers)
+    - New advanced errors.
+    - Async. methods.
+    - Implement new versions of DTD & CIM/XML and support backward 
+      compatibility on client & server
+    - Overriding a method cannot add a required parameter.
+    - Deprecate TOINSTANCE (don't send as XML, & ignore on incoming XML)
+    - Use libcwd to improve the new segfault handler on linux.  De-mangle names
+       and print filename/line numbers.
+    - Add a page to the website similar to http://cygwin.com/bugs.html
+    - Add rbac authentication
+    - Validate the "Required" qualifier on properties during create & modifyInstance.
+    - Add config items and code to do ssl client authentication.
+    - Config item for slp renewal time.
+    - Change ACL checking to use the new CIM access schema (if appropriate)
+      - Needed features: granularity down to the property level (currently
+         it's namespace level)
+      - Granularity to control each operation (currently it's just rw-overall).
+         Maybe also be for convenience, allow rw-schema, rw-instance, rw-overall
+      - Handle groups/roles (RBAC) as well as users.
+      - Change enabling/disabling of ACLs to be via a config item instead of the
+        presence of the schema.  It's more efficient to check a bool once
+        instead of doing a getClass on every operation.
+    - Figure out a better scheme for authentication to allow for simple,
+      digest, pki, kerberos, or user defined.
+    - Verify that classes maintain their invariant.
+    - Implement a "compatibility mode" in the client if the server doesn't 
+      support the latest version(s) of the spec(s). We only need to do this
+      for PROTOCOLVERSION="1.1" instead of 1.0, we can leave CIMVERSION and
+      DTDVERSION the same.
+    - Add ability to compress (w/zlib) data in the repository.
+    - Add ability for methods to return arrays
+    - Add capability for real (not string properties) embedded objects.
+
+Refactorings:
+    - Start to use __attribute__ ((warn_unused_result)) where applicable.
+    - Remove *E,*A functions from the CIMOMHandle.  Create OW_CIMUtils:: functions
+      that return OW_Enumeration<T> and OW_Array<T>.
+    - XML Things:
+      - Move some of the XML code around.  Get rid of param* strings.  Move 
+        XMLQualifier::* to XMLCIMFactory.
+      - Fix most of the CIMtoXML object path stuff to closely mirror the dtd.
+    - Create a base class for all the common code in the provider interfaces.
+    - Templatetize/inline the mutex lock classes.
+    - Split the http client/server classes into 2 layers, one that just deals
+      with plain http, and another layer that knows about wbem http.
+
+    Interface breaking, but of questionable value.
+    - Clean up CIM naming. Create a CIM class/instance path, local object path,
+      etc. and use them where appropriate.
+    - Make a new header OW_PPconfig.h that is like OW_config.h now.  Make
+      OW_config.h to not use PP symbols, use consts derived from the pp symbols.
+    - Rewrite the provider manager lookup so it's simpler/less code.
+    - simplify the provider manager lookup structure
+    - rename cimom to wbem server
+    - Rename OW_NonRecursiveMutex -> OW_Mutex and OW_Mutex -> OW_RecursiveMutex
+
+Documentation:
+    - Enhance developer documentation (similar to "SNIA CIM Object Manager 
+      Architecture and Developers Guide" found at 
+      http://www.opengroup.org/snia-cimom/) Also see: http://msdn.microsoft.com/library/default.asp?url=/library/en-us/wmisdk/wmi/supporting_features_for_wmi.asp
+      - Provider initialization, loading & unloading.
+      - CIMOM locking & concurrency issues.
+    - Document locking from a provider perspective, and which operations are
+      safe for providers to perform.  Method providers may run concurrently
+      (no locks are held.)
+    - Make a web page that has a list of projects/products that are using 
+      OpenWBEM.
+    - Update javadoc on header files in ifcs, common, client, and provider.
+    - Document how to create an SSL key+cert
+    - Document each class's:
+      - Copy semantics
+      - Thread safety
+      - Exception safety
+    - Define/document invariants for classes (especially OW_CIM*)
+
+Optimizations:
+    - Use KCacheGrind to find any hot spots
+    - See if using OW_StringBuffer as the OW_String internal representation is 
+      faster than ByteBuf. Probably remove COWReference completely and just
+      store a ByteBuf/OW_StringBuffer?
+      - Fix comparisons against const char* const to not allocate a new buffer.
+      - See if using concepts of Mozilla's string classes would be better,
+        such as having a string with a large buffer for stack use.
+    - inline the smaller functions in OW_String, OW_StringBuffer, and other 
+      commonly used classes. First we need repeatable benchmarks to measure
+      performance in order to determine if it's worth it.
+    - Redo WQL to only process one instance at a time for better scalability.
+    - Use OW_HashMap class where appropriate.
+    - Change instance/associator provider interface to pass in a list of
+      properties which should be returned, so providers can optimize and avoid
+      calculating unrequested properties.  OW_CIMServer will have to calculate
+      the property list based on local-only, propertyList, deep, etc. Also,
+      pass all the parameters (localOnly, deep, propertyList, etc.) to the
+      generic *ProviderIFC, so that various interfaces can make use of them.
+      Change OW_CIMServer to not do anything with the parameters when calling
+      a provider.  Let the provider ifc/provider do all the work.
+    - Have OW_CIMClass store a list of base classes.  Then remove some of the
+      algorithms that have to run up the chain by doing a repeated getClass.
+

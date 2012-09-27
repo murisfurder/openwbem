@@ -1,0 +1,12 @@
+[Association, Aggregation, Provider("c++::associatortest") ]
+class TEST_Assoc:CIM_SystemComponent
+{
+        [Override ("GroupComponent"), Aggregate, Max (1), Min (1),
+         Description ("The parent system in the Association.") ]
+    CIM_System REF GroupComponent;
+        [Override ("PartComponent"), Weak, Description (
+         "The LogicalDevice that is a component of a System.") ]
+    CIM_LogicalDevice REF PartComponent;
+};
+
+													

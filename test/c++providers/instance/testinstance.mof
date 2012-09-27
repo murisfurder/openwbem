@@ -1,0 +1,17 @@
+// ===================================================================
+// Test Instance
+// ===================================================================
+[Description ("Used to test instance provider.") ]
+class TestInstance
+{
+	[Description ("Name"), KEY]
+		string Name;
+
+	[Description ("The value of the accept language when the provider"
+		" received it") ]
+		string AcceptLanguage;
+		
+	[Description ("String array of bogus values") ]
+		string Params[];
+};
+

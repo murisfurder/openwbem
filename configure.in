@@ -1,0 +1,1509 @@
+AC_PREREQ([2.57])
+AC_INIT(OpenWBEM, 3.2.3, openwbem-public@lists.sourceforge.net)
+dnl When we implement --help and --version for all installed binaries, use the std-options option
+dnl AM_INIT_AUTOMAKE([foreign dist-bzip2 std-options 1.6.3])
+
+dnl We are a "foreign" type distribution (i.e. don't require all the standard GNU files)
+dnl  And we want a dist-bzip2 rule to be able to create .tar.bz2 dist files.
+dnl  And we require automake >= 1.6.3
+AM_INIT_AUTOMAKE([foreign dist-bzip2 tar-ustar 1.9])
+AC_CONFIG_SRCDIR(Makefile.am)
+AM_CONFIG_HEADER(config.h)
+
+OPENWBEM_MAJOR_VERSION=3
+OPENWBEM_MINOR_VERSION=2
+OPENWBEM_MICRO_VERSION=3
+dnl This gets incremented every release that a header has changed.
+OPENWBEM_LIBRARY_VERSION=4
+
+OPENWBEM_VERSION=$OPENWBEM_MAJOR_VERSION.$OPENWBEM_MINOR_VERSION.$OPENWBEM_MICRO_VERSION
+AC_SUBST(OPENWBEM_MAJOR_VERSION)
+AC_DEFINE_UNQUOTED(OPENWBEM_MAJOR_VERSION, $OPENWBEM_MAJOR_VERSION, [OpenWBEM Major Version])
+AC_SUBST(OPENWBEM_MINOR_VERSION)
+AC_DEFINE_UNQUOTED(OPENWBEM_MINOR_VERSION, $OPENWBEM_MINOR_VERSION, [OpenWBEM Minor Version])
+AC_SUBST(OPENWBEM_MICRO_VERSION)
+AC_DEFINE_UNQUOTED(OPENWBEM_MICRO_VERSION, $OPENWBEM_MICRO_VERSION, [OpenWBEM Micro Version])
+AC_SUBST(OPENWBEM_VERSION)
+AC_DEFINE_UNQUOTED(OPENWBEM_VERSION, ($OPENWBEM_MAJOR_VERSION*10000 + $OPENWBEM_MINOR_VERSION*100 + $OPENWBEM_MICRO_VERSION), [OpenWBEM Version])
+AC_SUBST(OPENWBEM_LIBRARY_VERSION)
+AC_DEFINE_UNQUOTED(OPENWBEM_LIBRARY_VERSION, $OPENWBEM_LIBRARY_VERSION, [OpenWBEM Library Version])
+
+
+AM_MAINTAINER_MODE
+#AM_DISABLE_STATIC
+
+dnl Checks for programs.
+AC_CANONICAL_HOST
+AC_PROG_CC
+AC_PROG_CXX
+AC_LANG_C
+#AC_LANG_CPLUSPLUS
+AM_PROG_LEX
+AC_PROG_RANLIB
+AM_CONDITIONAL(HAVE_FLEX, test x$LEX = xflex)
+AC_PROG_YACC
+
+AC_PATH_PROG(AR, ar, ar)
+SAVED_AR=$AR
+AR="\$(shell pwd)/\$(top_srcdir)/ow_ar.sh $SAVED_AR --"
+
+AC_PATH_PROG(MV, mv, mv)
+AC_PATH_PROG(RM, rm, rm)
+AC_PATH_PROG(SED, sed, sed)
+
+dnl FreeBSD and darwin have true in /usr/bin/true, while most other systems
+dnl   (e.g. linux) have true in /bin/true . Similarly for false.
+dnl
+dnl So here we find out where true and false are, and add #defines to the config
+dnl   headers. OW_ExecTestCases.cpp relies on these.
+dnl
+AC_PATH_PROG(TRUE_PATHNAME, true, [Error, true not found.])
+AC_DEFINE_UNQUOTED(TRUE_PATHNAME, "$TRUE_PATHNAME", [Where true is.])
+
+AC_PATH_PROG(FALSE_PATHNAME, false, [Error, false not found.])
+AC_DEFINE_UNQUOTED(FALSE_PATHNAME, "$FALSE_PATHNAME", [Where false is.])
+
+dnl This needs to be before we set any CFLAGS since setting DEBUG screws up perl.h
+HAVE_PERL=no
+AC_ARG_ENABLE(perl-providerifc,
+OW_HELP_STRING(--enable-perl-providerifc,enable the perl provider interface),
+[
+	dnl BMMU check for perl
+	#PGAC_CHECK_PERL_CONFIGS([archlibexp,privlibexp,useshrplib])
+	PGAC_CHECK_PERL_CONFIG(archlibexp)
+	PGAC_CHECK_PERL_CONFIG(privlibexp)
+	PGAC_CHECK_PERL_CONFIG(useshrplib)
+	PGAC_CHECK_PERL_EMBED_CCFLAGS
+	PGAC_CHECK_PERL_EMBED_LDFLAGS
+	saved_LDFLAGS="$LDFLAGS"
+	saved_CFLAGS="$CFLAGS"
+	CFLAGS="$CFLAGS $perl_embed_ccflags"
+	LDFLAGS="$LDFLAGS $perl_embed_ldflags"
+
+	# Basic test to check for compilation success
+	AC_TRY_COMPILE(
+		[
+		#include <EXTERN.h>
+		#include <perl.h>
+		],
+		[],
+		[
+			AC_DEFINE(PERLIFC)
+			HAVE_PERL=yes
+			break;
+		]
+	)
+	CFLAGS="$saved_CFLAGS"
+	LDFLAGS="$saved_LDFLAGS"
+])
+AM_CONDITIONAL(HAVE_PERL_EMBED, test x$HAVE_PERL = xyes)
+
+STATIC_LINK_FLAGS=
+DYNAMIC_LINK_FLAGS=
+DYNAMIC_EXPORT_FLAG=
+RPATH_LINK_FLAG=
+RPATH_LINK_FLAG_REQUIRED=0
+RPATH_DEFAULT_PATH=
+
+echo "Setting host specific flags..."
+#Figure out which platform dir to compile
+case "$host" in
+*-*-aix*)
+	AC_MSG_WARN(*** AIX support is currently experimental ***)
+	AIX=1
+	AC_DEFINE(AIX, $AIX, Target OS is AIX)
+	AC_SUBST(AIX)
+	LIBS="$LIBS -lxnet"
+	AIX_COMMON_CFLAGS="-D_REENTRANT -D_XOPEN_SOURCE_EXTENDED=1 -D_XOPEN_SOURCE=500 -D_ALL_SOURCE=1"
+	AIX_COMMON_LFLAGS="-L/usr/lib/threads"
+	RPATH_DEFAULT_PATH="/usr/lib:"
+
+	# This figures out which compiler is invoked, and sets the default flags based on that.
+	AIX_COMPILER=`basename $CXX`
+	case $AIX_COMPILER in 
+	xlC) 
+		AC_MSG_WARN(***************************************************************************)
+		AC_MSG_WARN(xlC will fail.  xlC_r should be used instead.)
+		AC_MSG_WARN(***************************************************************************)
+		exit 1
+		;;
+	xlC_r) 
+		AC_MSG_WARN(***************************************************************************)
+		AC_MSG_WARN(WARNING: Although it currently compiles, the C++ library has thread issues.)
+		AC_MSG_WARN(Make sure the tests run correctly.)
+		AC_MSG_WARN(***************************************************************************)
+		PLAT_CFLAGS="$AIX_COMMON_CFLAGS"
+		PLAT_CXXFLAGS="$AIX_COMMON_CFLAGS -qrtti=all"
+		CBINLINKFLAGS="-brtl -Wl,-bh:5"
+		CXXCOMMONLINKFLAGS="-brtl"
+		CXXBINLINKFLAGS="-Wl,-bh:5"
+		STATIC_LINK_FLAGS="-bstatic"
+		DYNAMIC_LINK_FLAGS="-bdynamic"
+		RPATH_LINK_FLAG="-blibpath:"
+		# This is a bad hack, as it includes an export using GNU make (others?)
+		# substitutions. 
+		CXXSHAREDLIBLINKFLAGS='-bdynamic -G -qmkshrobj -bnoentry -bexport:$(@:%.so=%.exp)'
+		DO_NOT_USE_DASH_PTHREAD=1
+		DYNAMIC_EXPORT_FLAG=-bexpall
+		;;
+	g++*)
+		# Some versions of gcc will work.  Others will fail.  Make sure it works.
+		AIX_COMPILER_VERSION=`$CXX --version | head -n1 | cut -f3 -d' '`
+		case $AIX_COMPILER_VERSION in
+		1.* | 2.* | 3.[012]*)
+			AC_MSG_WARN(***************************************************************************)
+			AC_MSG_WARN(This gcc compiler version ($AIX_COMPILER_VERSION) will fail.  Aborting now.)
+			AC_MSG_WARN(***************************************************************************)
+			exit 1;
+			;;
+		3.3*)
+			AC_MSG_WARN(***************************************************************************)
+			AC_MSG_WARN(Your compiler should have been patched, and the C++ standard library checked,)
+			AC_MSG_WARN(or problems with exception handling will cause OpenWBEM to fail.)
+			AC_MSG_WARN(***************************************************************************)
+			;;
+		3.4*)
+			# No issues known (at the present)
+			;;
+		*)   
+			# Let it pass.  It must be a newer (and hopefully functional) version of gcc.
+			;;
+		esac
+		
+		PLAT_CFLAGS="$AIX_COMMON_CFLAGS -pthread -W -Wall"
+		PLAT_CXXFLAGS="$AIX_COMMON_CFLAGS -pthread -W -Wall"
+		CBINLINKFLAGS="-Wl,-brtl"
+		CXXCOMMONLINKFLAGS="$AIX_COMMON_LFLAGS -pthread -Wl,-brtl" 
+		CXXBINLINKFLAGS="-Wl,-brtl"
+		STATIC_LINK_FLAGS="-Wl,-bstatic"
+		DYNAMIC_LINK_FLAGS="-Wl,-bdynamic"
+		RPATH_LINK_FLAG="-Wl,-blibpath:"
+		# This is a bad hack, as it includes an export using GNU make (others?)
+		# substitutions. 
+		CXXSHAREDLIBLINKFLAGS='-shared -Wl,-G -Wl,-bnoentry -Wl,-bexport:$(@:%.so=%.exp)'
+		DYNAMIC_EXPORT_FLAG=-Wl,-bexpall
+		;;
+	*)
+		AC_MSG_WARN(***************************************************************************)
+		AC_MSG_WARN(WARNING: Your C++ compiler ($AIX_COMPILER) has not been tested.)
+		AC_MSG_WARN(Using GCC defaults.)
+		AC_MSG_WARN(***************************************************************************)
+
+		PLAT_CFLAGS="$AIX_COMMON_CFLAGS -pthread -W -Wall"
+		PLAT_CXXFLAGS="$AIX_COMMON_CFLAGS -pthread -W -Wall"
+		CBINLINKFLAGS="-Wl,-brtl"
+		CXXCOMMONLINKFLAGS="$AIX_COMMON_LFLAGS -pthread -Wl,-brtl"
+		CXXBINLINKFLAGS=""
+		STATIC_LINK_FLAGS="-Wl,-bstatic"
+		DYNAMIC_LINK_FLAGS="-Wl,-bdynamic"
+		RPATH_LINK_FLAG="-Wl,-blibpath:"
+		# This is a bad hack, as it includes an export using GNU make (others?)
+		# substitutions. 
+		CXXSHAREDLIBLINKFLAGS='-shared -Wl,-G -Wl,-bnoentry -Wl,-bexport:$(@:%.so=%.exp)'
+		DYNAMIC_EXPORT_FLAG=-Wl,-bexpall
+		;;
+	esac
+
+	PLAT_OPTFLAGS="-O0"
+	PIDFILE_DIR="/var/locks"
+	LIB_EXT="so"
+	;;
+#*-*-cygwin*)
+#	;;
+*-*-darwin*)
+	PLATFORMDIR="posix"
+	AC_DEFINE(DARWIN, 1, Target OS is DARWIN)
+	PLAT_CFLAGS="-fno-common -D_REENTRANT"
+	PLAT_CXXFLAGS="-no-cpp-precomp -fno-common -D_REENTRANT"
+	CXXCOMMONLINKFLAGS=""
+	CXXBINLINKFLAGS=""
+	CXXSHAREDLIBLINKFLAGS="-dynamiclib -install_name \$(thelibdir)/\$(DYFILENAME) -compatibility_version \$(LIBRARY_BINARY_VERSION) -current_version \$(LIBRARY_BINARY_VERSION)"
+	CXXBUNDLELIBLINKFLAGS="-bundle"
+	PLAT_OPTFLAGS="-O2"
+	PIDFILE_DIR="/var/run"
+	CXX="g++"
+	LIB_EXT="dylib.bundle"
+	OW_NO_WDEPRECATED=1
+	;;
+#*-*-dgux*)
+#	;;
+#*-*-hpux10*)
+#	;;
+*-*-hpux11*)
+	AC_DEFINE(HPUX)
+	LIBS="$LIBS -lxnet -lpthread -lrt"
+	PLAT_CFLAGS="+Z -mt -D_XOPEN_SOURCE -D_XOPEN_SOURCE_EXTENDED=1"
+	PLAT_CXXFLAGS="-AA +Z -mt +p -D_XOPEN_SOURCE -D_XOPEN_SOURCE_EXTENDED=1 -D__HPACC_THREAD_SAFE_RB_TREE"
+	CPPFLAGS="-AA $CPPFLAGS" # need this so the configure tests work right.
+	CXXCOMMONLINKFLAGS="-AA -mt +Z -Wl,+b${libdir}:/usr/lib -Wl,+s -z"
+	CXXBINLINKFLAGS="-Wl,-B,immediate -Wl,-E $LDFLAGS"
+	CXXSHAREDLIBLINKFLAGS="-b -Wl,+h,\$@.\$(LIBRARY_BINARY_VERSION)"
+	PLAT_OPTFLAGS="+O2"
+	PIDFILE_DIR="/var/run"
+	LIB_EXT="sl"
+	RPATH_LINK_FLAG="-Wl,+s -Wl,+b"
+	;;
+#*-*-irix5*)
+#	;;
+#*-*-irix6*)
+#	;;
+*-*-linux*)
+	AC_DEFINE(GNU_LINUX)
+	PLAT_CFLAGS="-fPIC -D_REENTRANT -D_GNU_SOURCE -pipe"
+	PLAT_CXXFLAGS="-fPIC -D_REENTRANT -D_GNU_SOURCE -pipe"
+	CXXCOMMONLINKFLAGS=""
+	CXXBINLINKFLAGS="-Wl,-Bdynamic -lpthread -Wl,-E $LDFLAGS"
+	CBINLINKFLAGS="-Wl,-Bdynamic -lpthread $LDFLAGS"
+	CXXSHAREDLIBLINKFLAGS='-shared -fPIC -Wl,-soname -Wl,$@.$(LIBRARY_BINARY_VERSION) -lpthread'
+	PLAT_OPTFLAGS="-O3"
+	PIDFILE_DIR="/var/run"
+	LIB_EXT="so"
+	STATIC_LINK_FLAGS="-Wl,-Bstatic"
+	DYNAMIC_LINK_FLAGS="-Wl,-Bdynamic"
+	DYNAMIC_EXPORT_FLAG=-Wl,--export-dynamic
+	RPATH_LINK_FLAG="-Wl,-rpath="
+	;;
+*-*-netware*)
+	AC_DEFINE(NETWARE, 1, Target OS is NetWare)
+	NETWARE=1
+	PLATFORMDIR="posix"
+	AC_DEFINE(USE_FAKE_LIBS, 1, Fake libraries are enabled)
+	STATIC_SERVICES=1
+	AC_DEFINE(STATIC_SERVICES, 1, Static services are enabled)
+	CURRENT_LINK_MODE_FLAGS="$STATIC_LINK_FLAGS"
+	BINLINKAPPENDFLAGS="$DYNAMIC_LINK_FLAGS"
+	LIB_EXT="nlm"
+	EXEEXT=".nlm"
+	PLAT_CFLAGS="-DEXPERIMENTAL"
+	PLAT_CXXFLAGS="-DEXPERIMENTAL"
+	LIBS="$LIBS -lnetware"
+	;;
+#*-*-netbsd*)
+#	;;
+*-*-freebsd*)
+	AC_DEFINE(FREEBSD)
+	PLAT_CFLAGS="-fPIC -D_REENTRANT -pipe -pthread"
+	PLAT_CXXFLAGS="-fPIC -D_REENTRANT -pipe -pthread"
+	CXXCOMMONLINKFLAGS="-pthread"
+	CXXBINLINKFLAGS="-Wl,-Bdynamic -Wl,-E $LDFLAGS"
+	CXXSHAREDLIBLINKFLAGS='-shared -fPIC -Wl,-soname -Wl,$@.$(LIBRARY_BINARY_VERSION)'
+	PLAT_OPTFLAGS="-O3"
+	PIDFILE_DIR="/var/run"
+	LIB_EXT="so"
+	;;
+*-*-solaris*)
+	AC_DEFINE(SOLARIS)
+	LIBS="$LIBS -lsocket -lnsl"
+	PLAT_CFLAGS="-fPIC -pthreads -D_REENTRANT -D__EXTENSIONS__ -D_POSIX_PTHREAD_SEMANTICS"
+	PLAT_CXXFLAGS="-fPIC -pthreads -D_REENTRANT -D__EXTENSIONS__ -D_POSIX_PTHREAD_SEMANTICS"
+	CXXCOMMONLINKFLAGS="-pthreads $LDFLAGS"
+	CXXBINLINKFLAGS="-Wl,-Bdynamic"
+	CXXSHAREDLIBLINKFLAGS='-shared -fPIC -Wl,-h -Wl,$@.$(LIBRARY_BINARY_VERSION)'
+	PLAT_OPTFLAGS="-O3"
+	PIDFILE_DIR="/var/run"
+	RPATH_LINK_FLAG="-R"
+	LIB_EXT="so"
+	;;
+*)
+	AC_MSG_WARN(***************************************************************************)
+	AC_MSG_WARN(Unknown platform ($host). The build may fail. Using linux/gcc build flags.)
+	AC_MSG_WARN(***************************************************************************)
+	PLAT_CFLAGS="-fPIC -D_REENTRANT -D_GNU_SOURCE -pipe"
+	PLAT_CXXFLAGS="-fPIC -D_REENTRANT -D_GNU_SOURCE -pipe"
+	CXXCOMMONLINKFLAGS=""
+	CXXBINLINKFLAGS="-Wl,-Bdynamic -lpthread -Wl,-E $LDFLAGS"
+	CBINLINKFLAGS="-Wl,-Bdynamic -lpthread $LDFLAGS"
+	CXXSHAREDLIBLINKFLAGS='-shared -fPIC -Wl,-soname -Wl,$@.$(LIBRARY_BINARY_VERSION) -lpthread'
+	PLAT_OPTFLAGS="-O3"
+	PIDFILE_DIR="/var/run"
+	LIB_EXT="so"
+	STATIC_LINK_FLAGS="-Wl,-Bstatic"
+	DYNAMIC_LINK_FLAGS="-Wl,-Bdynamic"
+	DYNAMIC_EXPORT_FLAG=-Wl,--export-dynamic
+	RPATH_LINK_FLAG="-Wl,-rpath="
+	;;
+esac
+
+
+#Figure out which architecture we are on
+case "$host" in
+i?86-*-*)
+	AC_DEFINE(ARCH_X86, 1, Intel x86 architecture)
+	;;
+powerpc-*-*)
+	AC_DEFINE(ARCH_PPC, 1, PowerPC architecture)
+	;;
+sparc-*-*)
+	AC_DEFINE(ARCH_SPARC, 1, SPARC architecture)
+	;;
+hppa2.0*-*-*)
+	AC_DEFINE(ARCH_HPPA20, 1, HP PA-RISC 2.0 architecture)
+	;;
+x86_64-*-*)
+	AC_DEFINE(ARCH_X86_64, 1, x86-64 architecture)
+	;;
+*)
+	AC_DEFINE(ARCH_UNKNOWN, 1, Unknown architecture)
+	;;
+esac
+
+# This figures out which compiler is invoked
+OW_COMPILER=`basename $CXX`
+case $OW_COMPILER in 
+g++* | c++*)
+	# Check for gcc versions which are known to be broken.
+	GCC_COMPILER_VERSION=`$CXX --version | head -n1 | cut -f3 -d' '`
+	case $GCC_COMPILER_VERSION in
+	2.96 | 3.0*)
+		AC_MSG_WARN(***************************************************************************)
+		AC_MSG_WARN(This gcc compiler version ($GCC_COMPILER_VERSION) will fail.  Aborting now.)
+		AC_MSG_WARN(***************************************************************************)
+		exit 1;
+		;;
+	*)   
+		# Let it pass.
+		;;
+	esac
+esac
+		
+CFLAGS="$CFLAGS $PLAT_CFLAGS"
+CXXFLAGS="$CXXFLAGS $PLAT_CXXFLAGS"
+
+OW_CHECK_COMPILER_FLAG(fno-enforce-eh-specs,
+[
+	# aCC passes the OW_CHECK_COMPILER_FLAG test for
+	# -fno-enforce-eh-specs, because it will build and link if the flag
+	# is givien, but it emits an anoying and useless warning. This
+	# kludge eliminates that warning.
+	if test "x$CXX" != "xaCC"; then 
+		CXXFLAGS="-fno-enforce-eh-specs $CXXFLAGS"
+	fi
+])
+
+# Set up the linker
+if test -z "$CXXLINK" ; then
+  CXXLINK="$CXX"
+fi
+if test -z "$CLINK" ; then
+  CLINK="$CC"
+fi
+
+AC_SUBST(DYNAMIC_EXPORT_FLAG)
+AC_SUBST(LIB_EXT)
+
+AC_SUBST(PIDFILE_DIR)
+AC_DEFINE_UNQUOTED(PIDFILE_DIR, "${PIDFILE_DIR}")
+
+AC_ARG_ENABLE(rpath-link,
+OW_HELP_STRING(--enable-rpath-link,enable the encoding of the destination library path into all executables for runtime linking),
+[
+	if test "x$RPATH_LINK_FLAG" != "x"; then
+		RPATH_LINK_FLAG_REQUIRED=1
+		dnl NOTE: Although the flags are required, they are NOT being enabled
+		dnl in the configure script right here. This is because the libdir
+		dnl variable expands to a variable that must be reevaluated. It is 
+		dnl set at the bottom of this script (to prevent any tests from 
+		dnl failing until it can be evaluated properly while running make).
+	else
+		AC_MSG_WARN(***************************************************************************)
+		AC_MSG_WARN(rpath link cannot be enabled on this platform (the proper flag is unknown) -- ignored.)
+		AC_MSG_WARN(***************************************************************************)
+	fi
+],[
+	# This was already set, but it should be set again.
+	RPATH_LINK_FLAG_REQUIRED=0
+])
+
+AC_ARG_WITH(runtime-link-path,
+OW_HELP_STRING(--with-runtime-link-path=PATH,enable the encoding of the specified library search path into all executables for runtime linking),
+[
+	if test "x$RPATH_LINK_FLAG" != "x"; then
+		if test "x${with_runtime_link_path}" != "xyes" -a "x${with_runtime_link_path}" != "xno"; then
+			LDFLAGS="$LDFLAGS $RPATH_LINK_FLAG${with_runtime_link_path}"
+		elif test "x${with_runtime_link_path}" = "xyes"; then
+			AC_MSG_WARN(***************************************************************************)
+			AC_MSG_WARN(A runtime path must be specified when using --runtime-link-path            )
+			AC_MSG_WARN(***************************************************************************)
+			exit 1
+		fi
+	else
+		if test "x${with_runtime_link_path}" = "xyes"; then
+			AC_MSG_WARN(***************************************************************************)
+			AC_MSG_WARN(The runtime link path flag is unknown on this platform -- ignored.         )
+			AC_MSG_WARN(***************************************************************************)
+		fi
+	fi
+])
+
+dnl Checks for header files.
+AC_HEADER_STDC
+AC_CHECK_HEADER(pthread.h, have_pthread=1)
+AC_CHECK_HEADER(pth.h, have_pth=1)
+
+
+use_pam=0
+AC_ARG_ENABLE(pam,
+OW_HELP_STRING(--disable-pam,disable pam integration))
+if test "$enable_pam" != no; then
+	use_pam=1
+	AC_CHECK_HEADERS(pam/pam_misc.h pam/pam_appl.h, true, use_pam=0)
+	if test x$use_pam = x0; then
+		AC_CHECK_HEADERS(security/pam_misc.h security/pam_appl.h, 
+			use_pam=1, use_pam=0)
+	fi
+
+	if test x$use_pam = x1; then
+		AC_DEFINE(HAVE_PAM)
+		PAM_LIB="-lpam"
+	else
+		AC_MSG_WARN(*** No PAM headers found! The PAM authentication module ***)
+		AC_MSG_WARN(*** will not be built. The config file defaults to      ***)
+		AC_MSG_WARN(*** using PAM authentication.                           ***)
+		AC_MSG_WARN(*** You must edit the config file and use a different   ***)
+		AC_MSG_WARN(*** authentication module or else the daemon won't start***)
+	fi
+fi
+AC_SUBST(PAM_LIB)
+AM_CONDITIONAL(USE_PAM, test x$use_pam = x1)
+
+AM_CONDITIONAL(USE_AIX_AUTHENTICATE, test x$AIX = x1)
+
+AM_CONDITIONAL(OW_NETWARE_INSTALL, test x$NETWARE = x1)
+
+AC_ARG_ENABLE(zlib,
+OW_HELP_STRING(--disable-zlib,disable zlib integration))
+
+if test "$enable_zlib" != no; then
+	AC_CHECK_HEADERS(zlib.h, Z_LIBS="-lz")
+fi
+AC_SUBST(Z_LIBS)
+
+AC_CHECK_HEADERS( \
+fcntl.h \
+limits.h \
+sys/file.h \
+unistd.h \
+byteswap.h \
+pthread.h \
+sys/cdefs.h \
+sys/queue.h \
+sys/int_types.h \
+inttypes.h \
+getopt.h \
+sys/sockio.h \
+sys/time.h \
+sys/param.h \
+dirent.h \
+sys/resource.h \
+sys/select.h \
+sys/poll.h \
+sys/epoll.h \
+sys/socket.h \
+netinet/in.h \
+sys/un.h \
+stropts.h \
+alloca.h \
+sys/types.h \
+sys/stat.h \
+pwd.h \
+sys/wait.h \
+grp.h \
+)
+
+# check for C++ headers
+AC_LANG_CPLUSPLUS
+
+AC_CHECK_HEADERS( \
+streambuf \
+streambuf.h \
+ostream \
+ostream.h \
+istream \
+istream.h \
+hash_map \
+ext/hash_map \
+cxxabi.h \
+)
+
+dnl On FreeBSD 4.9, <unistd.h> and <getopt.h> contain conflicting declarations
+dnl    for getopt.
+dnl This *MUST* be done while AC_LANG_CPLUSPLUS is set; the conflict does not occur in C;
+dnl    It is C++ only.				
+AC_MSG_CHECKING(if <unistd.h> and <getopt.h> conflict)
+AC_TRY_COMPILE(
+[
+#include<getopt.h>
+#include<unistd.h>
+],
+[
+],
+[
+	AC_MSG_RESULT(no)
+],
+[
+	AC_MSG_RESULT(yes)
+	AC_DEFINE(GETOPT_AND_UNISTD_CONFLICT, 1, [Define to 1 if getopt and unistd conflict])
+])
+
+dnl On FreeBSD 4.9, WIFEXITED and WEXITSTATUS require wait.h .
+AC_MSG_CHECKING(if WIFEXITED and WEXITSTATUS require <wait.h>)
+AC_TRY_COMPILE(
+[
+],
+[
+	int i;
+	int* status= &i;
+	WIFEXITED(status);
+	WEXITSTATUS(status);
+],
+[
+	AC_MSG_RESULT(no)
+],
+[
+	AC_MSG_RESULT(yes)
+	AC_DEFINE(WIFEXITED_NEEDS_WAIT_H, 1, [Define to 1 if WIFEXITED and WEXITSTATUS require wait.h])
+])
+
+dnl bt_debug.c expects <inttypes.h> to #define PRIu32 and PRIx32 .
+dnl Trouble is, whether <inttypes.h> #defines PRIu32 and PRIx32 is system dependent;
+dnl linux <inttypes.h> does, FreeBSD and Darwin <inttypes.h> do not.
+AC_MSG_CHECKING([does <inttypes.h> define PRIu32 and PRIx32?])
+AC_TRY_COMPILE(
+[
+	#include <inttypes.h>
+],
+[
+	char const* c= PRIu32;
+	char const* d= PRIx32;
+],
+[
+	AC_MSG_RESULT(yes)
+	AC_DEFINE(INTTYPES_H_DEFINES_PRI, 1, [Define to 1 if <inttypes.h> defines PRIu32 and PRIx32.])
+],
+[
+	AC_MSG_RESULT(no)
+	AC_DEFINE(INTTYPES_H_DOES_NOT_DEFINE_PRI, 1, [Define to 1 if <inttypes.h> does not define PRIu32 or PRIx32.])
+])
+				
+dnl See if the C++ compiler supports __PRETTY_FUNCTION__
+AC_MSG_CHECKING(if the C++ compiler supports __PRETTY_FUNCTION__)
+AC_TRY_COMPILE(
+[
+],
+[
+	const char* f = __PRETTY_FUNCTION__;
+],
+[
+	AC_MSG_RESULT(yes)
+	AC_DEFINE(HAVE_UUPRETTY_FUNCTIONUU, 1, [Define to 1 if the C++ compiler supports __PRETTY_FUNCTION__])
+],
+[
+	AC_MSG_RESULT(no)
+])
+
+dnl See if the C++ compiler supports the C99 __func__
+AC_MSG_CHECKING(if the C++ compiler supports the C99 __func__)
+AC_TRY_COMPILE(
+[
+],
+[
+	const char* f = __func__;
+],
+[
+	AC_MSG_RESULT(yes)
+	AC_DEFINE(HAVE_C99_UUFUNCUU, 1, [Define to 1 if the C++ compiler supports the C99 __func__])
+],
+[
+	AC_MSG_RESULT(no)
+])
+
+AC_LANG_C
+
+AC_CHECK_FUNCS(getopt_long sched_yield backtrace nanosleep \
+mkstemp snprintf random srandom asctime_r gmtime_r localtime_r gettimeofday \
+timegm getpwnam_r getpwuid_r strtof setrlimit)
+
+dnl Test for pthread_atfork(), since some versions of glibc are broken and have a prototype but no function.
+if test ".${ac_cv_header_pthread_h}" = ".yes"; then
+	AC_MSG_CHECKING([for pthread_atfork])
+	AC_TRY_LINK([
+		#include "confdefs.h"
+		#include <pthread.h>],
+		[pthread_atfork(NULL, NULL, NULL);],
+		AC_DEFINE_UNQUOTED(HAVE_PTHREAD_ATFORK, 1, [pthread_atfork() exists])
+		AC_MSG_RESULT(yes)
+		ac_has_pthread_atfork=yes,
+		AC_MSG_RESULT(no)
+		ac_has_pthread_atfork=no)
+else
+	ac_has_pthread_atfork=no
+fi
+
+dnl This horrible mess is here because there are variations in the number of
+dnl parameters that gethostbyname_r takes on various platforms.  The general
+dnl idea for this came from the python configure script.
+AC_CHECK_FUNC(gethostbyname_r, 
+[
+  dnl the 6 arg version is the way Linux does it.
+  AC_MSG_CHECKING(if gethostbyname_r takes 6 args)
+  AC_TRY_COMPILE(
+  [
+#include <netdb.h>
+  ],
+  [ 
+    const char* hostname = "IGNOREME";
+    struct hostent hostbuf;
+    struct hostent* host = &hostbuf;
+    char buf[2048];
+    int localh_errno = 0;
+
+    (void) gethostbyname_r(hostname, &hostbuf, buf, sizeof(buf), &host, &localh_errno);
+  ],
+  dnl Yes, it takes 6 args
+  [
+    AC_MSG_RESULT(yes)
+    AC_DEFINE(HAVE_GETHOSTBYNAME_R, 1, Have gethostbyname_r())
+    AC_DEFINE(GETHOSTBYNAME_R_ARGUMENTS, 6, Number of args to gethostbyname_r())
+  ],
+  dnl else (not 6 args)
+  [
+    AC_MSG_RESULT(no)
+    dnl The 3 arg version is the way AIX does it.
+    AC_MSG_CHECKING(if gethostbyname_r takes 3 args)
+    AC_TRY_COMPILE(
+    [
+#include <netdb.h>
+    ],
+    [
+      const char* hostname = "IGNOREME";
+      struct hostent hostbuf;
+      struct hostent_data hostdata;
+      
+      (void) gethostbyname_r(hostname, &hostbuf, &hostdata);
+    ],
+    dnl Yes, it takes 3 args
+    [
+      AC_MSG_RESULT(yes)
+      AC_DEFINE(HAVE_GETHOSTBYNAME_R, 1, Have gethostbyname_r())
+      AC_DEFINE(GETHOSTBYNAME_R_ARGUMENTS, 3, Number of args to gethostbyname_r())
+    ],
+    dnl else (not 3 arg)
+    [
+      AC_MSG_RESULT(no)
+      dnl This was taken from the python source, as I don't know what platforms
+      dnl it is correct on.
+      AC_MSG_CHECKING(if gethostbyname_r takes 5 args)
+      AC_TRY_COMPILE(
+      [
+#include <netdb.h>
+      ],
+      [
+        const char* name = "IGNOREME";
+	struct hostent *he;
+	char buffer[2048];
+	int localh_errno = 0;
+	(void) gethostbyname_r(name, he, buffer, sizeof(buffer), &localh_errno);
+      ],
+      dnl Yes, it takes 5 args
+      [
+        AC_MSG_RESULT(yes)
+        AC_DEFINE(HAVE_GETHOSTBYNAME_R, 1, Have gethostbyname_r())
+        AC_DEFINE(GETHOSTBYNAME_R_ARGUMENTS, 5, Number of args to gethostbyname_r())
+      ],
+      dnl else (Who knows?)
+      [
+        AC_MSG_RESULT(no)
+      ] )
+    ] )
+  ] )
+] )
+dnl end of gethostbyname_r checks.
+
+dnl Check for the sighandler_t type
+AC_CHECK_TYPES([sighandler_t], , ,[#include <signal.h>])
+dnl Check for sigval or sigval_t typedefs (normal, struct, or union)
+AC_CHECK_TYPES([sigval],[AC_DEFINE(SIGVAL_TYPE, sigval, The sigval type)], 
+  AC_CHECK_TYPES([union sigval],[AC_DEFINE(SIGVAL_TYPE, union sigval, The sigval type)], 
+    AC_CHECK_TYPES([struct sigval],[AC_DEFINE(SIGVAL_TYPE, struct sigval, The sigval type)], 
+      AC_CHECK_TYPES([sigval_t],[AC_DEFINE(SIGVAL_TYPE, sigval_t, The sigval type)], 
+        AC_CHECK_TYPES([union sigval_t],[AC_DEFINE(SIGVAL_TYPE, union sigval_t, The sigval type)], 
+          AC_CHECK_TYPES([struct sigval_t],[AC_DEFINE(SIGVAL_TYPE, struct sigval_t, The sigval type)], ,[#include <signal.h>])
+        ,[#include <signal.h>])
+      ,[#include <signal.h>])
+    ,[#include <signal.h>])
+  ,[#include <signal.h>])
+,[#include <signal.h>])
+
+dnl Check the existance of strsignal.
+AC_CHECK_FUNCS(strsignal)
+
+dnl Check the availability siginfo_t and sigval_t members.
+dnl If *all* of the above SIGVAL_TYPE checks failed, then tests for members of
+dnl those types will fail here (as they should)
+AC_CHECK_MEMBERS([siginfo_t.si_fd, SIGVAL_TYPE.sival_int, SIGVAL_TYPE.sigval_int], , ,[#include <signal.h>])
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_BIGENDIAN
+
+AC_CHECK_SIZEOF(char, 1)
+AC_CHECK_SIZEOF(short int, 2)
+AC_CHECK_SIZEOF(int, 4)
+AC_CHECK_SIZEOF(long int, 4)
+AC_CHECK_SIZEOF(long long int, 8)
+AC_CHECK_SIZEOF(float, 4)
+AC_CHECK_SIZEOF(double, 8)
+AC_CHECK_SIZEOF(long double, 8)
+AC_CHECK_SIZEOF(char *, 4)
+
+dnl Posix does not require 'pthread_t' to mean anything unless <pthread.h> is
+dnl   #included, so some of our platforms, like FreeBSD, do not provide
+dnl   pthread_t unless <pthread.h> is #included.
+AC_CHECK_SIZEOF(pthread_t, 0, [#include <pthread.h>])
+
+
+AC_TYPE_OFF_T
+AC_TYPE_SIZE_T
+AC_CHECK_TYPE(u_int8_t, uint8_t)
+AC_CHECK_TYPE(u_int16_t, uint16_t)
+AC_CHECK_TYPE(u_int32_t, uint32_t)
+AC_STRUCT_ST_BLKSIZE
+AC_DECL_SYS_SIGLIST
+TYPE_SOCKLEN_T
+
+dnl Checks for library functions
+AC_FUNC_MEMCMP
+AC_FUNC_MMAP
+AC_FUNC_VPRINTF
+AC_CHECK_FUNCS(strerror strtoll strtoull)
+
+dnl Check for dynamic library loader functionality
+AC_CHECK_FUNCS(NSLinkModule, [ tempdl="dyld" ], [ tempdl="no" ])
+#if test "$tempdl" = "no"; then
+#  AC_CHECK_LIB(dld, shl_load, [ tempdl="shl"; DL_LIB="-ldld" ], [ tempdl="no" ])
+#fi
+if test "$tempdl" = "no"; then
+  AC_CHECK_FUNCS(dlopen, [ tempdl="dlfcn" ], [ tempdl="no" ])
+fi
+if test "$tempdl" = "no"; then
+  AC_CHECK_LIB(dl, dlopen, [ tempdl="dlfcn"; DL_LIB="-ldl" ], [ tempdl="no" ])
+fi
+case "$tempdl" in
+  dlfcn) AC_DEFINE(USE_DL);;
+  shl)   AC_DEFINE(USE_SHL);;
+  dyld)  AC_DEFINE(USE_DYLD);;
+esac
+
+AC_SUBST(DL_LIB)
+
+dnl now handle all the --enable configure arguments
+AC_ARG_ENABLE(debug-mode,
+OW_HELP_STRING(--enable-debug-mode,enable debugging mode),
+[
+	AC_DEFINE(DEBUG)
+	CFLAGS="$CFLAGS -g"
+	CXXFLAGS="$CXXFLAGS -g -D_GLIBCXX_DEBUG"
+	OW_CHECK_COMPILER_FLAG(Werror,[CXXFLAGS="$CXXFLAGS -Werror"])
+	OW_CHECK_COMPILER_FLAG(Wall,[CXXFLAGS="$CXXFLAGS -Wall"])
+	OW_CHECK_COMPILER_FLAG(W,[CXXFLAGS="$CXXFLAGS -W"])
+	OW_CHECK_COMPILER_FLAG(Woverloaded-virtual,[CXXFLAGS="$CXXFLAGS -Woverloaded-virtual"])
+	OW_CHECK_COMPILER_FLAG(Wno-unused,[CXXFLAGS="$CXXFLAGS -Wno-unused"])
+	OW_CHECK_COMPILER_FLAG(Wno-unused-label,[CXXFLAGS="$CXXFLAGS -Wno-unused-label"])
+	OW_CHECK_COMPILER_FLAG(Wno-unused-parameter,[CXXFLAGS="$CXXFLAGS -Wno-unused-parameter"])
+	OW_CHECK_COMPILER_FLAG(Wno-long-long,[CXXFLAGS="$CXXFLAGS -Wno-long-long"])
+	OW_CHECK_COMPILER_FLAG(Wwrite-strings,[CXXFLAGS="$CXXFLAGS -Wwrite-strings"])
+	if test "x$OW_NO_WDEPRECATED" = "x1"; then
+		# For OS X which doesn't correctly handle __attribute__(deprecated), so we turn it off
+		OW_CHECK_COMPILER_FLAG(Wno-deprecated,[CXXFLAGS="$CXXFLAGS -Wno-deprecated"])
+	fi
+dnl I wish we could enable this, but unfortunately network macros cause it to blow chunks.
+dnl	OW_CHECK_COMPILER_FLAG(Wold-style-cast,[CXXFLAGS="$CXXFLAGS -Wold-style-cast"])
+],[
+	CFLAGS="$CFLAGS -DNDEBUG $PLAT_OPTFLAGS"
+	CXXFLAGS="$CXXFLAGS -DNDEBUG $PLAT_OPTFLAGS"
+	# SUSE ships with some experimental gcc optimization patches, and the -fweb option gets enabled 
+	# at -O3 causes some of the libdb code (thus only CFLAGS are set) to be miscompiled.
+	OW_CHECK_COMPILER_FLAG(fno-web,[CFLAGS="$CFLAGS -fno-web"])
+])
+
+dnl Check to see if fake libraries and static services are requested.
+AC_ARG_ENABLE(fake-libs,
+OW_HELP_STRING(--enable-fake-libs,enable fake libraries (required for static services)),
+[ 
+  USE_FAKE_LIBS=1
+  AC_DEFINE(USE_FAKE_LIBS, 1, Fake libraries are enabled)
+])
+
+AC_ARG_ENABLE(static-services,
+OW_HELP_STRING(--enable-static-services,force services to be statically linked (auto-enables fake libraries)),
+[ 
+  if test "x$USE_FAKE_LIBS" = "x"; then
+    echo "Enabling fake libraries."
+    AC_DEFINE(USE_FAKE_LIBS, 1, Fake libraries are enabled)
+  fi
+  STATIC_SERVICES=1
+  AC_DEFINE(STATIC_SERVICES, 1, Static services are enabled)
+  CURRENT_LINK_MODE_FLAGS="$STATIC_LINK_FLAGS"
+  BINLINKAPPENDFLAGS="$DYNAMIC_LINK_FLAGS"
+], [
+  CURRENT_LINK_MODE_FLAGS="$DYNAMIC_LINK_FLAGS"
+  BINLINKAPPENDFLAGS=""
+])
+CXXBINLINKFLAGS="$CURRENT_LINK_MODE_FLAGS $CXXBINLINKFLAGS $CURRENT_LINK_MODE_FLAGS"
+CBINLINKFLAGS="$CURRENT_LINK_MODE_FLAGS $CBINLINKFLAGS $CURRENT_LINK_MODE_FLAGS"
+AC_SUBST(STATIC_LINK_FLAGS)
+AC_SUBST(DYNAMIC_LINK_FLAGS)
+AC_SUBST(STATIC_SERVICES)
+AM_CONDITIONAL(OW_STATIC_LINKING, test "x$STATIC_SERVICES" != "x")
+AC_SUBST(CURRENT_LINK_MODE_FLAGS)
+AC_SUBST(BINLINKAPPENDFLAGS)
+
+AC_ARG_ENABLE(openslp,
+OW_HELP_STRING(--disable-openslp,disable openslp integration))
+
+OW_HAVE_SLP=0
+if test "$enable_openslp" != no; then
+	AC_CHECK_HEADERS(slp.h, SLP_LIB="-lslp"; OW_HAVE_SLP=1)
+fi
+AM_CONDITIONAL(HAVE_SLP, test "x$OW_HAVE_SLP" = "x1")
+AC_SUBST(SLP_LIB)
+
+AC_ARG_ENABLE(memory-debug-mode,
+OW_HELP_STRING(--enable-memory-debug-mode,enable memory debug mode),
+[
+	AC_DEFINE(DEBUG_MEMORY)
+])
+
+AC_ARG_ENABLE(func-name-debug-mode,
+OW_HELP_STRING(--enable-func-name-debug-mode,enable func name debug mode),
+[
+	AC_DEFINE(PRINT_FUNC_DEBUG)
+])
+
+
+AC_ARG_ENABLE(stack-trace,
+	OW_HELP_STRING(--enable-stack-trace,enable stack trace on exceptions. This 
+		incurs a performance penalty, and so may only be appropriate for 
+		debugging during development.),
+[
+	AC_DEFINE(ENABLE_STACK_TRACE_ON_EXCEPTIONS)
+])
+
+AC_ARG_ENABLE(check-null-references,
+OW_HELP_STRING(--disable-check-null-references,disable checking for NULL references))
+
+if test "$enable_check_null_references" != no; then
+	AC_DEFINE(CHECK_NULL_REFERENCES)
+fi
+
+AC_ARG_ENABLE(check-array-indexing,
+OW_HELP_STRING(--disable-check-array-indexing,disable checking valid array indexes))
+
+if test "$enable_check_array_indexing" != no; then
+	AC_DEFINE(CHECK_ARRAY_INDEXING)
+fi
+
+AC_ARG_ENABLE(digest,
+OW_HELP_STRING(--disable-digest,disable digest authentication))
+
+OW_DISABLE_DIGEST=0
+if test "$enable_digest" = no; then
+	AC_DEFINE(DISABLE_DIGEST)
+	OW_DISABLE_DIGEST=1
+fi
+AM_CONDITIONAL(DISABLE_DIGEST, test x$OW_DISABLE_DIGEST = x1)
+
+AC_ARG_ENABLE(association-traversal,
+OW_HELP_STRING(--disable-association-traversal,disable association traversal))
+
+OW_DISABLE_ASSOCIATION_TRAVERSAL=0
+if test "$enable_association_traversal" = no; then
+	AC_DEFINE(DISABLE_ASSOCIATION_TRAVERSAL)
+	OW_DISABLE_ASSOCIATION_TRAVERSAL=1
+fi
+AM_CONDITIONAL(DISABLE_ASSOCIATION_TRAVERSAL, test x$OW_DISABLE_ASSOCIATION_TRAVERSAL = x1)
+
+OW_ENABLE_CMPI=1
+AC_ARG_ENABLE(cmpi,
+OW_HELP_STRING(--disable-cmpi, disable the cmpi provider interface))
+if test "$enable_cmpi" = no; then
+	OW_ENABLE_CMPI=0
+fi
+AM_CONDITIONAL(ENABLE_CMPI, test x$OW_ENABLE_CMPI = x1)
+
+AC_ARG_ENABLE(qualifier-declaration,
+OW_HELP_STRING(--disable-qualifier-declaration,disable qualifier declaration))
+
+OW_DISABLE_QUALIFIER_DECLARATION=0
+if test "$enable_qualifier_declaration" = no; then
+	AC_DEFINE(DISABLE_QUALIFIER_DECLARATION)
+	OW_DISABLE_QUALIFIER_DECLARATION=1
+fi
+AM_CONDITIONAL(DISABLE_QUALIFIER_DECLARATION, test x$OW_DISABLE_QUALIFIER_DECLARATION = x1)
+
+
+AC_ARG_ENABLE(schema-manipulation,
+OW_HELP_STRING(--disable-schema-manipulation,disable schema manipulation))
+
+OW_DISABLE_SCHEMA_MANIPULATION=0
+if test "$enable_schema_manipulation" = no; then
+	AC_DEFINE(DISABLE_SCHEMA_MANIPULATION)
+	OW_DISABLE_SCHEMA_MANIPULATION=1
+fi
+AM_CONDITIONAL(DISABLE_SCHEMA_MANIPULATION, test x$OW_DISABLE_SCHEMA_MANIPULATION = x1)
+
+
+AC_ARG_ENABLE(instance-manipulation,
+OW_HELP_STRING(--disable-instance-manipulation,disable instance manipulation))
+
+OW_DISABLE_INSTANCE_MANIPULATION=0
+if test "$enable_instance_manipulation" = no; then
+	AC_DEFINE(DISABLE_INSTANCE_MANIPULATION)
+	OW_DISABLE_INSTANCE_MANIPULATION=1
+fi
+AM_CONDITIONAL(DISABLE_INSTANCE_MANIPULATION, test x$OW_DISABLE_INSTANCE_MANIPULATION = x1)
+
+AC_ARG_ENABLE(property-operations,
+OW_HELP_STRING(--disable-property-operations,disable GetProperty & SetProperty WBEM Operations))
+
+OW_DISABLE_PROPERTY_OPERATIONS=0
+if test "$enable_property_operations" = no; then
+	AC_DEFINE(DISABLE_PROPERTY_OPERATIONS)
+	OW_DISABLE_PROPERTY_OPERATIONS=1
+fi
+AM_CONDITIONAL(DISABLE_PROPERTY_OPERATIONS, test x$OW_DISABLE_PROPERTY_OPERATIONS = x1)
+
+AC_ARG_ENABLE(namespace-manipulation,
+OW_HELP_STRING(--disable-namespace-manipulation,disable namespace manipulation))
+
+OW_DISABLE_NAMESPACE_MANIPULATION=0
+if test "$enable_namespace_manipulation" = no; then
+	AC_DEFINE(DISABLE_NAMESPACE_MANIPULATION)
+	OW_DISABLE_NAMESPACE_MANIPULATION=1
+fi
+AM_CONDITIONAL(DISABLE_NAMESPACE_MANIPULATION, test x$OW_DISABLE_NAMESPACE_MANIPULATION = x1)
+
+AC_ARG_ENABLE(valgrind-support,
+OW_HELP_STRING(--enable-valgrind-support,enable workarounds so the code can work well with valgrind),
+[
+	AC_DEFINE(VALGRIND_SUPPORT)
+])
+
+AC_ARG_ENABLE(non-thread-safe-exception-handling-workaround,
+OW_HELP_STRING(--enable-non-thread-safe-exception-handling-workaround,enable workarounds for non thread safe exception handling),
+[
+	AC_DEFINE(NON_THREAD_SAFE_EXCEPTION_HANDLING)
+])
+
+AC_ARG_ENABLE(threads-run-as-user,
+OW_HELP_STRING(--enable-threads-run-as-user,enable threads to run as the authenticated user.  This has only been tested on Linux, and probably doesn't work on other platforms.),
+[
+	AC_DEFINE(THREADS_RUN_AS_USER, 1, Threads run as the authenticated user)
+])
+
+AC_ARG_WITH(package-prefix,
+	OW_HELP_STRING(--with-package-prefix=PREFIX,specify an optional prefix for 
+		use when building a commercial version of OpenWBEM.  This allows separate 
+		versions to simultaneously coexist.),
+	[
+		PACKAGE_PREFIX=${with_package_prefix}
+		PACKAGE_PREFIX_D=${with_package_prefix}-
+	],
+	[
+		PACKAGE_PREFIX=
+		PACKAGE_PREFIX_D=
+	]
+)
+AC_SUBST(PACKAGE_PREFIX)
+AC_SUBST(PACKAGE_PREFIX_D)
+AC_DEFINE_UNQUOTED(PACKAGE_PREFIX, "$PACKAGE_PREFIX")
+
+
+OW_ENABLE_DB4_REPOSITORY=0
+AC_ARG_ENABLE(db4-repository,
+OW_HELP_STRING(--enable-db4-repository,enable (still in development) db4 repository),
+[
+	AC_DEFINE(ENABLE_DB4_REPOSITORY, 1, Enable db4 repository)
+	OW_ENABLE_DB4_REPOSITORY=1
+])
+AM_CONDITIONAL(ENABLE_DB4_REPOSITORY, test x$OW_ENABLE_DB4_REPOSITORY = x1)
+
+dnl for now everything that uses the configure script uses pthreads
+AC_DEFINE(USE_PTHREAD)
+
+AC_ARG_WITH(search-dir,
+	OW_HELP_STRING(--with-search-dir=PATH,specify an additional directory to look for include/ and lib/ sub dirs),
+	[
+		if test "x$withval" != "xno" ; then
+			CXXFLAGS="$CXXFLAGS -I$withval/include" 
+			CFLAGS="$CFLAGS -I$withval/include" 
+			LDFLAGS="$LDFLAGS -L$withval/lib" 
+		fi
+	]
+)
+
+saved_LDFLAGS="$LDFLAGS"
+saved_CPPFLAGS="$CPPFLAGS"
+saved_LIBS="$LIBS"
+
+AC_ARG_ENABLE(ssl,
+OW_HELP_STRING(--disable-ssl,disable ssl integration))
+
+if test "$enable_ssl" != no; then
+
+# The big search for OpenSSL.  Thanks to the openssh configure.in file!
+AC_ARG_WITH(ssl-dir,
+	OW_HELP_STRING(--with-ssl-dir=PATH,specify path to OpenSSL installation),
+[
+	if test "x$withval" != "xno" ; then
+		tryssldir=$withval
+	fi
+]
+)
+
+if test "x$prefix" != "xNONE" ; then
+	tryssldir="$tryssldir $prefix"
+fi
+AC_CACHE_CHECK([for OpenSSL directory], ac_cv_openssldir, [
+	for ssldir in $tryssldir "" /usr/local/openssl /usr/lib/openssl /usr/local/ssl /usr/lib/ssl /usr/local /usr/pkg /opt /opt/openssl ; do
+		CPPFLAGS="$saved_CPPFLAGS"
+		LDFLAGS="$saved_LDFLAGS"
+		SSL_LIBS="-lssl -lcrypto"
+		LIBS="$saved_LIBS $SSL_LIBS"
+ 
+		# Skip directories if they don't exist
+		if test ! -z "$ssldir" -a ! -d "$ssldir" ; then
+			continue;
+		fi
+		if test ! -z "$ssldir" -a "x$ssldir" != "x/usr"; then
+			# Try to use $ssldir/lib if it exists, otherwise
+			# $ssldir
+			if test -d "$ssldir/lib" ; then
+				LDFLAGS="$saved_LDFLAGS -L$ssldir/lib"
+				if test "x$RPATH_LINK_FLAG_REQUIRED" = "x1" ; then
+					LDFLAGS="$LDFLAGS ${RPATH_LINK_FLAG}$ssldir/lib"
+				fi
+			else
+				LDFLAGS="$saved_LDFLAGS -L$ssldir"
+				if test "x$RPATH_LINK_FLAG_REQUIRED" = "x1" ; then
+					LDFLAGS="$LDFLAGS ${RPATH_LINK_FLAG}$ssldir"
+				fi
+			fi
+			# Try to use $ssldir/include if it exists, otherwise
+			# $ssldir
+			if test -d "$ssldir/include" ; then
+				CPPFLAGS="$saved_CPPFLAGS -I$ssldir/include"
+			else
+				CPPFLAGS="$saved_CPPFLAGS -I$ssldir"
+			fi
+		fi
+ 
+		# Basic test to check for compatible version and correct linking
+		# *does not* test for RSA - that comes later.
+		AC_TRY_COMPILE(
+		[
+#include <string.h>
+#include <openssl/rand.h>
+		],
+		[
+	char a[2048];
+	memset(a, 0, sizeof(a));
+	RAND_add(a, sizeof(a), sizeof(a));
+	return(RAND_status() <= 0);
+		],
+		[
+			found_crypto=1
+			break;
+		], 
+		[
+			did_not_find_crypt=0
+		] 
+		)
+ 
+		if test ! -z "$found_crypto" ; then
+			break;
+		fi
+	done
+ 
+	if test -z "$found_crypto" ; then
+		#AC_MSG_ERROR([Could not find working OpenSSL library, please install or check config.log])
+		ssldir=""
+	fi
+	if test -z "$ssldir" && test ! -z "$found_crypto"; then
+		ssldir="(system)"
+	fi
+ 
+	ac_cv_openssldir=$ssldir
+])
+ 
+if (test ! -z "$ac_cv_openssldir") ; then
+	AC_DEFINE(HAVE_OPENSSL)
+	SSL_LIBS="-lssl -lcrypto"
+	LIBS="$saved_LIBS"
+else
+	AC_DEFINE(NO_SSL)
+	SSL_LIBS=""
+	LDFLAGS="$saved_LDFLAGS"
+	CPPFLAGS="$saved_CPPFLAGS"
+	LIBS="$saved_LIBS"
+fi
+
+if (test ! -z "$ac_cv_openssldir" && test "x$ac_cv_openssldir" != "x(system)") ; then
+	dnl Need to recover ssldir - test above runs in subshell
+	ssldir=$ac_cv_openssldir
+	if test ! -z "$ssldir" -a "x$ssldir" != "x/usr"; then
+		# Try to use $ssldir/lib if it exists, otherwise
+		# $ssldir
+		if test -d "$ssldir/lib" ; then
+			LDFLAGS="$saved_LDFLAGS -L$ssldir/lib"
+			if test "x$RPATH_LINK_FLAG_REQUIRED" = "x1" ; then
+				LDFLAGS="$LDFLAGS ${RPATH_LINK_FLAG}$ssldir/lib"
+			fi
+		else
+			LDFLAGS="$saved_LDFLAGS -L$ssldir"
+			if test "x$RPATH_LINK_FLAG_REQUIRED" = "x1" ; then
+				LDFLAGS="$LDFLAGS ${RPATH_LINK_FLAG}$ssldir"
+			fi
+		fi
+		# Try to use $ssldir/include if it exists, otherwise
+		# $ssldir
+		if test -d "$ssldir/include" ; then
+			CPPFLAGS="$saved_CPPFLAGS -I$ssldir/include"
+		else
+			CPPFLAGS="$saved_CPPFLAGS -I$ssldir"
+		fi
+	fi
+	SSL_LIBS="-lssl -lcrypto"
+fi
+else
+	AC_DEFINE(NO_SSL)
+	SSL_LIBS=""
+	LDFLAGS="$saved_LDFLAGS"
+	CPPFLAGS="$saved_CPPFLAGS"
+	LIBS="$saved_LIBS"
+fi
+
+dnl
+dnl   Fix this section, to make it more 'autoconfish', as this is just a chunk
+dnl   of a bourne-style shell script 
+dnl
+dnl   Note: This chunk of tests was added because Redhat includes dependencies
+dnl   to kerberos in their compilation of the openSSL libraries.  To allow
+dnl   things to compile happily, we need to include the proper directories and
+dnl   libraries (as is set in pkg-config openssl --cflags --libs)
+dnl
+dnl
+AC_MSG_CHECKING("For additional SSL dependencies")
+dnl Make sure that pkg-config exists.
+if `pkg-config --version &> /dev/null` 
+then
+  
+	if `pkg-config openssl`
+	then
+		EXTRA_SSL_LIBS=`pkg-config openssl --libs`
+		EXTRA_SSL_INCLUDES=`pkg-config openssl --cflags`
+		CPPFLAGS="$CPPFLAGS $EXTRA_SSL_INCLUDES"
+		SSL_LIBS="$SSL_LIBS $EXTRA_SSL_LIBS"
+		AC_MSG_RESULT("$EXTRA_SSL_INCLUDES $EXTRA_SSL_LIBS");
+	else
+		AC_MSG_RESULT("None")
+	fi
+else
+	AC_MSG_RESULT("None \(pkg-config not found\)")
+fi
+
+AC_SUBST(SSL_LIBS)
+
+dnl End of the ssl check
+
+dnl Now check for threading stuff
+OLD_LIBS=$LIBS
+if [[ "x$DO_NOT_USE_DASH_PTHREAD" = "x" ]]
+then
+  # Always link pthread dynamically.
+  LIBS="$DYNAMIC_LINK_FLAGS -pthread $CURRENT_LINK_MODE_FLAGS $LIBS"
+fi
+AC_MSG_CHECKING("pthread_mutexattr_settype")
+AC_TRY_COMPILE(
+	[
+#include <pthread.h>
+#include <assert.h>
+	],
+	[
+	pthread_mutexattr_t attr;
+	pthread_mutex_t mutex;
+	int res = 0;
+	res = pthread_mutexattr_init(&attr);
+	assert(res == 0);
+	res = pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
+	assert(res == 0);
+	res = pthread_mutex_init(&mutex, &attr);
+	assert(res == 0);
+	return 0;
+	],
+	[
+		AC_DEFINE(HAVE_PTHREAD_MUTEXATTR_SETTYPE)
+		AC_MSG_RESULT("yes")
+	],
+	[ AC_MSG_RESULT("no") ]
+)
+
+AC_MSG_CHECKING("pthread_spin_lock")
+AC_TRY_COMPILE(
+	[
+#include <pthread.h>
+#include <assert.h>
+	],
+	[
+	pthread_spinlock_t spinlock;
+	if (pthread_spin_init(&spinlock, 0) != 0)
+		return 1;
+	if (pthread_spin_lock(&spinlock) != 0)
+		return 1;
+	if (pthread_spin_unlock(&spinlock) != 0)
+		return 1;
+	return 0;
+	],
+	[
+		AC_DEFINE(HAVE_PTHREAD_SPIN_LOCK)
+		AC_MSG_RESULT("yes")
+	],
+	[ AC_MSG_RESULT("no") ]
+)
+
+AC_MSG_CHECKING("pthread_barrier_init")
+AC_TRY_COMPILE(
+	[
+#include <pthread.h>
+#include <assert.h>
+	],
+	[
+	pthread_barrier_t barrier;
+	assert(pthread_barrier_init(&barrier, NULL, 1) == 0);
+	assert(pthread_barrier_wait(&barrier) == PTHREAD_BARRIER_SERIAL_THREAD);
+	assert(pthread_barrier_destroy(&barrier) == 0);
+	return 0;
+	],
+	[
+		AC_DEFINE(HAVE_PTHREAD_BARRIER)
+		AC_MSG_RESULT("yes")
+	],
+	[ AC_MSG_RESULT("no") ]
+)
+
+AC_CHECK_FUNCS(pthread_kill_other_threads_np)
+
+# restore flags after pthread tests
+LIBS=$OLD_LIBS
+
+#####################################################
+# Set the location of the state dir
+if test "x$localstatedir" != "x\${prefix}/var"; then
+	tempDir=$localstatedir
+else
+	if test "x$prefix" != "xNONE"; then
+		tempDir=${prefix}/var
+	else
+		tempDir=${ac_default_prefix}/var
+	fi
+fi
+AC_DEFINE_UNQUOTED(DEFAULT_STATE_DIR, "${tempDir}")
+
+#####################################################
+# Set the location of the lib dir
+if test "x$libdir" != "x\${exec_prefix}/lib"; then
+	tempDir=$libdir
+else
+	if test "x$exec_prefix" != "xNONE"; then
+		tempDir=${exec_prefix}/lib
+	else
+		tempDir=${ac_default_prefix}/lib
+	fi
+fi
+AC_DEFINE_UNQUOTED(DEFAULT_LIB_DIR, "${tempDir}")
+
+
+#####################################################
+# Set the location of the bin dir
+if test "x$bindir" != "x\${exec_prefix}/bin"; then
+	tempDir=$bindir
+else
+	if test "x$exec_prefix" != "xNONE"; then
+		tempDir=${exec_prefix}/bin
+	else
+		tempDir=${ac_default_prefix}/bin
+	fi
+fi
+AC_DEFINE_UNQUOTED(DEFAULT_BIN_DIR, "${tempDir}", "The bin dir")
+
+
+#####################################################
+# Set the location of the sbin dir
+if test "x$sbindir" != "x\${exec_prefix}/sbin"; then
+	tempDir=$sbindir
+else
+	if test "x$exec_prefix" != "xNONE"; then
+		tempDir=${exec_prefix}/sbin
+	else
+		tempDir=${ac_default_prefix}/sbin
+	fi
+fi
+AC_DEFINE_UNQUOTED(DEFAULT_SBIN_DIR, "${tempDir}", "The sbin dir")
+
+
+#####################################################
+# Set the location of the libexec dir
+if test "x$libexecdir" != "x\${exec_prefix}/libexec"; then
+	tempDir=$libexecdir
+else
+	if test "x$exec_prefix" != "xNONE"; then
+		tempDir=${exec_prefix}/libexec
+	else
+		tempDir=${ac_default_prefix}/libexec
+	fi
+fi
+AC_DEFINE_UNQUOTED(DEFAULT_LIBEXEC_DIR, "${tempDir}")
+
+#####################################################
+# Set the location of the sysconf dir
+if test "x$sysconfdir" != "x\${prefix}/etc"; then
+	tempDir=$sysconfdir
+else
+	if test "x$prefix" != "xNONE"; then
+		tempDir=${prefix}/etc
+	else
+		tempDir=${ac_default_prefix}/etc
+	fi
+fi
+AC_DEFINE_UNQUOTED(DEFAULT_SYSCONF_DIR, "${tempDir}")
+
+# This is down at the bottom, because $libdir expands to
+# "${exec_prefix}/lib".  This variable won't be available until the
+# makefiles are generated.  This has the (unfortunate?) result that if
+# --prefix is passed to configure, and --exec-prefix is not, stuff
+# will end up rpath'd to a lib dir the openwbem libs are *not*
+# installed to.
+
+if test "x$RPATH_LINK_FLAG_REQUIRED" = "x1" ; then
+		LDFLAGS="$LDFLAGS ${RPATH_LINK_FLAG}${RPATH_DEFAULT_PATH}$libdir"
+fi
+
+CXXSHAREDLIBLINKFLAGS="$CXXCOMMONLINKFLAGS $CXXSHAREDLIBLINKFLAGS $LDFLAGS"
+CXXBINLINKFLAGS="$CXXCOMMONLINKFLAGS $CXXBINLINKFLAGS $LDFLAGS"
+CBINLINKFLAGS="$CBINLINKFLAGS $LDFLAGS"
+
+AC_SUBST(CXXSHAREDLIBLINKFLAGS)
+AC_SUBST(CXXBUNDLELIBLINKFLAGS)
+AC_SUBST(CXXBINLINKFLAGS)
+AC_SUBST(CBINLINKFLAGS)
+AC_SUBST(CXXLINK)
+AC_SUBST(CLINK)
+
+AC_OUTPUT(Makefile
+db/Makefile
+db/btree/Makefile
+db/db/Makefile
+db/include/Makefile
+db/mpool/Makefile
+db/test/Makefile
+doc/Makefile
+doc/man/Makefile
+doc/man/man1/Makefile
+doc/man/man8/Makefile
+etc/Makefile
+etc/init/Makefile
+etc/pam.d/Makefile
+etc/sysconfig/Makefile
+etc/sysconfig/daemons/Makefile
+mof/Makefile
+schemas/Makefile
+schemas/cim28/Makefile
+src/Makefile
+src/authenticators/Makefile
+src/authenticators/simple/Makefile
+src/authenticators/nonauthenticating/Makefile
+src/authenticators/pam/Makefile
+src/authenticators/pamcl/Makefile
+src/authenticators/aix/Makefile
+src/authorizers/Makefile
+src/authorizers/simple/Makefile
+src/authorizers/simple2/Makefile
+src/cim/Makefile
+src/cimom/Makefile
+src/cimom/common/Makefile
+src/cimom/server/Makefile
+src/cimom/indication/Makefile
+src/cimom/embedded/Makefile
+src/cimxmllistener/Makefile
+src/client/Makefile
+src/common/Makefile
+src/common/socket/Makefile
+src/common/socket/test/Makefile
+src/http/Makefile
+src/http/client/Makefile
+src/http/common/Makefile
+src/http/test/Makefile
+src/http/test/certs/Makefile
+src/ifcs/Makefile
+src/mof/Makefile
+src/provider/Makefile
+src/providerifcs/Makefile
+src/providerifcs/cpp/Makefile
+src/providerifcs/remote/Makefile
+src/providerifcs/cmpi/Makefile
+src/providerifcs/cmpi/common/Makefile
+src/providerifcs/npi/Makefile
+src/providerifcs/npi/common/Makefile
+src/providerifcs/perl/Makefile
+src/providerifcs/perl/perlProvider/Makefile
+src/providers/Makefile
+src/providers/cpp/Makefile
+src/providers/cpp/indicationexport/Makefile
+src/providers/cpp/polled/Makefile
+src/providers/cpp/polled/slp/Makefile
+src/providers/cpp/polled/unloader/Makefile
+src/providers/cpp/instance/Makefile
+src/providers/cpp/instance/CIM_IndicationSubscription/Makefile
+src/providers/cpp/instance/CIM_IndicationFilter/Makefile
+src/providers/cpp/instance/OpenWBEM_ConfigSettingData/Makefile
+src/providers/cpp/instance/OpenWBEM_ObjectManager/Makefile
+src/providers/cpp/instance/OpenWBEM_UnitaryComputerSystem/Makefile
+src/providers/cpp/instance/CIM_Namespace/Makefile
+src/providers/cpp/instance/CIM_NamespaceInManager/Makefile
+src/providers/cpp/instance/OW_NameSpace/Makefile
+src/providers/cpp/indication/Makefile
+src/providers/cpp/indication/IndicationRepLayer/Makefile
+src/repositories/Makefile
+src/repositories/hdb/Makefile
+src/repositories/tdbcr/Makefile
+src/requesthandlers/Makefile
+src/requesthandlers/binary/Makefile
+src/requesthandlers/cimxml/Makefile
+src/provideragent/Makefile
+src/services/Makefile
+src/services/http/Makefile
+src/tools/Makefile
+src/tools/owmofc/Makefile
+src/tools/owprovideragent/Makefile
+src/wql/Makefile
+src/wql/common/Makefile
+src/xml/Makefile
+test/Makefile
+test/CppUnit/Makefile
+test/acceptance/Makefile
+test/acceptance/progs/Makefile
+test/acceptance/testfiles/Makefile
+test/acceptance/testfiles/socketCat/Makefile
+test/acceptance/testfiles/xml_input/Makefile
+test/c++providers/Makefile
+test/c++providers/associator/Makefile
+test/c++providers/method/Makefile
+test/c++providers/instance/Makefile
+test/c++providers/indication/Makefile
+test/c++providers/secondary_instance/Makefile
+test/unit/Makefile
+test/performance/Makefile
+)
+
+AC_CREATE_PREFIX_CONFIG_H([${srcdir}/src/common/OW_config.h], OW, [config.h])
+dnl AC_CREATE_PREFIX_CONFIG_H([${srcdir}/src/providerifcs/owbi1/OWBI1_AuxConfig.h], OWBI1, [config.h])
+

@@ -1,0 +1,38 @@
+
+class EXP_BartComputerSystem : CIM_System
+{
+  [ provider("c++::methodtest") ]
+   string GetState(
+		[in, required] string s,
+		[in] uint8 uint8array[],
+		[in(false), out] boolean b,
+		[in(false), out] real64 r64,
+		[in, out] sint16 io16,
+		[in(false), out] string msg,
+		[in, out] CIM_System REF paths[],
+		[in, out] datetime nullParam,
+		[in, out, 
+			EmbeddedInstance("CIM_System")]
+			string embedded_insts[],
+		[in, out, 
+			EmbeddedInstance("CIM_System")]
+			string embedded_inst);
+
+  [ provider("c++::methodtest") ]
+   string ToggleState();
+
+  [ provider("c++::methodtest") ]
+   string SetState(
+	[IN] string newState);
+
+  [ provider("c++::methodtest") ]
+   UInt32 Sleep(
+	[IN] UInt32 duration); // units are in seconds
+};
+
+instance of EXP_BartComputerSystem
+{
+    CreationClassName = "EXP_BartComputerSystem";
+    Name = "test";
+};
+
