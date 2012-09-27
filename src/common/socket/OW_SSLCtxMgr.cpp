@@ -248,6 +248,11 @@ public:
 			CryptographicRandomNumber::saveRandomState();
 		}
 		SSLCtxMgr::uninit();
+
+		// Reset locking callback before delete of mutex_buf;
+		// the id and dyn_* callbacks don't need any reset.
+		CRYPTO_set_locking_callback(NULL);
+
 		delete[] mutex_buf;
 		mutex_buf = 0;
 	}
