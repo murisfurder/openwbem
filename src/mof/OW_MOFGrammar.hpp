@@ -36,6 +36,7 @@
 #define OW_MOF_GRAMMAR_HPP_INCLUDE_GUARD_
 #include "OW_config.h"
 #include "OW_String.hpp"
+#include "OW_vector.hpp"
 #include "OW_List.hpp"
 #include "OW_AutoPtr.hpp"
 #include "OW_MOFVisitor.hpp"

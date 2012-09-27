@@ -39,6 +39,7 @@
 #include "OW_String.hpp"
 #include "OW_MOFParserErrorHandlerIFC.hpp"
 #include "OW_Exception.hpp"
+#include "OW_List.hpp"
 #include "OW_Array.hpp"
 #include "OW_MOFLineInfo.hpp"
 #include "OW_MOFGrammar.hpp"
