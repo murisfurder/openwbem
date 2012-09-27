@@ -51,6 +51,7 @@
 
 #include <assert.h>
 #include <cctype>
+#include <climits> // for CHAR_MAX
 
 // forward declarations of some lex/yacc functions we need to call.
 void owmof_delete_buffer(YY_BUFFER_STATE b);
