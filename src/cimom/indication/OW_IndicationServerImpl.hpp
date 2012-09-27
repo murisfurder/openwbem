@@ -38,6 +38,7 @@
 #include "OW_Types.hpp"
 #include "OW_CIMFwd.hpp"
 #include "OW_IfcsFwd.hpp"
+#include "OW_vector.hpp"
 #include "OW_List.hpp"
 #include "OW_Condition.hpp"
 #include "OW_CIMInstance.hpp"
