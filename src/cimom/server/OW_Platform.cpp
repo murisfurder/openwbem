@@ -43,6 +43,7 @@
 #include "OW_PlatformSignal.hpp"
 #include "OW_ServiceEnvironmentIFC.hpp"
 #include "OW_Logger.hpp"
+#include <cstdlib>
 
 #ifdef OW_NETWARE
 #include "OW_Condition.hpp"
